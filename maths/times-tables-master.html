@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Times Tables Master · 2× to 12×</title>
+<style>
+  :root{
+    --bg:#0f1226; --bg2:#171a38; --card:#1e2247; --card2:#262b57;
+    --ink:#eef1ff; --muted:#9aa3d0; --line:#33386e;
+    --brand:#7c6bff; --brand2:#00d4ff; --good:#2ee6a6; --bad:#ff6b8b; --warn:#ffcf5c;
+    --shadow:0 18px 50px rgba(0,0,0,.45);
+    --r:20px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{
+    font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+    background:radial-gradient(1200px 700px at 15% -10%,#2a2170 0%,transparent 55%),
+               radial-gradient(1000px 700px at 110% 10%,#0a3a63 0%,transparent 50%),
+               var(--bg);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:960px;margin:0 auto;padding:20px 16px 60px}
+  header.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+  .logo{display:flex;align-items:center;gap:12px}
+  .logo .mark{
+    width:46px;height:46px;border-radius:14px;display:grid;place-items:center;font-size:24px;font-weight:800;
+    background:linear-gradient(135deg,var(--brand),var(--brand2));color:#0b0e22;box-shadow:var(--shadow)
+  }
+  .logo h1{font-size:20px;margin:0;letter-spacing:.3px}
+  .logo p{margin:2px 0 0;color:var(--muted);font-size:12.5px}
+  .streak{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);
+    padding:8px 14px;border-radius:999px;font-weight:700;font-size:14px}
+  .streak b{color:var(--warn)}
+
+  nav.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 18px}
+  nav.tabs button{
+    border:1px solid var(--line);background:var(--card);color:var(--muted);
+    padding:10px 16px;border-radius:999px;font-size:14px;font-weight:700;cursor:pointer;transition:.15s;
+  }
+  nav.tabs button:hover{color:var(--ink);border-color:var(--brand)}
+  nav.tabs button.active{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#0b0e22;border-color:transparent}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px;box-shadow:var(--shadow)}
+  .view{display:none;animation:fade .35s ease}
+  .view.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  h2.section{margin:0 0 4px;font-size:20px}
+  .sub{color:var(--muted);font-size:13.5px;margin:0 0 18px}
+
+  /* table selector chips */
+  .picker{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+  .chip{
+    position:relative;min-width:64px;padding:14px 10px;border-radius:16px;cursor:pointer;text-align:center;
+    background:var(--card2);border:1px solid var(--line);transition:.15s;user-select:none
+  }
+  .chip:hover{transform:translateY(-2px);border-color:var(--brand)}
+  .chip.sel{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#0b0e22;border-color:transparent}
+  .chip .n{font-size:22px;font-weight:800;line-height:1}
+  .chip .t{font-size:10.5px;opacity:.8;margin-top:2px}
+  .chip .stars{position:absolute;top:-8px;right:-6px;font-size:12px}
+
+  .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .btn{
+    border:none;border-radius:14px;padding:13px 22px;font-size:15px;font-weight:800;cursor:pointer;transition:.15s;
+    background:linear-gradient(135deg,var(--brand),var(--brand2));color:#0b0e22;box-shadow:var(--shadow)
+  }
+  .btn:hover{filter:brightness(1.06);transform:translateY(-1px)}
+  .btn.ghost{background:var(--card2);color:var(--ink);border:1px solid var(--line);box-shadow:none}
+  .btn.sm{padding:9px 14px;font-size:13px}
+  .btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+
+  /* dashboard mastery */
+  .grid-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-top:14px}
+  .mini{background:var(--card2);border:1px solid var(--line);border-radius:16px;padding:14px}
+  .mini h3{margin:0 0 8px;font-size:15px;display:flex;justify-content:space-between;align-items:center}
+  .bar{height:9px;background:#0e1130;border-radius:999px;overflow:hidden}
+  .bar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--good),var(--brand2));transition:width .6s}
+  .mini .pct{font-size:12px;color:var(--muted);margin-top:6px}
+
+  /* learn */
+  .learn-head{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:8px}
+  .bignum{font-size:44px;font-weight:900;background:linear-gradient(135deg,var(--brand),var(--brand2));
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .facts{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin-top:8px}
+  .fact{display:flex;align-items:center;gap:12px;background:var(--card2);border:1px solid var(--line);
+    border-radius:14px;padding:10px 14px;cursor:pointer;transition:.15s}
+  .fact:hover{border-color:var(--brand);transform:translateX(3px)}
+  .fact .eq{font-weight:800;font-size:16px;min-width:78px}
+  .fact .ans{margin-left:auto;font-weight:900;font-size:18px;color:var(--brand2)}
+  .dots{display:flex;flex-wrap:wrap;gap:4px;max-width:120px}
+  .dot{width:9px;height:9px;border-radius:3px;background:var(--brand)}
+  .skipline{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 4px}
+  .skip{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-weight:800;font-size:14px}
+  .skip.pop{animation:pop .4s}
+  @keyframes pop{0%{transform:scale(.4);opacity:0}60%{transform:scale(1.15)}100%{transform:scale(1)}}
+  .tip{background:rgba(124,107,255,.12);border:1px solid var(--brand);border-radius:14px;padding:12px 16px;
+    margin-top:16px;font-size:13.5px;color:#d8dcff}
+  .tip b{color:var(--brand2)}
+
+  /* quiz + speed shared */
+  .stage{text-align:center;padding:8px 4px}
+  .qmeta{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;font-weight:700;font-size:14px;color:var(--muted)}
+  .qmeta .score b{color:var(--good)}
+  .qmeta .timer b{color:var(--warn)}
+  .question{font-size:min(15vw,64px);font-weight:900;margin:14px 0 6px;letter-spacing:1px}
+  .qsub{color:var(--muted);font-size:14px;margin-bottom:20px}
+  .opts{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;max-width:420px;margin:0 auto}
+  .opt{padding:20px;border-radius:16px;font-size:24px;font-weight:900;cursor:pointer;border:1px solid var(--line);
+    background:var(--card2);transition:.12s}
+  .opt:hover{border-color:var(--brand);transform:translateY(-2px)}
+  .opt.correct{background:var(--good);color:#062018;border-color:transparent;animation:pop .3s}
+  .opt.wrong{background:var(--bad);color:#2a0611;border-color:transparent}
+  .opt.dim{opacity:.45}
+  .typed{display:flex;gap:10px;justify-content:center;margin:0 auto;max-width:340px}
+  .typed input{flex:1;font-size:30px;font-weight:900;text-align:center;padding:14px;border-radius:14px;
+    border:2px solid var(--line);background:#0e1130;color:var(--ink);outline:none}
+  .typed input:focus{border-color:var(--brand)}
+  .feedback{font-size:20px;font-weight:900;height:26px;margin:16px 0 4px}
+  .feedback.good{color:var(--good)} .feedback.bad{color:var(--bad)}
+  .progress-thin{height:7px;background:#0e1130;border-radius:999px;overflow:hidden;margin-bottom:20px}
+  .progress-thin>i{display:block;height:100%;background:linear-gradient(90deg,var(--brand),var(--brand2));width:0;transition:width .3s}
+
+  /* results */
+  .result{text-align:center;padding:12px}
+  .result .big{font-size:64px;margin:6px 0}
+  .result .msg{font-size:22px;font-weight:900;margin:2px 0 4px}
+  .result .stat{color:var(--muted);font-size:15px;margin-bottom:18px}
+  .medal{font-size:70px;filter:drop-shadow(0 8px 18px rgba(0,0,0,.5))}
+
+  /* matching game */
+  .match-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:520px;margin:0 auto}
+  .tile{aspect-ratio:1;border-radius:14px;display:grid;place-items:center;font-weight:900;font-size:17px;
+    cursor:pointer;background:var(--card2);border:1px solid var(--line);transition:.15s;user-select:none}
+  .tile:hover{border-color:var(--brand)}
+  .tile.up{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#0b0e22}
+  .tile.done{background:var(--good);color:#062018;border-color:transparent;cursor:default}
+  .tile.miss{background:var(--bad);color:#2a0611}
+
+  .center{text-align:center}
+  .mt{margin-top:16px}
+  .hidden{display:none!important}
+  footer{color:var(--muted);font-size:12px;text-align:center;margin-top:26px}
+  .confetti{position:fixed;top:-12px;width:10px;height:16px;z-index:99;pointer-events:none;border-radius:2px}
+  @media(max-width:520px){.opts{grid-template-columns:repeat(2,1fr)}.match-grid{grid-template-columns:repeat(3,1fr)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="logo">
+      <div class="mark">×</div>
+      <div>
+        <h1>Times Tables Master</h1>
+        <p>Learn, play &amp; master 2× to 12×</p>
+      </div>
+    </div>
+    <div class="streak">🔥 Streak <b id="streak">0</b></div>
+  </header>
+
+  <nav class="tabs">
+    <button data-view="home" class="active">🏠 Home</button>
+    <button data-view="learn">📖 Learn</button>
+    <button data-view="flash">🃏 Flashcards</button>
+    <button data-view="quiz">✍️ Quiz</button>
+    <button data-view="speed">⚡ Beat the Clock</button>
+    <button data-view="match">🧩 Match</button>
+  </nav>
+
+  <!-- ================= HOME ================= -->
+  <section id="home" class="view active">
+    <div class="card">
+      <h2 class="section">Pick a table to focus on</h2>
+      <p class="sub">Tap the tables you want to practise. Everything below uses your selection. Earn ⭐ by getting facts right in quizzes and games.</p>
+      <div class="picker" id="picker"></div>
+      <div class="row mt">
+        <button class="btn sm ghost" id="selAll">Select all</button>
+        <button class="btn sm ghost" id="selNone">Clear</button>
+        <button class="btn sm ghost" id="selHard">Only the tricky ones (6,7,8,9,12)</button>
+      </div>
+    </div>
+
+    <div class="card mt">
+      <h2 class="section">Your mastery</h2>
+      <p class="sub">Green fills as you answer each fact correctly. Aim for 3 ⭐ on every table!</p>
+      <div class="grid-cards" id="mastery"></div>
+    </div>
+  </section>
+
+  <!-- ================= LEARN ================= -->
+  <section id="learn" class="view">
+    <div class="card">
+      <div class="learn-head">
+        <span class="bignum" id="learnNum">2</span>
+        <div>
+          <h2 class="section" style="margin:0">The <span id="learnNum2">2</span> times table</h2>
+          <p class="sub" style="margin:0">See the pattern, then tap any fact to reveal its picture.</p>
+        </div>
+        <div style="margin-left:auto" class="row">
+          <button class="btn sm ghost" id="learnPrev">‹ Prev</button>
+          <button class="btn sm ghost" id="learnNext">Next ›</button>
+        </div>
+      </div>
+
+      <div class="skipline" id="skipline"></div>
+
+      <div class="facts" id="facts"></div>
+
+      <div class="tip" id="learnTip"></div>
+    </div>
+  </section>
+
+  <!-- ================= FLASHCARDS ================= -->
+  <section id="flash" class="view">
+    <div class="card stage">
+      <div class="qmeta">
+        <span>🃏 Flashcards</span>
+        <span class="score">Card <b id="flashIdx">1</b></span>
+      </div>
+      <div id="flashCard" style="cursor:pointer">
+        <div class="question" id="flashFront">2 × 3</div>
+        <div class="qsub" id="flashHint">Tap the card to flip</div>
+      </div>
+      <div class="row center mt" style="justify-content:center" id="flashBtns">
+        <button class="btn ghost" id="flashDont">😕 Still learning</button>
+        <button class="btn" id="flashKnow">✅ I knew it!</button>
+      </div>
+      <div class="mt"><button class="btn sm ghost" id="flashNew">🔀 Shuffle new deck</button></div>
+    </div>
+  </section>
+
+  <!-- ================= QUIZ ================= -->
+  <section id="quiz" class="view">
+    <div class="card" id="quizIntro">
+      <h2 class="section">Quiz mode</h2>
+      <p class="sub">10 questions from your selected tables. Type or tap the answer — you get instant feedback and ⭐ for each one you nail.</p>
+      <div class="row">
+        <button class="btn" id="quizStartMC">Start (multiple choice)</button>
+        <button class="btn ghost" id="quizStartType">Start (type answers)</button>
+      </div>
+    </div>
+
+    <div class="card stage hidden" id="quizPlay">
+      <div class="progress-thin"><i id="quizBar"></i></div>
+      <div class="qmeta">
+        <span class="score">Score <b id="quizScore">0</b></span>
+        <span>Q <span id="quizNo">1</span>/10</span>
+      </div>
+      <div class="question" id="quizQ">2 × 3</div>
+      <div class="opts" id="quizOpts"></div>
+      <div class="typed hidden" id="quizTyped">
+        <input id="quizInput" type="number" inputmode="numeric" autocomplete="off" placeholder="?">
+        <button class="btn" id="quizSubmit">Go</button>
+      </div>
+      <div class="feedback" id="quizFb"></div>
+    </div>
+
+    <div class="card result hidden" id="quizResult"></div>
+  </section>
+
+  <!-- ================= SPEED ================= -->
+  <section id="speed" class="view">
+    <div class="card" id="speedIntro">
+      <h2 class="section">⚡ Beat the Clock</h2>
+      <p class="sub">How many can you answer in 60 seconds? Every correct answer adds points and builds your streak. Wrong answers just move on — keep going!</p>
+      <button class="btn" id="speedStart">Start 60-second challenge</button>
+      <p class="sub mt">Best score this session: <b id="speedBest" style="color:var(--warn)">0</b></p>
+    </div>
+
+    <div class="card stage hidden" id="speedPlay">
+      <div class="qmeta">
+        <span class="score">Score <b id="speedScore">0</b></span>
+        <span class="timer">⏱ <b id="speedTime">60</b>s</span>
+      </div>
+      <div class="progress-thin"><i id="speedBar" style="width:100%"></i></div>
+      <div class="question" id="speedQ">2 × 3</div>
+      <div class="opts" id="speedOpts"></div>
+      <div class="feedback" id="speedFb"></div>
+    </div>
+
+    <div class="card result hidden" id="speedResult"></div>
+  </section>
+
+  <!-- ================= MATCH ================= -->
+  <section id="match" class="view">
+    <div class="card">
+      <h2 class="section">🧩 Match the pairs</h2>
+      <p class="sub">Flip two tiles to match an equation with its answer. Fewer moves = higher score. Uses your selected tables.</p>
+      <div class="row" style="margin-bottom:16px">
+        <button class="btn sm" id="matchNew">New board</button>
+        <span class="sub" style="margin:0">Moves: <b id="matchMoves" style="color:var(--brand2)">0</b> · Pairs: <b id="matchPairs" style="color:var(--good)">0</b></span>
+      </div>
+      <div class="match-grid" id="matchGrid"></div>
+      <div class="feedback center mt" id="matchFb"></div>
+    </div>
+  </section>
+
+  <footer>Made for practice · Progress is kept for this session only. Refresh to start fresh. 💜</footer>
+</div>
+
+<script>
+"use strict";
+/* ---------------- STATE (in-memory only, no storage) ---------------- */
+const TABLES = [2,3,4,5,6,7,8,9,10,11,12];
+const MULTS  = [2,3,4,5,6,7,8,9,10,11,12]; // multiply each table by 2..12
+const state = {
+  selected: new Set([2,3,4,5]),
+  learn: 2,
+  streak: 0,
+  mastery: {},          // key "a x b" -> {correct:int, seen:int}
+  flash: {deck:[], i:0},
+  quiz: {},
+  speed: {best:0},
+};
+TABLES.forEach(a=>MULTS.forEach(b=>{ state.mastery[key(a,b)]={correct:0,seen:0}; }));
+function key(a,b){return a+"x"+b;}
+function rint(n){ return Math.floor(Math.random()*n); }
+
+/* ---------------- NAV ---------------- */
+const views = document.querySelectorAll(".view");
+const tabBtns = document.querySelectorAll("nav.tabs button");
+tabBtns.forEach(b=>b.addEventListener("click",()=>show(b.dataset.view)));
+function show(name){
+  views.forEach(v=>v.classList.toggle("active",v.id===name));
+  tabBtns.forEach(b=>b.classList.toggle("active",b.dataset.view===name));
+  if(name==="home") renderMastery();
+  if(name==="learn") renderLearn();
+  if(name==="flash") newFlashDeck();
+  if(name==="quiz") resetQuizView();
+  if(name==="speed") resetSpeedView();
+  if(name==="match") newMatch();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+/* ---------------- STREAK + MASTERY ---------------- */
+function bump(correct){
+  if(correct){ state.streak++; } else { state.streak=0; }
+  document.getElementById("streak").textContent = state.streak;
+}
+function record(a,b,correct){
+  const m=state.mastery[key(a,b)];
+  m.seen++; if(correct) m.correct++;
+}
+function tableMastery(t){
+  let c=0,tot=0;
+  MULTS.forEach(b=>{ const m=state.mastery[key(t,b)]; tot++; if(m.correct>0) c++; });
+  return c/tot; // fraction of facts answered correctly at least once
+}
+function stars(frac){ return frac>=1?"⭐⭐⭐":frac>=.66?"⭐⭐":frac>=.33?"⭐":""; }
+
+/* ---------------- HOME: picker + mastery ---------------- */
+const picker=document.getElementById("picker");
+function renderPicker(){
+  picker.innerHTML="";
+  TABLES.forEach(t=>{
+    const d=document.createElement("div");
+    d.className="chip"+(state.selected.has(t)?" sel":"");
+    d.innerHTML=`<div class="n">${t}×</div><div class="t">table</div><div class="stars">${stars(tableMastery(t))}</div>`;
+    d.onclick=()=>{ state.selected.has(t)?state.selected.delete(t):state.selected.add(t);
+      if(state.selected.size===0) state.selected.add(t); // keep at least one
+      renderPicker(); };
+    picker.appendChild(d);
+  });
+}
+document.getElementById("selAll").onclick=()=>{ TABLES.forEach(t=>state.selected.add(t)); renderPicker(); };
+document.getElementById("selNone").onclick=()=>{ state.selected=new Set([2]); renderPicker(); };
+document.getElementById("selHard").onclick=()=>{ state.selected=new Set([6,7,8,9,12]); renderPicker(); };
+
+function renderMastery(){
+  renderPicker();
+  const wrap=document.getElementById("mastery");
+  wrap.innerHTML="";
+  TABLES.forEach(t=>{
+    const frac=tableMastery(t), pct=Math.round(frac*100);
+    const el=document.createElement("div");
+    el.className="mini";
+    el.innerHTML=`<h3>${t}× <span>${stars(frac)||"·"}</span></h3>
+      <div class="bar"><i style="width:${pct}%"></i></div>
+      <div class="pct">${pct}% of facts mastered</div>`;
+    wrap.appendChild(el);
+  });
+}
+
+/* ---------------- LEARN ---------------- */
+function renderLearn(){
+  const t=state.learn;
+  document.getElementById("learnNum").textContent=t;
+  document.getElementById("learnNum2").textContent=t;
+  // skip counting line
+  const sl=document.getElementById("skipline"); sl.innerHTML="";
+  for(let i=1;i<=12;i++){
+    const s=document.createElement("div"); s.className="skip"; s.textContent=t*i;
+    sl.appendChild(s);
+  }
+  // facts
+  const f=document.getElementById("facts"); f.innerHTML="";
+  for(let b=1;b<=12;b++){
+    const eq=document.createElement("div"); eq.className="fact";
+    eq.innerHTML=`<span class="eq">${t} × ${b} =</span><div class="dots"></div><span class="ans">${t*b}</span>`;
+    eq.querySelector(".ans").style.visibility="visible";
+    // build dots (array model) lazily on click for the big ones
+    const dotsBox=eq.querySelector(".dots");
+    const drawDots=()=>{ dotsBox.innerHTML=""; const n=Math.min(t*b,60);
+      for(let k=0;k<n;k++){const d=document.createElement("span");d.className="dot";dotsBox.appendChild(d);} };
+    drawDots();
+    eq.onclick=()=>{ eq.style.animation="pop .3s"; setTimeout(()=>eq.style.animation="",300); };
+    f.appendChild(eq);
+  }
+  document.getElementById("learnTip").innerHTML = tipFor(t);
+}
+function tipFor(t){
+  const tips={
+    2:"<b>Doubling!</b> The 2× table is just adding the number to itself. 2×7 = 7+7 = 14.",
+    3:"<b>Pattern:</b> The digits of 3×, 6×, 9× repeat in cycles. Try counting up in 3s out loud.",
+    4:"<b>Double-double!</b> 4× is doubling twice. 4×6 → double 6 = 12 → double again = 24.",
+    5:"<b>Clock trick:</b> Every answer ends in 5 or 0. 5× anything = half of (10× that number).",
+    6:"<b>Even helper:</b> 6× an even number ends in the same digit as the number (6×4=24).",
+    7:"<b>Trickiest table!</b> Learn 7×8=56 as '5,6,7,8'. Practice this one the most.",
+    8:"<b>Double three times:</b> 8×7 → 7→14→28→56. Also 8× ends in 8,6,4,2,0…",
+    9:"<b>Finger trick:</b> Hold up 10 fingers, fold the Nth finger. Fingers left = tens, right = ones. Digits of every answer add to 9!",
+    10:"<b>Easiest!</b> Just add a zero. 10×8 = 80.",
+    11:"<b>Mirror:</b> For 11×1…9 just double the digit — 11×4 = 44. 11×8 = 88.",
+    12:"<b>Split it:</b> 12× = 10× + 2×. 12×7 = 70 + 14 = 84."
+  };
+  return tips[t]||"";
+}
+document.getElementById("learnPrev").onclick=()=>{ const i=TABLES.indexOf(state.learn); state.learn=TABLES[(i-1+TABLES.length)%TABLES.length]; renderLearn(); };
+document.getElementById("learnNext").onclick=()=>{ const i=TABLES.indexOf(state.learn); state.learn=TABLES[(i+1)%TABLES.length]; renderLearn(); };
+
+/* ---------------- HELPERS: build a question from selected tables ---------------- */
+function randFact(){
+  const arr=[...state.selected];
+  const a=arr[rint(arr.length)];
+  const b=MULTS[rint(MULTS.length)];
+  return {a,b,ans:a*b};
+}
+function options(ans){
+  const set=new Set([ans]);
+  while(set.size<4){
+    let d = ans + (rint(2)?1:-1)*(1+rint(9));
+    if(d>0) set.add(d);
+    else set.add(ans+1+rint(9));
+  }
+  return [...set].sort(()=>Math.random()-.5);
+}
+
+/* ---------------- FLASHCARDS ---------------- */
+const fEls={front:document.getElementById("flashFront"),hint:document.getElementById("flashHint"),
+  idx:document.getElementById("flashIdx"),card:document.getElementById("flashCard")};
+let flashFlipped=false;
+function newFlashDeck(){
+  const deck=[];
+  state.selected.forEach(a=>MULTS.forEach(b=>deck.push({a,b,ans:a*b})));
+  deck.sort(()=>Math.random()-.5);
+  state.flash={deck:deck.slice(0,Math.max(12,Math.min(deck.length,24))),i:0};
+  showFlash();
+}
+function showFlash(){
+  const {deck,i}=state.flash;
+  if(deck.length===0){ fEls.front.textContent="Pick a table first"; return; }
+  const c=deck[i]; flashFlipped=false;
+  fEls.front.textContent=`${c.a} × ${c.b}`;
+  fEls.hint.textContent="Tap the card to flip";
+  fEls.idx.textContent=(i+1)+" / "+deck.length;
+}
+fEls.card.onclick=()=>{
+  const c=state.flash.deck[state.flash.i]; if(!c) return;
+  flashFlipped=!flashFlipped;
+  if(flashFlipped){ fEls.front.textContent=c.ans; fEls.hint.textContent=`${c.a} × ${c.b} = ${c.ans}`; }
+  else showFlash();
+};
+function nextFlash(known){
+  const c=state.flash.deck[state.flash.i];
+  if(c){ record(c.a,c.b,known); bump(known); }
+  state.flash.i++;
+  if(state.flash.i>=state.flash.deck.length){ celebrate(); newFlashDeck(); }
+  else showFlash();
+}
+document.getElementById("flashKnow").onclick=()=>nextFlash(true);
+document.getElementById("flashDont").onclick=()=>nextFlash(false);
+document.getElementById("flashNew").onclick=newFlashDeck;
+
+/* ---------------- QUIZ ---------------- */
+function resetQuizView(){
+  document.getElementById("quizIntro").classList.remove("hidden");
+  document.getElementById("quizPlay").classList.add("hidden");
+  document.getElementById("quizResult").classList.add("hidden");
+}
+document.getElementById("quizStartMC").onclick=()=>startQuiz(false);
+document.getElementById("quizStartType").onclick=()=>startQuiz(true);
+function startQuiz(typed){
+  state.quiz={n:0,total:10,score:0,typed,current:null,answered:false};
+  document.getElementById("quizIntro").classList.add("hidden");
+  document.getElementById("quizResult").classList.add("hidden");
+  document.getElementById("quizPlay").classList.remove("hidden");
+  document.getElementById("quizScore").textContent=0;
+  nextQuiz();
+}
+function nextQuiz(){
+  const q=state.quiz;
+  if(q.n>=q.total){ endQuiz(); return; }
+  q.n++; q.answered=false; q.current=randFact();
+  document.getElementById("quizNo").textContent=q.n;
+  document.getElementById("quizBar").style.width=((q.n-1)/q.total*100)+"%";
+  document.getElementById("quizQ").textContent=`${q.current.a} × ${q.current.b}`;
+  document.getElementById("quizFb").textContent="";
+  document.getElementById("quizFb").className="feedback";
+  const optsBox=document.getElementById("quizOpts"), typedBox=document.getElementById("quizTyped");
+  if(q.typed){
+    optsBox.classList.add("hidden"); typedBox.classList.remove("hidden");
+    const inp=document.getElementById("quizInput"); inp.value=""; inp.focus();
+  }else{
+    typedBox.classList.add("hidden"); optsBox.classList.remove("hidden");
+    optsBox.innerHTML="";
+    options(q.current.ans).forEach(v=>{
+      const o=document.createElement("div"); o.className="opt"; o.textContent=v;
+      o.onclick=()=>answerQuiz(v,o); optsBox.appendChild(o);
+    });
+  }
+}
+function answerQuiz(val,el){
+  const q=state.quiz; if(q.answered) return; q.answered=true;
+  const correct = Number(val)===q.current.ans;
+  record(q.current.a,q.current.b,correct); bump(correct);
+  const fb=document.getElementById("quizFb");
+  if(correct){ q.score++; document.getElementById("quizScore").textContent=q.score;
+    fb.textContent="Correct! 🎉"; fb.className="feedback good"; }
+  else{ fb.textContent=`It's ${q.current.ans}`; fb.className="feedback bad"; }
+  if(!q.typed && el){
+    document.querySelectorAll("#quizOpts .opt").forEach(o=>{
+      o.classList.add("dim");
+      if(Number(o.textContent)===q.current.ans) o.classList.add("correct");
+    });
+    if(!correct) el.classList.add("wrong");
+  }
+  setTimeout(nextQuiz, correct?650:1200);
+}
+document.getElementById("quizSubmit").onclick=submitTyped;
+document.getElementById("quizInput").addEventListener("keydown",e=>{ if(e.key==="Enter") submitTyped(); });
+function submitTyped(){
+  const q=state.quiz; if(q.answered||!q.typed) return;
+  const v=document.getElementById("quizInput").value; if(v==="") return;
+  answerQuiz(v,null);
+}
+function endQuiz(){
+  document.getElementById("quizBar").style.width="100%";
+  document.getElementById("quizPlay").classList.add("hidden");
+  const box=document.getElementById("quizResult"); box.classList.remove("hidden");
+  const s=state.quiz.score;
+  const medal = s>=9?"🏆":s>=7?"🥇":s>=5?"🥈":"🎯";
+  const msg = s>=9?"Outstanding!":s>=7?"Great job!":s>=5?"Nice work!":"Keep practising!";
+  box.innerHTML=`<div class="medal">${medal}</div>
+    <div class="msg">${msg}</div>
+    <div class="big">${s} / 10</div>
+    <div class="stat">You mastered ${s} fact${s===1?"":"s"} this round.</div>
+    <div class="row center" style="justify-content:center">
+      <button class="btn" id="quizAgain">Play again</button>
+      <button class="btn ghost" id="quizHome">Back home</button>
+    </div>`;
+  document.getElementById("quizAgain").onclick=()=>startQuiz(state.quiz.typed);
+  document.getElementById("quizHome").onclick=()=>show("home");
+  if(s>=7) celebrate();
+}
+
+/* ---------------- SPEED (Beat the Clock) ---------------- */
+let speedTimer=null;
+function resetSpeedView(){
+  clearInterval(speedTimer);
+  document.getElementById("speedIntro").classList.remove("hidden");
+  document.getElementById("speedPlay").classList.add("hidden");
+  document.getElementById("speedResult").classList.add("hidden");
+  document.getElementById("speedBest").textContent=state.speed.best;
+}
+document.getElementById("speedStart").onclick=startSpeed;
+function startSpeed(){
+  state.speed.score=0; state.speed.time=60; state.speed.current=null; state.speed.locked=false;
+  document.getElementById("speedIntro").classList.add("hidden");
+  document.getElementById("speedResult").classList.add("hidden");
+  document.getElementById("speedPlay").classList.remove("hidden");
+  document.getElementById("speedScore").textContent=0;
+  document.getElementById("speedTime").textContent=60;
+  document.getElementById("speedBar").style.width="100%";
+  nextSpeed();
+  clearInterval(speedTimer);
+  speedTimer=setInterval(()=>{
+    state.speed.time--;
+    document.getElementById("speedTime").textContent=state.speed.time;
+    document.getElementById("speedBar").style.width=(state.speed.time/60*100)+"%";
+    if(state.speed.time<=0) endSpeed();
+  },1000);
+}
+function nextSpeed(){
+  const q=randFact(); state.speed.current=q; state.speed.locked=false;
+  document.getElementById("speedQ").textContent=`${q.a} × ${q.b}`;
+  const box=document.getElementById("speedOpts"); box.innerHTML="";
+  options(q.ans).forEach(v=>{
+    const o=document.createElement("div"); o.className="opt"; o.textContent=v;
+    o.onclick=()=>answerSpeed(v,o); box.appendChild(o);
+  });
+}
+function answerSpeed(val,el){
+  if(state.speed.locked) return; state.speed.locked=true;
+  const q=state.speed.current;
+  const correct=Number(val)===q.ans;
+  record(q.a,q.b,correct); bump(correct);
+  const fb=document.getElementById("speedFb");
+  if(correct){ state.speed.score++; document.getElementById("speedScore").textContent=state.speed.score;
+    el.classList.add("correct"); fb.textContent="+1 🔥 "+state.streak; fb.className="feedback good"; }
+  else{ el.classList.add("wrong"); fb.textContent=`= ${q.ans}`; fb.className="feedback bad";
+    document.querySelectorAll("#speedOpts .opt").forEach(o=>{ if(Number(o.textContent)===q.ans) o.classList.add("correct"); }); }
+  setTimeout(()=>{ if(state.speed.time>0) nextSpeed(); }, correct?300:700);
+}
+function endSpeed(){
+  clearInterval(speedTimer);
+  document.getElementById("speedPlay").classList.add("hidden");
+  const s=state.speed.score;
+  if(s>state.speed.best) state.speed.best=s;
+  const box=document.getElementById("speedResult"); box.classList.remove("hidden");
+  const medal=s>=25?"🏆":s>=18?"🥇":s>=12?"🥈":"⚡";
+  box.innerHTML=`<div class="medal">${medal}</div>
+    <div class="msg">Time's up!</div>
+    <div class="big">${s}</div>
+    <div class="stat">correct answers in 60 seconds · best this session: ${state.speed.best}</div>
+    <div class="row center" style="justify-content:center">
+      <button class="btn" id="speedAgain">Try again</button>
+      <button class="btn ghost" id="speedHome">Back home</button>
+    </div>`;
+  document.getElementById("speedAgain").onclick=startSpeed;
+  document.getElementById("speedHome").onclick=()=>show("home");
+  if(s>=12) celebrate();
+}
+
+/* ---------------- MATCH GAME ---------------- */
+const mState={first:null,lock:false,moves:0,pairs:0,tiles:[]};
+function newMatch(){
+  mState.first=null;mState.lock=false;mState.moves=0;mState.pairs=0;
+  document.getElementById("matchMoves").textContent=0;
+  document.getElementById("matchPairs").textContent=0;
+  document.getElementById("matchFb").textContent="";
+  // pick 6 distinct facts (distinct answers) from selected tables
+  const seen=new Set(), facts=[];
+  let guard=0;
+  while(facts.length<6 && guard<400){
+    guard++;
+    const f=randFact();
+    if(seen.has(f.ans)) continue;
+    seen.add(f.ans); facts.push(f);
+  }
+  // build 12 tiles: equation + answer
+  const tiles=[];
+  facts.forEach((f,gi)=>{
+    tiles.push({group:gi,label:`${f.a}×${f.b}`,type:"eq"});
+    tiles.push({group:gi,label:`${f.ans}`,type:"ans"});
+  });
+  tiles.sort(()=>Math.random()-.5);
+  mState.tiles=tiles;
+  const grid=document.getElementById("matchGrid"); grid.innerHTML="";
+  tiles.forEach((t,i)=>{
+    const el=document.createElement("div"); el.className="tile"; el.dataset.i=i;
+    el.textContent="?";
+    el.onclick=()=>flipTile(i,el);
+    grid.appendChild(el);
+  });
+}
+function flipTile(i,el){
+  if(mState.lock) return;
+  const t=mState.tiles[i];
+  if(el.classList.contains("done")||el.classList.contains("up")) return;
+  el.classList.add("up"); el.textContent=t.label;
+  if(mState.first===null){ mState.first={i,el}; return; }
+  // second pick
+  mState.moves++; document.getElementById("matchMoves").textContent=mState.moves;
+  const a=mState.first, b={i,el};
+  const ta=mState.tiles[a.i], tb=mState.tiles[b.i];
+  if(ta.group===tb.group && a.i!==b.i){
+    mState.lock=true;
+    setTimeout(()=>{
+      a.el.classList.add("done"); b.el.classList.add("done");
+      a.el.classList.remove("up"); b.el.classList.remove("up");
+      mState.pairs++; document.getElementById("matchPairs").textContent=mState.pairs;
+      // record mastery for this fact group
+      const eqTile = ta.type==="eq"?ta:tb;
+      const [x,y]=eqTile.label.split("×").map(Number);
+      record(x,y,true); bump(true);
+      mState.first=null; mState.lock=false;
+      if(mState.pairs===6){
+        document.getElementById("matchFb").innerHTML=`🎉 Solved in ${mState.moves} moves!`;
+        document.getElementById("matchFb").className="feedback good center";
+        celebrate();
+      }
+    },420);
+  }else{
+    mState.lock=true; a.el.classList.add("miss"); b.el.classList.add("miss");
+    setTimeout(()=>{
+      [a.el,b.el].forEach(e=>{e.classList.remove("up","miss");e.textContent="?";});
+      mState.first=null; mState.lock=false;
+    },700);
+  }
+}
+document.getElementById("matchNew").onclick=newMatch;
+
+/* ---------------- CONFETTI ---------------- */
+function celebrate(){
+  const colors=["#7c6bff","#00d4ff","#2ee6a6","#ffcf5c","#ff6b8b"];
+  for(let i=0;i<80;i++){
+    const c=document.createElement("div"); c.className="confetti";
+    c.style.left=Math.random()*100+"vw";
+    c.style.background=colors[rint(colors.length)];
+    c.style.transform=`rotate(${Math.random()*360}deg)`;
+    document.body.appendChild(c);
+    const fall=1200+Math.random()*1400, drift=(Math.random()*2-1)*160;
+    c.animate([{transform:`translate(0,0) rotate(0)`,opacity:1},
+               {transform:`translate(${drift}px,105vh) rotate(${Math.random()*720}deg)`,opacity:.9}],
+              {duration:fall,easing:"cubic-bezier(.2,.6,.4,1)"});
+    setTimeout(()=>c.remove(),fall);
+  }
+}
+
+/* ---------------- INIT ---------------- */
+renderPicker();
+renderMastery();
+renderLearn();
+</script>
+</body>
+</html>

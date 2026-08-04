@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matter Mastery · Grade 9 Science · Chapter 3</title>
+<style>
+:root{
+  --bg:#0c0a14; --bg2:#141021; --panel:#191330; --panel2:#211a3d;
+  --ink:#ece9f6; --ink-soft:#b3aacb; --ink-dim:#7a6f99;
+  --line:#2c2447;
+  --violet:#a78bfa; --violet-d:#6d28d9; --violet-soft:#3b2170;
+  --cyan:#22d3ee; --cyan-d:#0e7490;
+  --grn:#4ade80; --grn-d:#166534;
+  --amber:#fbbf24; --amber-d:#92400e;
+  --red:#f87171; --red-d:#991b1b;
+  --blue:#60a5fa; --pink:#f472b6;
+  --radius:16px; --shadow:0 10px 30px rgba(0,0,0,.45); --maxw:940px;
+  --font:'Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:
+  radial-gradient(1200px 600px at 12% -5%, #4c1d9522 0%, transparent 60%),
+  radial-gradient(1000px 500px at 90% 3%, #0e749033 0%, transparent 55%),
+  var(--bg);
+  color:var(--ink);font-family:var(--font);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,h4{line-height:1.25;margin:0 0 .5em}
+p{margin:0 0 1em}
+a{color:var(--cyan)}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+
+#topbar{position:sticky;top:0;z-index:60;background:rgba(12,10,20,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+#topbar .wrap{display:flex;align-items:center;gap:14px;height:58px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;white-space:nowrap}
+.brand .dot{width:26px;height:26px;border-radius:50%;background:radial-gradient(circle at 34% 30%,#ddd6fe,var(--violet) 42%,var(--violet-d));
+  box-shadow:0 0 0 4px #a78bfa22,0 0 18px #a78bfa55;position:relative;flex:0 0 auto}
+.brand .dot::after{content:"";position:absolute;inset:7px;border-radius:50%;border:2px solid #0c0a14}
+.brand small{display:block;font-weight:500;color:var(--ink-dim);font-size:11px;letter-spacing:.5px}
+#navlinks{margin-left:auto;display:flex;gap:2px;flex-wrap:wrap}
+#navlinks a{font-size:12.5px;color:var(--ink-soft);text-decoration:none;padding:6px 9px;border-radius:8px}
+#navlinks a:hover{background:var(--panel2);color:var(--ink)}
+#scorechip{display:flex;align-items:center;gap:7px;background:var(--panel2);border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:12.5px;font-weight:700;cursor:pointer;white-space:nowrap}
+#scorechip .star{color:var(--amber)}
+#readbar{height:3px;background:linear-gradient(90deg,var(--violet),var(--cyan));width:0%;position:fixed;top:58px;left:0;z-index:59;box-shadow:0 0 10px #a78bfa88}
+@media(max-width:860px){#navlinks{display:none}.brand small{display:none}}
+
+.hero{padding:60px 0 34px;text-align:center;position:relative}
+.hero .kicker{display:inline-block;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--violet);border:1px solid var(--violet-soft);background:#241147;padding:5px 14px;border-radius:999px;margin-bottom:20px;font-weight:700}
+.hero h1{font-size:clamp(30px,6vw,52px);margin-bottom:14px;background:linear-gradient(120deg,#fff 20%,var(--violet) 55%,var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .sub{font-size:clamp(16px,2.4vw,20px);color:var(--ink-soft);max-width:660px;margin:0 auto 28px}
+.hero-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn{border:none;cursor:pointer;font-family:inherit;font-weight:700;font-size:14.5px;padding:13px 22px;border-radius:12px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:transform .12s}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:linear-gradient(120deg,var(--violet),var(--violet-d));color:#160b2e;box-shadow:0 8px 24px #a78bfa40}
+.btn-ghost{background:var(--panel2);color:var(--ink);border:1px solid var(--line)}
+.floaters{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:-1}
+.floaters span{position:absolute;opacity:.13;font-size:32px;animation:drift linear infinite}
+@keyframes drift{0%{transform:translateY(20px) rotate(0)}50%{transform:translateY(-24px) rotate(20deg)}100%{transform:translateY(20px) rotate(0)}}
+
+section.lesson{padding:28px 0;scroll-margin-top:80px}
+.eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.eyebrow .num{font-size:12px;font-weight:800;color:#160b2e;background:var(--violet);width:26px;height:26px;border-radius:8px;display:grid;place-items:center;flex:0 0 auto}
+.eyebrow span{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--violet);font-weight:700}
+.lesson h2{font-size:clamp(23px,4vw,33px);margin-bottom:14px}
+.lead{font-size:17.5px;color:var(--ink-soft)}
+
+.card{background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);margin:16px 0}
+.card h3{font-size:19px}
+.grid{display:grid;gap:14px}
+@media(min-width:680px){.grid.two{grid-template-columns:1fr 1fr}.grid.three{grid-template-columns:1fr 1fr 1fr}}
+
+.insight{border-left:4px solid var(--amber);background:#241d0e88;padding:14px 18px;border-radius:0 12px 12px 0;margin:16px 0}
+.insight b{color:var(--amber)}
+.insight .lbl,.keyidea .lbl,.warn .lbl{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;font-weight:800;display:block;margin-bottom:4px}
+.insight .lbl{color:var(--amber)}
+.keyidea{border-left:4px solid var(--cyan);background:#0a2c3388;padding:14px 18px;border-radius:0 12px 12px 0;margin:16px 0}
+.keyidea .lbl{color:var(--cyan)}
+.warn{border-left:4px solid var(--red);background:#2a141488;padding:14px 18px;border-radius:0 12px 12px 0;margin:16px 0}
+.warn .lbl{color:var(--red)}
+
+.pill{display:inline-block;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;margin:2px 3px}
+.pill.v{background:#241147;color:#c9b3ff;border:1px solid #5b21b6}
+.pill.c{background:#0a2c33;color:#8ee9f7;border:1px solid #0e7490}
+.pill.g{background:#0f3324;color:#9df0b8;border:1px solid #166534}
+.pill.a{background:#3a2a12;color:#f7c66b;border:1px solid #92400e}
+.pill.r{background:#3a1220;color:#f79ac0;border:1px solid #9d174d}
+
+.tbl{width:100%;border-collapse:collapse;font-size:14px;margin:10px 0;border-radius:12px;overflow:hidden}
+.tbl th,.tbl td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top}
+.tbl th{background:var(--panel2);color:var(--violet);font-size:12.5px;letter-spacing:.4px;text-transform:uppercase}
+.tbl tr:nth-child(even) td{background:#120e22}
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.mono{font-family:ui-monospace,Menlo,Consolas,monospace}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+
+.stage{background:radial-gradient(120% 120% at 50% 0%,#160f2b,#0a0812);border:1px solid var(--line);border-radius:16px;padding:20px;margin:16px 0;position:relative}
+.stage h4{text-align:center;color:var(--ink-soft);font-size:13px;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
+.stage-cta{display:inline-block;background:var(--panel2);border:1px solid var(--line);color:var(--violet);font-weight:700;padding:9px 18px;border-radius:10px;cursor:pointer;font-family:inherit;font-size:13.5px}
+.stage-cta:hover{background:#241a44}
+.center{text-align:center}
+
+/* ===== CLASSIFICATION TREE ===== */
+.tree{display:flex;flex-direction:column;align-items:center;gap:0}
+.tree .lvl{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative}
+.tnode{background:var(--panel2);border:2px solid var(--line);border-radius:12px;padding:10px 16px;font-weight:700;cursor:pointer;transition:.18s;text-align:center;min-width:112px}
+.tnode:hover{border-color:var(--violet);transform:translateY(-2px)}
+.tnode.active{border-color:var(--violet);background:#2a1a52;box-shadow:0 0 18px #a78bfa44}
+.tnode small{display:block;font-weight:500;font-size:11px;color:var(--ink-dim)}
+.tnode.matter{border-color:var(--cyan);color:var(--cyan)}
+.connector{width:2px;height:22px;background:var(--line)}
+.treeinfo{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-top:16px;min-height:70px}
+.treeinfo h5{margin:0 0 4px;color:var(--violet);font-size:16px}
+.treeinfo p{margin:0;color:var(--ink-soft);font-size:14px}
+.treeinfo .ex{font-size:13px;color:var(--ink-dim);margin-top:6px}
+
+/* ===== ATOM BUILDER ===== */
+.atomwrap{display:grid;gap:18px;align-items:center}
+@media(min-width:680px){.atomwrap{grid-template-columns:280px 1fr}}
+.atomstage{position:relative;width:260px;height:260px;margin:0 auto}
+.nucleus{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:flex;flex-wrap:wrap;width:80px;justify-content:center;align-content:center;gap:2px;z-index:3}
+.nuc{width:14px;height:14px;border-radius:50%}
+.nuc.p{background:radial-gradient(circle at 32% 30%,#fca5a5,#dc2626)}
+.nuc.n{background:radial-gradient(circle at 32% 30%,#cbd5e1,#64748b)}
+.orbit{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);border:1px solid #ffffff22;border-radius:50%}
+.ewrap{position:absolute;top:50%;left:50%;transform-origin:0 0}
+.electron{position:absolute;width:11px;height:11px;border-radius:50%;background:radial-gradient(circle at 32% 30%,#a5f3fc,#0891b2);box-shadow:0 0 8px #22d3ee}
+@keyframes spin{to{transform:rotate(360deg)}}
+.atominfo{display:flex;flex-direction:column;gap:10px}
+.atomrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.stepper{display:flex;align-items:center;gap:8px;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:6px 8px}
+.stepper .lab{font-size:13px;font-weight:700;min-width:78px}
+.stepper .lab.p{color:#fca5a5}.stepper .lab.n{color:#cbd5e1}
+.stepper button{width:30px;height:30px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font-size:18px;font-weight:800;cursor:pointer;font-family:inherit}
+.stepper button:hover{border-color:var(--violet)}
+.stepper .cnt{min-width:26px;text-align:center;font-weight:800;font-size:16px}
+.atomcard{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:14px 16px;text-align:center}
+.atomcard .sym{font-size:44px;font-weight:800;color:var(--cyan);line-height:1}
+.atomcard .nm{font-size:15px;color:var(--ink);margin-top:2px}
+.atomcard .notation{font-family:ui-monospace,monospace;font-size:15px;color:var(--ink-soft);margin-top:8px}
+.atomcard .notation b{color:var(--violet)}
+.zamini{display:flex;gap:8px;justify-content:center;margin-top:8px;flex-wrap:wrap}
+.zamini span{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:4px 10px;font-size:12.5px}
+.zamini b{color:var(--cyan)}
+
+/* ===== MOLECULE GALLERY ===== */
+.molfilter{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:6px 0 14px}
+.molfilter button{background:var(--panel2);border:1px solid var(--line);color:var(--ink-soft);font-family:inherit;font-weight:700;font-size:13px;padding:8px 15px;border-radius:999px;cursor:pointer}
+.molfilter button.on{background:var(--violet);color:#160b2e;border-color:transparent}
+.molgrid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(130px,1fr))}
+.molcard{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:12px 8px;text-align:center;transition:.2s}
+.molcard.hide{display:none}
+.molcard svg{width:100%;height:70px}
+.molcard .fm{font-weight:800;color:var(--cyan);font-size:15px;margin-top:2px}
+.molcard .nm{font-size:12px;color:var(--ink-soft)}
+.molcard .tag{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;padding:2px 8px;border-radius:999px;display:inline-block;margin-top:5px}
+.tag.homo{background:#0f3324;color:#9df0b8}.tag.hetero{background:#241147;color:#c9b3ff}
+.atomc{font-weight:700}
+
+/* ===== NOTATION DECODER ===== */
+.decoder{display:grid;gap:14px}
+@media(min-width:620px){.decoder{grid-template-columns:200px 1fr}}
+.decode-pick{display:flex;flex-wrap:wrap;gap:6px}
+.decode-pick button{background:var(--panel2);border:1px solid var(--line);color:var(--ink);font-family:ui-monospace,monospace;font-weight:700;font-size:14px;padding:8px 12px;border-radius:10px;cursor:pointer;min-width:52px}
+.decode-pick button.on{background:var(--cyan);color:#04222a;border-color:transparent}
+.decode-out{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:16px}
+.bignote{font-family:ui-monospace,monospace;font-size:40px;text-align:center;margin-bottom:10px}
+.bignote .a{color:var(--amber);font-size:22px;vertical-align:super}
+.bignote .z{color:var(--cyan);font-size:22px;vertical-align:sub}
+.bignote .s{color:var(--ink);font-weight:800}
+.decode-rows .drow{display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding:7px 2px;font-size:14px}
+.decode-rows .drow b{color:var(--violet)}
+
+/* ===== SEPARATION MATCHER ===== */
+.sepgame{display:grid;gap:10px}
+.sepq{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.sepq .prompt{font-weight:700;margin-bottom:10px}
+.sepopts{display:flex;flex-wrap:wrap;gap:8px}
+.sepopts button{background:var(--bg);border:1px solid var(--line);color:var(--ink);font-family:inherit;font-size:13px;font-weight:600;padding:8px 13px;border-radius:9px;cursor:pointer}
+.sepopts button:hover{border-color:var(--violet)}
+.sepopts button.right{background:#12331f;border-color:var(--grn);color:#9df0b8}
+.sepopts button.wrong{background:#331414;border-color:var(--red)}
+.sepfb{font-size:13px;margin-top:8px;min-height:18px}
+
+/* video cards */
+.vidgrid{display:grid;gap:12px}
+@media(min-width:620px){.vidgrid{grid-template-columns:1fr 1fr}}
+.vidcard{display:flex;align-items:center;gap:14px;background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:14px 16px;text-decoration:none;color:var(--ink);transition:.18s}
+.vidcard:hover{border-color:var(--red);transform:translateY(-2px)}
+.vidcard .play{width:48px;height:48px;border-radius:12px;background:#ff0000;display:grid;place-items:center;font-size:22px;flex:0 0 auto;color:#fff}
+.vidcard b{display:block;font-size:14.5px}.vidcard small{color:var(--ink-dim);font-size:12.5px}
+
+/* cheat sheet */
+#cheat .card{background:linear-gradient(180deg,#181227,#0c0a14);border-color:var(--violet-soft)}
+.cheat-grid{display:grid;gap:12px}
+@media(min-width:680px){.cheat-grid{grid-template-columns:1fr 1fr}}
+.cheat-box{background:#120e22;border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.cheat-box h4{color:var(--violet);font-size:14px;margin-bottom:8px;display:flex;align-items:center;gap:7px}
+.cheat-box ul{margin:0;padding-left:18px}
+.cheat-box li{margin-bottom:5px;font-size:13.6px;color:var(--ink-soft)}
+.cheat-box li b{color:var(--ink)}
+.mnem{background:#241d0e;border:1px dashed var(--amber);border-radius:10px;padding:10px 14px;margin-top:10px;font-size:13.5px}
+.mnem b{color:var(--amber)}
+
+/* quiz */
+.quiz-head{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:8px}
+.quiz-meta{display:flex;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--ink-soft)}
+.quiz-meta b{color:var(--violet)}
+.qfilter{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 18px}
+.qfilter button{background:var(--panel2);border:1px solid var(--line);color:var(--ink-soft);font-family:inherit;font-size:12.5px;font-weight:700;padding:7px 13px;border-radius:999px;cursor:pointer}
+.qfilter button.active{background:var(--violet);color:#160b2e;border-color:transparent}
+.flip{perspective:1600px;margin:0 auto}
+.flip-inner{position:relative;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.4,.2,.2,1);min-height:350px}
+.flip.flipped .flip-inner{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:18px;padding:26px;display:flex;flex-direction:column;border:1px solid var(--line);box-shadow:var(--shadow)}
+.face-front{background:linear-gradient(160deg,#1c1636,#100c22)}
+.face-back{background:linear-gradient(160deg,#1a1140,#0f0a24);transform:rotateY(180deg);border-color:var(--violet-soft)}
+.q-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.q-cat{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:4px 11px;border-radius:999px}
+.q-idx{font-size:12.5px;color:var(--ink-dim);font-weight:700}
+.q-text{font-size:18.5px;font-weight:600;flex:1;display:flex;align-items:center}
+.opts{display:grid;gap:9px;margin-top:8px}
+.opt{text-align:left;background:var(--panel2);border:1px solid var(--line);color:var(--ink);font-family:inherit;font-size:14.5px;padding:12px 14px;border-radius:11px;cursor:pointer;transition:.15s;display:flex;gap:10px;align-items:center}
+.opt:hover{border-color:var(--violet);background:#211a3d}
+.opt .k{width:24px;height:24px;border-radius:7px;background:var(--bg);border:1px solid var(--line);display:grid;place-items:center;font-weight:800;font-size:12.5px;flex:0 0 auto;color:var(--ink-soft)}
+.opt.correct{border-color:var(--grn);background:#12331f}.opt.correct .k{background:var(--grn);color:#04210f}
+.opt.wrong{border-color:var(--red);background:#331414}.opt.wrong .k{background:var(--red);color:#2a0808}
+.opt:disabled{cursor:default}
+.q-hint{text-align:center;color:var(--ink-dim);font-size:12.5px;margin-top:14px}
+.a-verdict{font-size:20px;font-weight:800;margin-bottom:8px}
+.a-verdict.ok{color:var(--grn)}.a-verdict.no{color:var(--red)}
+.a-answer{font-size:15px;margin-bottom:10px}.a-answer b{color:var(--cyan)}
+.a-expl{font-size:14.5px;color:var(--ink-soft);flex:1;overflow:auto}
+.a-actions{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+.a-ref{background:var(--panel2);border:1px solid var(--line);color:var(--violet);text-decoration:none;font-weight:700;font-size:13px;padding:9px 15px;border-radius:10px;display:inline-flex;align-items:center;gap:7px;cursor:pointer}
+.a-ref:hover{background:#241a44}
+.q-nav{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:18px}
+.q-nav button{background:var(--panel2);border:1px solid var(--line);color:var(--ink);font-family:inherit;font-weight:700;font-size:14px;padding:11px 20px;border-radius:11px;cursor:pointer}
+.q-nav button:hover:not(:disabled){border-color:var(--violet)}
+.q-nav button:disabled{opacity:.35;cursor:default}
+.dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;max-width:440px}
+.dots i{width:9px;height:9px;border-radius:50%;background:var(--line);cursor:pointer}
+.dots i.done{background:var(--grn)}.dots i.miss{background:var(--red)}.dots i.cur{outline:2px solid var(--violet);outline-offset:2px}
+.dash-grid{display:grid;gap:12px;margin:14px 0}
+@media(min-width:560px){.dash-grid{grid-template-columns:repeat(4,1fr)}}
+.stat{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:16px;text-align:center}
+.stat .v{font-size:30px;font-weight:800;color:var(--violet);line-height:1}
+.stat .l{font-size:11.5px;color:var(--ink-dim);text-transform:uppercase;letter-spacing:1px;margin-top:6px}
+.mastery .row{display:flex;align-items:center;gap:10px;margin-bottom:9px;font-size:13px}
+.mastery .row .nm{width:170px;flex:0 0 auto;color:var(--ink-soft)}
+.bar{flex:1;height:9px;background:var(--bg);border-radius:999px;overflow:hidden;border:1px solid var(--line)}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--violet),var(--cyan));width:0;transition:width .8s}
+.mastery .row .pc{width:42px;text-align:right;font-weight:700;color:var(--ink)}
+.history{font-size:12.5px;color:var(--ink-dim);margin-top:6px}
+.history span{display:inline-block;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:3px 9px;margin:3px 3px 0 0}
+#result{display:none;text-align:center;padding:26px}#result.show{display:block}
+#result .big{font-size:56px;font-weight:800;line-height:1;background:linear-gradient(120deg,var(--violet),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+#result .msg{font-size:18px;margin:10px 0}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:100;overflow:hidden}
+footer{border-top:1px solid var(--line);margin-top:50px;padding:26px 0 60px;text-align:center;color:var(--ink-dim);font-size:13px}
+.reset-link{color:var(--ink-dim);text-decoration:underline;cursor:pointer;font-size:12px}
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--panel2);border:1px solid var(--violet-soft);color:var(--ink);padding:12px 20px;border-radius:12px;font-size:13.5px;font-weight:600;box-shadow:var(--shadow);z-index:120;opacity:0;transition:.35s}
+#toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+</style>
+</head>
+<body>
+
+<div id="topbar"><div class="wrap">
+  <div class="brand"><span class="dot"></span><div>Matter Mastery<small>Grade 9 Science · Ch.3</small></div></div>
+  <nav id="navlinks">
+    <a href="#s-intro">Start</a>
+    <a href="#s-elements">Elements</a>
+    <a href="#s-atom">Atom Builder</a>
+    <a href="#s-compounds">Compounds</a>
+    <a href="#s-mixtures">Mixtures</a>
+    <a href="#cheat">Cheat Sheet</a>
+    <a href="#quiz">Quiz</a>
+  </nav>
+  <div id="scorechip" onclick="document.getElementById('dashboard').scrollIntoView()">
+    <span class="star">★</span><span id="scorechip-txt">Best 0%</span>
+  </div>
+</div></div>
+<div id="readbar"></div>
+
+<header class="hero">
+  <div class="floaters" id="floaters"></div>
+  <div class="wrap">
+    <span class="kicker">The only guide you'll need · Ch.3</span>
+    <h1>What Everything<br>Is Made Of</h1>
+    <p class="sub">Air, water, gold, sugar, your own body &mdash; every single thing is <em>matter</em>, and all matter is built from a small kit of atoms. Once you see the classification map, the whole chapter becomes one clean story.</p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#s-intro">▶ Start learning</a>
+      <a class="btn btn-ghost" href="#quiz">Test myself first</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap" id="content">
+
+<!-- ===== 1. CLASSIFICATION MAP ===== -->
+<section class="lesson reveal" id="s-intro">
+  <div class="eyebrow"><span class="num">1</span><span>The master map</span></div>
+  <h2>One map that organises the whole chapter</h2>
+  <p class="lead"><b>Matter</b> is anything that has mass and takes up space. Scientists sort all matter with a simple branching map. Learn this tree first &mdash; every later topic is just one branch of it.</p>
+
+  <div class="stage">
+    <h4>Interactive · Classification of matter</h4>
+    <div class="tree">
+      <div class="lvl"><button class="tnode matter" data-k="matter">Matter</button></div>
+      <div class="connector"></div>
+      <div class="lvl">
+        <button class="tnode" data-k="pure">Pure substances</button>
+        <button class="tnode" data-k="mixtures">Mixtures<small>(non-pure)</small></button>
+      </div>
+      <div class="connector"></div>
+      <div class="lvl">
+        <button class="tnode" data-k="elements">Elements</button>
+        <button class="tnode" data-k="compounds">Compounds</button>
+        <button class="tnode" data-k="homo">Homogeneous</button>
+        <button class="tnode" data-k="hetero">Heterogeneous</button>
+      </div>
+    </div>
+    <div class="treeinfo" id="treeInfo">
+      <h5>👆 Tap any box</h5>
+      <p>Tap a branch to see what it means and real examples. Try to predict where "salt water" or "gold" would sit before you tap.</p>
+    </div>
+  </div>
+
+  <div class="keyidea"><span class="lbl">The two questions that decide everything</span>① <b>Is it one substance or several mixed together?</b> → pure vs mixture. ② If pure, <b>can it be broken into simpler substances?</b> → compound (yes) vs element (no). Ask these two questions about anything and you can classify it.</div>
+</section>
+
+<!-- ===== 2. PURE vs MIXTURE quick ===== -->
+<section class="lesson reveal" id="s-pure">
+  <div class="eyebrow"><span class="num">2</span><span>Pure vs non-pure</span></div>
+  <h2>Pure substances vs mixtures</h2>
+  <div class="grid two">
+    <div class="card" style="margin:0;border-color:var(--cyan-d)">
+      <h3 style="color:var(--cyan)">💎 Pure substance</h3>
+      <p>Contains <b>only one constituent</b> with its own specific properties.</p>
+      <p><span class="pill c">aluminium</span><span class="pill c">silver</span><span class="pill c">copper</span><span class="pill c">distilled water</span><span class="pill c">carbon</span><span class="pill c">sulphur</span><span class="pill c">zinc</span><span class="pill c">copper sulphate</span><span class="pill c">sodium chloride</span></p>
+    </div>
+    <div class="card" style="margin:0;border-color:var(--amber-d)">
+      <h3 style="color:var(--amber)">🥗 Mixture</h3>
+      <p>Contains <b>two or more constituents</b> mixed together. Most everyday things are mixtures.</p>
+      <p><span class="pill a">air</span><span class="pill a">drinking water</span><span class="pill a">salt solution</span><span class="pill a">sea water</span><span class="pill a">tea</span><span class="pill a">fruit salad</span></p>
+    </div>
+  </div>
+  <div class="insight"><span class="lbl">Watch the trap</span><b>Distilled water</b> is pure (only H₂O). But <b>drinking water</b> is a mixture &mdash; it has dissolved salts and gases. Same-looking liquids, different classes!</div>
+</section>
+
+<!-- ===== 3. ELEMENTS & SYMBOLS ===== -->
+<section class="lesson reveal" id="s-elements">
+  <div class="eyebrow"><span class="num">3</span><span>Elements &amp; their symbols</span></div>
+  <h2>Elements: the un-splittable substances</h2>
+  <p class="lead">An <b>element</b> is a pure substance that <b>cannot be broken down</b> into simpler substances by any physical or chemical method. About <b>120 elements</b> have been discovered. Examples: iron, sulphur, chlorine, silver, zinc, copper, carbon, oxygen, aluminium, mercury.</p>
+
+  <div class="card">
+    <h3>Symbols — a global shorthand</h3>
+    <p>Every country uses the same symbols for elements. There are three rules for where a symbol comes from:</p>
+    <div class="grid three">
+      <div class="cheat-box"><h4>① One capital letter</h4>First letter of the English name (always capital).<br><span class="mono">C</span>=Carbon · <span class="mono">O</span>=Oxygen · <span class="mono">S</span>=Sulphur · <span class="mono">H</span>=Hydrogen</div>
+      <div class="cheat-box"><h4>② Two letters</h4>When names share a first letter, add a second (lowercase).<br><span class="mono">Cl</span>=Chlorine · <span class="mono">Ca</span>=Calcium · <span class="mono">Mg</span>=Magnesium · <span class="mono">Al</span>=Aluminium</div>
+      <div class="cheat-box"><h4>③ From Latin names</h4>Some come from the Latin name, not English.<br><span class="mono">Na</span>=Sodium (Natrium) · <span class="mono">Fe</span>=Iron (Ferrum) · <span class="mono">Au</span>=Gold (Aurum)</div>
+    </div>
+    <div class="tbl-scroll"><table class="tbl">
+      <tr><th>English name</th><th>Latin name</th><th>Symbol</th></tr>
+      <tr><td>Sodium</td><td>Natrium</td><td class="mono">Na</td></tr>
+      <tr><td>Copper</td><td>Cuprum</td><td class="mono">Cu</td></tr>
+      <tr><td>Lead</td><td>Plumbum</td><td class="mono">Pb</td></tr>
+      <tr><td>Gold</td><td>Aurum</td><td class="mono">Au</td></tr>
+      <tr><td>Mercury</td><td>Hydrargyrum</td><td class="mono">Hg</td></tr>
+      <tr><td>Iron</td><td>Ferrum</td><td class="mono">Fe</td></tr>
+      <tr><td>Silver</td><td>Argentum</td><td class="mono">Ag</td></tr>
+    </table></div>
+    <div class="warn"><span class="lbl">The #1 careless mistake</span>In a two-letter symbol, <b>only the first letter is capital</b>. It's <span class="mono">Cl</span> not <span class="mono">CL</span>, <span class="mono">Na</span> not <span class="mono">NA</span>. <span class="mono">Co</span> (cobalt) and <span class="mono">CO</span> (carbon monoxide, a compound) mean totally different things!</div>
+  </div>
+</section>
+
+<!-- ===== 4. ATOMS & MOLECULES ===== -->
+<section class="lesson reveal" id="s-atoms">
+  <div class="eyebrow"><span class="num">4</span><span>Building units</span></div>
+  <h2>Atoms &amp; molecules</h2>
+  <p class="lead">Matter is made of incredibly tiny particles. <b>John Dalton</b> named the smallest indivisible particle an <b>atom</b> (from the Greek <em>atomos</em> = "cannot be divided"). An element is made of atoms that are all the <b>same type</b> &mdash; iron atoms differ from aluminium atoms.</p>
+
+  <div class="card">
+    <h3>What's a molecule?</h3>
+    <p>A <b>molecule</b> is a unit made when <b>one or more atoms combine</b>. When the joined atoms are the <b>same kind</b>, it's a <b>homo-atomic molecule</b>. Oxygen doesn't float around as single O atoms &mdash; it pairs up as O₂.</p>
+    <div class="stage">
+      <h4>Gallery · Homo-atomic vs hetero-atomic molecules</h4>
+      <div class="molfilter" id="molfilter">
+        <button class="on" data-f="all">All</button>
+        <button data-f="homo">Homo-atomic (element)</button>
+        <button data-f="hetero">Hetero-atomic (compound)</button>
+      </div>
+      <div class="molgrid" id="molgrid"></div>
+      <div class="keyidea" style="margin-top:14px"><span class="lbl">The key distinction</span><b>Homo-atomic</b> = same atoms → still an <b>element</b> (O₂, H₂, N₂, Cl₂, F₂). <b>Hetero-atomic</b> = different atoms → a <b>compound</b> (H₂O, CO₂, HCl, NH₃, CH₄).</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 5. ATOMIC STRUCTURE + BUILDER ===== -->
+<section class="lesson reveal" id="s-atom">
+  <div class="eyebrow"><span class="num">5</span><span>Inside the atom</span></div>
+  <h2>Atomic structure — build your own atom</h2>
+  <p class="lead">An atom is mostly <b>empty space</b>! Almost all its mass sits in a tiny, positively-charged core called the <b>nucleus</b> (discovered by <b>Ernest Rutherford</b>). Three subatomic particles make up every atom:</p>
+
+  <div class="tbl-scroll"><table class="tbl">
+    <tr><th>Particle</th><th>Location</th><th>Relative mass</th><th>Relative charge</th></tr>
+    <tr><td>Proton</td><td>In the nucleus</td><td>1</td><td class="mono">+1</td></tr>
+    <tr><td>Neutron</td><td>In the nucleus</td><td>1</td><td class="mono">0</td></tr>
+    <tr><td>Electron</td><td>Moving around the nucleus</td><td>1/1840 (tiny)</td><td class="mono">−1</td></tr>
+  </table></div>
+
+  <div class="card">
+    <h3>🔬 Atom Builder — add particles and watch the element change</h3>
+    <div class="atomwrap">
+      <div class="atomstage" id="atomStage"></div>
+      <div class="atominfo">
+        <div class="stepper"><span class="lab p">Protons (p⁺)</span>
+          <button onclick="chg('p',-1)">−</button><span class="cnt" id="cntP">6</span><button onclick="chg('p',1)">+</button></div>
+        <div class="stepper"><span class="lab n">Neutrons (n⁰)</span>
+          <button onclick="chg('n',-1)">−</button><span class="cnt" id="cntN">6</span><button onclick="chg('n',1)">+</button></div>
+        <div class="atomcard">
+          <div class="sym" id="atSym">C</div>
+          <div class="nm" id="atName">Carbon</div>
+          <div class="notation" id="atNote"></div>
+          <div class="zamini">
+            <span>Atomic no. <b id="atZ">6</b></span>
+            <span>Mass no. <b id="atA">12</b></span>
+            <span>Electrons <b id="atE">6</b></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="insight"><span class="lbl">Feel the rules, don't memorise them</span>Watch as you change particles: <b>the number of protons decides which element it is</b> (add a proton to carbon and it becomes nitrogen!). Electrons always match protons because the atom is <b>neutral</b>. Neutrons change only the mass, not the element.</div>
+  </div>
+</section>
+
+<!-- ===== 6. ATOMIC NUMBER & MASS NUMBER ===== -->
+<section class="lesson reveal" id="s-numbers">
+  <div class="eyebrow"><span class="num">6</span><span>Atomic &amp; mass number</span></div>
+  <h2>The two numbers that define an atom</h2>
+  <div class="grid two">
+    <div class="card" style="margin:0">
+      <h3 style="color:var(--cyan)">Atomic number (Z)</h3>
+      <p>= the number of <b>protons</b> in the nucleus. It's the atom's <b>unique fingerprint</b> — no two elements share the same Z. Since atoms are neutral, <b>Z = protons = electrons</b>.</p>
+    </div>
+    <div class="card" style="margin:0">
+      <h3 style="color:var(--amber)">Mass number (A)</h3>
+      <p>= <b>protons + neutrons</b> (the heavy particles in the nucleus). So the number of neutrons = <b>A − Z</b>.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>How to read the standard notation</h3>
+    <p>Mass number goes <b>top-left</b>, atomic number goes <b>bottom-left</b> of the symbol. Pick an atom to decode it:</p>
+    <div class="stage">
+      <h4>Decoder · <span class="mono">ᴬ<sub>Z</sub>X</span> notation</h4>
+      <div class="decoder">
+        <div class="decode-pick" id="decodePick"></div>
+        <div class="decode-out">
+          <div class="bignote" id="decodeBig"></div>
+          <div class="decode-rows" id="decodeRows"></div>
+        </div>
+      </div>
+    </div>
+    <div class="mnem"><b>Memory hook:</b> <b>A</b> is <b>A</b>bove (top), and <b>A</b> is the bigger number (mass). Neutrons = <b>A − Z</b> (mass minus protons). Example: <span class="mono">²³<sub>11</sub>Na</span> → 11 protons, 11 electrons, 23−11 = <b>12 neutrons</b>.</div>
+  </div>
+</section>
+
+<!-- ===== 7. COMPOUNDS ===== -->
+<section class="lesson reveal" id="s-compounds">
+  <div class="eyebrow"><span class="num">7</span><span>Compounds</span></div>
+  <h2>Compounds: elements chemically joined</h2>
+  <p class="lead">A <b>compound</b> forms when two or more <b>different</b> elements combine chemically in a <b>fixed ratio</b>. Their molecules contain different atoms, so they're <b>hetero-atomic molecules</b>. A compound's <b>chemical formula</b> tells you which atoms and how many.</p>
+
+  <div class="card">
+    <div class="tbl-scroll"><table class="tbl">
+      <tr><th>Compound</th><th>Formula</th><th>Elements inside</th></tr>
+      <tr><td>Water</td><td class="mono">H₂O</td><td>H and O</td></tr>
+      <tr><td>Glucose</td><td class="mono">C₆H₁₂O₆</td><td>C, H and O</td></tr>
+      <tr><td>Methane</td><td class="mono">CH₄</td><td>C and H</td></tr>
+      <tr><td>Carbon dioxide</td><td class="mono">CO₂</td><td>C and O</td></tr>
+      <tr><td>Sodium chloride (salt)</td><td class="mono">NaCl</td><td>Na and Cl</td></tr>
+      <tr><td>Copper sulphate</td><td class="mono">CuSO₄</td><td>Cu, S and O</td></tr>
+      <tr><td>Calcium carbonate</td><td class="mono">CaCO₃</td><td>Ca, C and O</td></tr>
+    </table></div>
+    <div class="keyidea"><span class="lbl">The big idea that surprises students</span>The <b>same set of elements</b> can build <b>completely different compounds</b> with different properties. C and H alone give: methane <span class="mono">CH₄</span> (biogas), hexane <span class="mono">C₆H₁₄</span> (solvent), benzene <span class="mono">C₆H₆</span>, acetylene <span class="mono">C₂H₂</span> (welding gas), ethene <span class="mono">C₂H₄</span> (makes polythene). Same ingredients, different recipe → different substance.</div>
+    <p style="font-size:13.5px;color:var(--ink-soft)">Add oxygen (C, H, O) and you get glucose <span class="mono">C₆H₁₂O₆</span>, acetic acid <span class="mono">CH₃COOH</span> (vinegar), ethanol <span class="mono">C₂H₅OH</span>, and sucrose <span class="mono">C₁₂H₂₂O₁₁</span> (cane sugar).</p>
+    <div class="insight"><span class="lbl">Element vs compound — the clean line</span>An <b>element</b> = atoms of <b>one</b> kind. A <b>compound</b> = atoms of <b>two or more</b> kinds, chemically joined in a fixed ratio. The elements inside a compound lose their own properties (sodium is an explosive metal, chlorine a poison gas — together they're table salt!).</div>
+  </div>
+</section>
+
+<!-- ===== 8. MIXTURES & SEPARATION ===== -->
+<section class="lesson reveal" id="s-mixtures">
+  <div class="eyebrow"><span class="num">8</span><span>Mixtures</span></div>
+  <h2>Mixtures &amp; how to separate them</h2>
+  <p class="lead">A <b>mixture</b> is two or more pure substances mixed together; the pure substances are its <b>constituents</b>. The defining feature: constituents can be separated by <b>physical methods</b> (no chemistry needed) — because they aren't chemically joined.</p>
+
+  <div class="card">
+    <div class="tbl-scroll"><table class="tbl">
+      <tr><th>Mixture</th><th>Constituents</th></tr>
+      <tr><td>Air</td><td>nitrogen, oxygen, argon, carbon dioxide, water vapour</td></tr>
+      <tr><td>Sea water</td><td>water, salts, dissolved oxygen, dissolved carbon dioxide</td></tr>
+      <tr><td>Cake mixture</td><td>sugar, flour, water, colouring, butter, eggs</td></tr>
+      <tr><td>Crude oil</td><td>diesel, petrol, kerosene, tar</td></tr>
+    </table></div>
+
+    <h3 style="margin-top:16px">Match the separation method</h3>
+    <p style="color:var(--ink-soft)">Each mixture has a physical method that fits it best. Try the mini-quiz:</p>
+    <div class="sepgame" id="sepGame"></div>
+    <details style="margin-top:12px">
+      <summary style="cursor:pointer;color:var(--violet);font-weight:700">📋 See the full list of separation methods</summary>
+      <div class="tbl-scroll"><table class="tbl" style="margin-top:10px">
+        <tr><th>Method</th><th>Used for</th></tr>
+        <tr><td>Panning</td><td>Separating sand from rice; gems from ores</td></tr>
+        <tr><td>Winnowing</td><td>Separating chaff from rice</td></tr>
+        <tr><td>Floating on water</td><td>Separating sterile seeds from seed paddy</td></tr>
+        <tr><td>Sifting</td><td>Separating gravel from sand</td></tr>
+        <tr><td>Vapourisation</td><td>Obtaining salt from sea water</td></tr>
+        <tr><td>Fractional distillation</td><td>Separating fuels from crude oil</td></tr>
+        <tr><td>Steam distillation</td><td>Separating cinnamon oil from leaves</td></tr>
+        <tr><td>Crystallization</td><td>Separating sugar from cane syrup</td></tr>
+        <tr><td>Using magnets</td><td>Separating minerals from mineral sands</td></tr>
+      </table></div>
+    </details>
+  </div>
+</section>
+
+<!-- ===== 9. HOMOGENEOUS vs HETEROGENEOUS ===== -->
+<section class="lesson reveal" id="s-homhet">
+  <div class="eyebrow"><span class="num">9</span><span>Two kinds of mixture</span></div>
+  <h2>Homogeneous vs heterogeneous</h2>
+  <p class="lead">Mixtures split into two types based on one thing: <b>is it the same all the way through?</b></p>
+  <div class="grid two">
+    <div class="card" style="margin:0;border-color:var(--grn-d)">
+      <h3 style="color:var(--grn)">🟢 Homogeneous</h3>
+      <p><b>Uniform</b> throughout — colour and composition are the same everywhere. You can't see separate parts.</p>
+      <p><span class="pill g">salt solution</span><span class="pill g">sugar solution</span><span class="pill g">sea water</span></p>
+    </div>
+    <div class="card" style="margin:0;border-color:var(--amber-d)">
+      <h3 style="color:var(--amber)">🟠 Heterogeneous</h3>
+      <p><b>Not uniform</b> — composition varies from place to place. You can often see the different parts.</p>
+      <p><span class="pill a">muddy water</span><span class="pill a">mortar mixture</span><span class="pill a">ice cream</span><span class="pill a">fruit salad</span></p>
+    </div>
+  </div>
+  <div class="insight"><span class="lbl">Quick test</span>Dissolve salt in water → clear and same throughout → <b>homogeneous</b>. Stir clay into water → cloudy, uneven, settles → <b>heterogeneous</b>. "Homo" = same, so homogeneous = looks the same everywhere.</div>
+</section>
+
+<!-- ===== 10. WATCH ===== -->
+<section class="lesson reveal" id="s-watch">
+  <div class="eyebrow"><span class="num">10</span><span>Watch &amp; revise</span></div>
+  <h2>🎬 Video lessons</h2>
+  <p class="lead">Two short video lessons that walk through this chapter. They open on YouTube (needs internet).</p>
+  <div class="vidgrid">
+    <a class="vidcard" href="https://youtu.be/fSWMHgxHVhs" target="_blank" rel="noopener">
+      <span class="play">▶</span><span><b>Nature &amp; Properties of Matter — Part 1</b><small>Grade 9 Science · youtu.be/fSWMHgxHVhs</small></span></a>
+    <a class="vidcard" href="https://youtu.be/cwtMM8dUuRk" target="_blank" rel="noopener">
+      <span class="play">▶</span><span><b>Nature &amp; Properties of Matter — Part 2</b><small>Grade 9 Science · youtu.be/cwtMM8dUuRk</small></span></a>
+  </div>
+</section>
+
+<!-- ===== 11. CHEAT SHEET ===== -->
+<section class="lesson reveal" id="cheat">
+  <div class="eyebrow"><span class="num">11</span><span>Last-minute revision</span></div>
+  <h2>⚡ The night-before cheat sheet</h2>
+  <p class="lead">Everything essential, condensed. Skim it the hour before the exam — tap back to any section you're unsure about.</p>
+  <div class="card">
+    <div class="cheat-grid">
+      <div class="cheat-box"><h4>🗺️ Classification of matter</h4><ul>
+        <li><b>Matter</b> → pure substances + mixtures.</li>
+        <li><b>Pure</b> → elements + compounds.</li>
+        <li><b>Mixtures</b> → homogeneous + heterogeneous.</li>
+        <li>Pure = one constituent; mixture = two or more.</li>
+      </ul></div>
+
+      <div class="cheat-box"><h4>⚛️ Elements &amp; symbols</h4><ul>
+        <li>Element = can't be split further (~120 known).</li>
+        <li>Symbol: 1 capital (C, O, S) or 2 letters (Cl, Ca) — 2nd is lowercase.</li>
+        <li>Latin: Na, Cu, Pb, Au, Hg, Fe, Ag.</li>
+        <li>Homo-atomic molecules: O₂, H₂, N₂, Cl₂, F₂.</li>
+      </ul></div>
+
+      <div class="cheat-box"><h4>🔬 Atomic structure</h4><ul>
+        <li>Atom = mostly empty space + tiny nucleus (Rutherford).</li>
+        <li><b>Proton:</b> nucleus, mass 1, charge +1.</li>
+        <li><b>Neutron:</b> nucleus, mass 1, charge 0.</li>
+        <li><b>Electron:</b> around nucleus, mass 1/1840, charge −1.</li>
+        <li>Dalton named the "atom" (atomos = indivisible).</li>
+      </ul></div>
+
+      <div class="cheat-box"><h4>🔢 The two numbers</h4><ul>
+        <li><b>Atomic number Z</b> = protons = electrons. Unique to each element.</li>
+        <li><b>Mass number A</b> = protons + neutrons.</li>
+        <li>Neutrons = <b>A − Z</b>.</li>
+        <li>Notation: <span class="mono">ᴬ<sub>Z</sub>X</span> → ²³<sub>11</sub>Na = 11p, 11e, 12n.</li>
+      </ul></div>
+
+      <div class="cheat-box"><h4>🧪 Compounds</h4><ul>
+        <li>2+ different elements chemically joined, fixed ratio.</li>
+        <li>Hetero-atomic molecules (different atoms).</li>
+        <li>Formulas: H₂O, CO₂, CH₄, NaCl, CuSO₄, CaCO₃, C₆H₁₂O₆.</li>
+        <li>Same elements → different compounds (CH₄ vs C₂H₄).</li>
+      </ul></div>
+
+      <div class="cheat-box"><h4>🥣 Mixtures</h4><ul>
+        <li>Separable by <b>physical</b> methods.</li>
+        <li>Methods: winnowing, sifting, panning, distillation, vapourisation, magnets…</li>
+        <li><b>Homogeneous:</b> uniform (salt solution, sea water).</li>
+        <li><b>Heterogeneous:</b> non-uniform (muddy water, fruit salad).</li>
+      </ul></div>
+    </div>
+    <div class="mnem"><b>Memory hooks:</b> &nbsp;• Two questions: <b>one or many?</b> then <b>splittable or not?</b> &nbsp;• <b>A</b>bove = mass number <b>A</b>; neutrons = <b>A − Z</b>. &nbsp;• Protons = the element's identity. &nbsp;• <b>Homo</b> = same (uniform); <b>hetero</b> = different (patchy). &nbsp;• Homo-atomic = element; hetero-atomic = compound.</div>
+  </div>
+</section>
+
+<!-- ===== 12. DASHBOARD ===== -->
+<section class="lesson reveal" id="dashboard">
+  <div class="eyebrow"><span class="num">12</span><span>Your progress</span></div>
+  <h2>📈 Track your mastery</h2>
+  <p class="lead">Saved on this device — come back anytime and watch your scores climb.</p>
+  <div class="card">
+    <div class="dash-grid">
+      <div class="stat"><div class="v" id="st-best">0%</div><div class="l">Best score</div></div>
+      <div class="stat"><div class="v" id="st-last">&ndash;</div><div class="l">Last score</div></div>
+      <div class="stat"><div class="v" id="st-attempts">0</div><div class="l">Attempts</div></div>
+      <div class="stat"><div class="v" id="st-streak">0</div><div class="l">Day streak</div></div>
+    </div>
+    <h4 style="color:var(--violet);margin:18px 0 10px">Mastery by topic</h4>
+    <div class="mastery" id="masteryList"></div>
+    <div class="history" id="historyList"></div>
+    <p id="improveNote" style="margin:14px 0 0;font-size:14px;color:var(--grn);font-weight:600"></p>
+  </div>
+</section>
+
+<!-- ===== 13. QUIZ ===== -->
+<section class="lesson reveal" id="quiz">
+  <div class="eyebrow"><span class="num">13</span><span>Test yourself · flip cards</span></div>
+  <h2>🎯 The 30-question challenge</h2>
+  <p class="lead">Answer, then the card <b>flips</b> to show if you're right, a full explanation, and a link back to the lesson. Filter by topic to drill weak spots.</p>
+  <div class="qfilter" id="qfilter">
+    <button class="active" data-cat="all">All 30</button>
+    <button data-cat="Classification">Classification</button>
+    <button data-cat="Elements">Elements</button>
+    <button data-cat="Atoms">Atoms</button>
+    <button data-cat="Compounds">Compounds</button>
+    <button data-cat="Mixtures">Mixtures</button>
+  </div>
+  <div class="quiz-head">
+    <div class="quiz-meta">
+      <span>Answered <b id="qm-done">0</b>/<b id="qm-total">30</b></span>
+      <span>Correct <b id="qm-correct">0</b></span>
+      <span>Score <b id="qm-score">0%</b></span>
+    </div>
+    <button class="btn btn-ghost" style="padding:8px 16px;font-size:13px" onclick="restartQuiz()">↻ Restart</button>
+  </div>
+  <div class="flip" id="flipcard"><div class="flip-inner">
+    <div class="face face-front" id="cardFront"></div>
+    <div class="face face-back" id="cardBack"></div>
+  </div></div>
+  <div class="q-nav">
+    <button id="prevBtn" onclick="goCard(-1)">‹ Prev</button>
+    <div class="dots" id="dots"></div>
+    <button id="nextBtn" onclick="goCard(1)">Next ›</button>
+  </div>
+  <div id="result" class="card">
+    <div class="big" id="resBig">0%</div>
+    <div class="msg" id="resMsg"></div>
+    <div class="hero-cta">
+      <button class="btn btn-primary" onclick="restartQuiz()">Try again</button>
+      <a class="btn btn-ghost" href="#cheat">Review cheat sheet</a>
+    </div>
+  </div>
+</section>
+
+
+
+<div id="toast"></div>
+<footer class="wrap">
+  <p>Built from the Grade 9 Science textbook (Ministry of Education, Sri Lanka) · Chapter 3: Nature and Properties of Matter.<br>
+  Your progress is saved on this device. <span class="reset-link" onclick="resetAll()">Reset all progress</span></p>
+</footer>
+
+<script>
+/* ===== AMBIENT ===== */
+(function(){const box=document.getElementById('floaters');const ems=['⚛️','🧪','💧','🔬','🧊','💎','🌫️'];
+  for(let i=0;i<14;i++){const s=document.createElement('span');s.textContent=ems[i%ems.length];
+  s.style.left=(Math.random()*100)+'%';s.style.top=(Math.random()*100)+'%';s.style.fontSize=(20+Math.random()*30)+'px';
+  s.style.animationDuration=(9+Math.random()*11)+'s';s.style.animationDelay=(-Math.random()*10)+'s';box.appendChild(s);}})();
+const readbar=document.getElementById('readbar');
+addEventListener('scroll',()=>{const h=document.documentElement;readbar.style.width=Math.min(100,h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';},{passive:true});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2200);}
+
+/* ===== CLASSIFICATION TREE ===== */
+const TREE={
+ matter:{n:'Matter',d:'Anything that has mass and takes up space. All matter splits into pure substances and mixtures.',ex:'Everything: air, water, gold, sugar, you.'},
+ pure:{n:'Pure substances',d:'Contain only ONE constituent with specific properties. Split further into elements and compounds.',ex:'aluminium, silver, distilled water, copper sulphate, sodium chloride.'},
+ mixtures:{n:'Mixtures (non-pure)',d:'Two or more constituents mixed together, separable by physical methods.',ex:'air, drinking water, salt solution, sea water.'},
+ elements:{n:'Elements',d:'Pure substances that CANNOT be broken into simpler substances by any method. Made of one kind of atom. ~120 exist.',ex:'iron, sulphur, carbon, oxygen, gold.'},
+ compounds:{n:'Compounds',d:'Pure substances formed when 2+ elements combine chemically in a fixed ratio.',ex:'water (H₂O), glucose, sodium chloride, copper sulphate.'},
+ homo:{n:'Homogeneous mixtures',d:'Uniform throughout — same colour and composition everywhere. Parts not visible.',ex:'salt solution, sugar solution, sea water.'},
+ hetero:{n:'Heterogeneous mixtures',d:'Non-uniform — composition varies from place to place. Parts often visible.',ex:'muddy water, mortar, ice cream, fruit salad.'}
+};
+(function(){const info=document.getElementById('treeInfo');
+  document.querySelectorAll('.tnode').forEach(nd=>nd.addEventListener('click',()=>{
+    const t=TREE[nd.dataset.k];document.querySelectorAll('.tnode').forEach(x=>x.classList.remove('active'));nd.classList.add('active');
+    info.innerHTML=`<h5>${t.n}</h5><p>${t.d}</p><div class="ex">📌 e.g. ${t.ex}</div>`;
+  }));})();
+
+/* ===== MOLECULE GALLERY ===== */
+const ECOL={H:'#e2e8f0',O:'#f87171',N:'#60a5fa',Cl:'#4ade80',C:'#a78bfa',F:'#fbbf24'};
+const MOLS=[
+ {f:'O₂',n:'Oxygen',t:'homo',a:[['O',45,35],['O',85,35]]},
+ {f:'H₂',n:'Hydrogen',t:'homo',a:[['H',48,35],['H',82,35]]},
+ {f:'N₂',n:'Nitrogen',t:'homo',a:[['N',45,35],['N',85,35]]},
+ {f:'Cl₂',n:'Chlorine',t:'homo',a:[['Cl',42,35],['Cl',88,35]]},
+ {f:'F₂',n:'Fluorine',t:'homo',a:[['F',48,35],['F',82,35]]},
+ {f:'H₂O',n:'Water',t:'hetero',a:[['O',65,30],['H',38,52],['H',92,52]]},
+ {f:'CO₂',n:'Carbon dioxide',t:'hetero',a:[['C',65,35],['O',33,35],['O',97,35]]},
+ {f:'CH₄',n:'Methane',t:'hetero',a:[['C',65,34],['H',65,12],['H',36,52],['H',94,52]]},
+ {f:'NH₃',n:'Ammonia',t:'hetero',a:[['N',65,32],['H',40,54],['H',90,54],['H',65,12]]},
+ {f:'HCl',n:'Hydrogen chloride',t:'hetero',a:[['H',42,35],['Cl',86,35]]}
+];
+function molSVG(m){const c=m.a[0];let bonds='';for(let i=1;i<m.a.length;i++){bonds+=`<line x1="${c[1]}" y1="${c[2]}" x2="${m.a[i][1]}" y2="${m.a[i][2]}" stroke="#5b5273" stroke-width="3"/>`;}
+  let atoms='';m.a.forEach(([el,x,y])=>{const r=el.length>1?13:11;atoms+=`<circle cx="${x}" cy="${y}" r="${r}" fill="${ECOL[el]}" stroke="#0c0a14" stroke-width="1.5"/><text x="${x}" y="${y+4}" text-anchor="middle" font-size="${el.length>1?10:11}" font-weight="800" fill="#160b2e">${el}</text>`;});
+  return `<svg viewBox="0 0 130 70">${bonds}${atoms}</svg>`;}
+function renderMols(filter){const g=document.getElementById('molgrid');g.innerHTML='';
+  MOLS.forEach(m=>{if(filter!=='all'&&m.t!==filter)return;const d=document.createElement('div');d.className='molcard';
+    d.innerHTML=molSVG(m)+`<div class="fm">${m.f}</div><div class="nm">${m.n}</div><span class="tag ${m.t}">${m.t}-atomic</span>`;g.appendChild(d);});}
+document.querySelectorAll('#molfilter button').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('#molfilter button').forEach(x=>x.classList.remove('on'));b.classList.add('on');renderMols(b.dataset.f);}));
+renderMols('all');
+
+/* ===== ATOM BUILDER ===== */
+const ELEMENTS={1:['H','Hydrogen'],2:['He','Helium'],3:['Li','Lithium'],4:['Be','Beryllium'],5:['B','Boron'],6:['C','Carbon'],7:['N','Nitrogen'],8:['O','Oxygen'],9:['F','Fluorine'],10:['Ne','Neon'],11:['Na','Sodium'],12:['Mg','Magnesium'],13:['Al','Aluminium'],14:['Si','Silicon'],15:['P','Phosphorus'],16:['S','Sulphur'],17:['Cl','Chlorine'],18:['Ar','Argon'],19:['K','Potassium'],20:['Ca','Calcium']};
+let atom={p:6,n:6};
+function shells(e){const caps=[2,8,8,2];const out=[];let left=e;for(const c of caps){if(left<=0)break;out.push(Math.min(c,left));left-=c;}return out;}
+function renderAtom(){
+  const st=document.getElementById('atomStage');st.innerHTML='';
+  const e=atom.p;const R=[44,74,104,124];const durs=[8,12,16,20];
+  const sh=shells(e);
+  sh.forEach((count,si)=>{const r=R[si]||124;
+    const spin=document.createElement('div');spin.className='orbit';
+    spin.style.width=spin.style.height=(2*r)+'px';spin.style.marginLeft=spin.style.marginTop=(-r)+'px';
+    spin.style.animation=`spin ${durs[si]||22}s linear infinite ${si%2?'reverse':''}`;
+    for(let k=0;k<count;k++){const ang=(k/count)*2*Math.PI;const x=r+r*Math.cos(ang),y=r+r*Math.sin(ang);
+      const el=document.createElement('div');el.className='electron';el.style.left=(x-5.5)+'px';el.style.top=(y-5.5)+'px';spin.appendChild(el);}
+    st.appendChild(spin);});
+  // nucleus
+  const nuc=document.createElement('div');nuc.className='nucleus';
+  const tot=atom.p+atom.n;const cap=Math.min(tot,40);
+  // interleave p and n visually
+  let pl=atom.p,nl=atom.n,placed=0;
+  while(placed<cap&&(pl>0||nl>0)){if(pl>0){const d=document.createElement('div');d.className='nuc p';nuc.appendChild(d);pl--;placed++;}
+    if(placed<cap&&nl>0){const d=document.createElement('div');d.className='nuc n';nuc.appendChild(d);nl--;placed++;}}
+  st.appendChild(nuc);
+  // info
+  const known=ELEMENTS[atom.p];
+  const sym=known?known[0]:'?';const name=known?known[1]:'Beyond Grade 9 range';
+  const A=atom.p+atom.n;
+  document.getElementById('atSym').textContent=sym;
+  document.getElementById('atName').textContent=name;
+  document.getElementById('atNote').innerHTML=known?`<sup>${A}</sup><sub>${atom.p}</sub><b>${sym}</b>`:'—';
+  document.getElementById('atZ').textContent=atom.p;
+  document.getElementById('atA').textContent=A;
+  document.getElementById('atE').textContent=atom.p;
+  document.getElementById('cntP').textContent=atom.p;
+  document.getElementById('cntN').textContent=atom.n;
+}
+function chg(w,d){if(w==='p')atom.p=Math.max(1,Math.min(20,atom.p+d));else atom.n=Math.max(0,Math.min(30,atom.n+d));renderAtom();}
+
+/* ===== NOTATION DECODER ===== */
+const DEC=[['Na',23,11],['Cl',35,17],['O',16,8],['N',14,7],['F',19,9],['C',12,6]];
+function renderDecodePick(){const p=document.getElementById('decodePick');p.innerHTML='';
+  DEC.forEach((d,i)=>{const b=document.createElement('button');b.innerHTML=`<sup>${d[1]}</sup><sub>${d[2]}</sub>${d[0]}`;b.onclick=()=>decode(i);if(i===0)b.classList.add('on');p.appendChild(b);});}
+function decode(i){const d=DEC[i];document.querySelectorAll('#decodePick button').forEach((b,k)=>b.classList.toggle('on',k===i));
+  document.getElementById('decodeBig').innerHTML=`<span class="a">${d[1]}</span><span class="z">${d[2]}</span><span class="s">${d[0]}</span>`;
+  const p=d[2],A=d[1],n=A-p;
+  document.getElementById('decodeRows').innerHTML=
+    `<div class="drow"><span>Atomic number (Z) = protons</span><b>${p}</b></div>
+     <div class="drow"><span>Electrons (= protons, neutral)</span><b>${p}</b></div>
+     <div class="drow"><span>Mass number (A) = p + n</span><b>${A}</b></div>
+     <div class="drow"><span>Neutrons = A − Z = ${A} − ${p}</span><b>${n}</b></div>`;}
+
+/* ===== SEPARATION MATCHER ===== */
+const SEP=[
+ {q:'Obtaining salt from sea water?',o:['Vapourisation','Winnowing','Using magnets'],a:0},
+ {q:'Separating chaff from rice?',o:['Panning','Winnowing','Fractional distillation'],a:1},
+ {q:'Separating the fuels in crude oil?',o:['Sifting','Floating on water','Fractional distillation'],a:2},
+ {q:'Separating iron filings from a mixture?',o:['Using magnets','Crystallization','Winnowing'],a:0}
+];
+(function(){const g=document.getElementById('sepGame');
+  SEP.forEach((s,i)=>{const box=document.createElement('div');box.className='sepq';
+    box.innerHTML=`<div class="prompt">${i+1}. ${s.q}</div><div class="sepopts"></div><div class="sepfb"></div>`;
+    const opts=box.querySelector('.sepopts'),fb=box.querySelector('.sepfb');
+    s.o.forEach((op,j)=>{const b=document.createElement('button');b.textContent=op;
+      b.onclick=()=>{if(box.dataset.done)return;box.dataset.done='1';
+        opts.querySelectorAll('button').forEach(x=>x.disabled=true);
+        if(j===s.a){b.classList.add('right');fb.style.color='var(--grn)';fb.textContent='✓ Correct!';}
+        else{b.classList.add('wrong');opts.children[s.a].classList.add('right');fb.style.color='var(--red)';fb.textContent='✗ The answer is '+s.o[s.a]+'.';}};
+      opts.appendChild(b);});
+    g.appendChild(box);});})();
+
+/* ===== QUIZ DATA (30) ===== */
+const CAT_COLORS={'Classification':'#0a2c33;color:#8ee9f7','Elements':'#241147;color:#c9b3ff','Atoms':'#3a2a12;color:#f7c66b','Compounds':'#0f3324;color:#9df0b8','Mixtures':'#3a1220;color:#f79ac0'};
+const Q=[
+ {c:'Classification',q:'Matter that contains only one constituent with specific properties is called a…',o:['mixture','pure substance','heterogeneous mixture','solution'],a:1,e:'A pure substance has just one constituent (e.g. copper, distilled water). Two or more constituents make a mixture.',r:'s-pure',rl:'§2 Pure vs mixture'},
+ {c:'Classification',q:'Which of the following is a MIXTURE?',o:['Silver','Sulphur','Air','Copper'],a:2,e:'Air is a mixture of nitrogen, oxygen, argon, CO₂ and water vapour. Silver, sulphur and copper are pure elements.',r:'s-pure',rl:'§2 Mixtures'},
+ {c:'Classification',q:'Which is a PURE substance?',o:['Drinking water','Distilled water','Salt solution','Sea water'],a:1,e:'Distilled water is pure (only H₂O). Drinking water, salt solution and sea water all contain dissolved substances — mixtures.',r:'s-pure',rl:'§2 The trap'},
+ {c:'Classification',q:'Pure substances can be further classified as…',o:['elements and compounds','solids and liquids','metals and non-metals','acids and bases'],a:0,e:'Pure substances split into elements (one kind of atom) and compounds (two or more elements chemically joined).',r:'s-intro',rl:'§1 Classification map'},
+ {c:'Classification',q:'A mixture with a uniform composition throughout is called…',o:['heterogeneous','homogeneous','a compound','an element'],a:1,e:'Homogeneous = uniform everywhere (salt solution, sea water). Heterogeneous = uneven (muddy water, fruit salad).',r:'s-homhet',rl:'§9 Homo vs hetero'},
+ {c:'Classification',q:'Which group contains matter belonging to the SAME set (all elements)?',o:['Sodium, carbon, oxygen','Oxygen, water, air','Water, carbon, sodium','Air, carbon, oxygen'],a:0,e:'Sodium, carbon and oxygen are all elements. The other groups mix in water (compound) or air (mixture).',r:'s-elements',rl:'§3 Elements'},
+ {c:'Elements',q:'An element is a pure substance that…',o:['is always a metal','cannot be broken into simpler substances','is always a gas','is a mixture of atoms'],a:1,e:'An element cannot be divided into simpler substances by any physical or chemical method. About 120 are known.',r:'s-elements',rl:'§3 Elements'},
+ {c:'Elements',q:'The chemical symbol for Sodium is…',o:['So','Sd','Na','S'],a:2,e:'Sodium\'s symbol Na comes from its Latin name Natrium. (S is sulphur.)',r:'s-elements',rl:'§3 Symbols'},
+ {c:'Elements',q:'The symbol Fe (from the Latin "Ferrum") represents…',o:['Fluorine','Iron','Francium','Lead'],a:1,e:'Fe = Iron, from the Latin Ferrum. Fluorine is F; lead is Pb (Plumbum).',r:'s-elements',rl:'§3 Latin symbols'},
+ {c:'Elements',q:'Which chemical symbol is written CORRECTLY?',o:['CL','cl','Cl','cL'],a:2,e:'In a two-letter symbol only the first letter is capital: Cl (chlorine). CL, cl and cL are all wrong.',r:'s-elements',rl:'§3 Symbol rules'},
+ {c:'Elements',q:'Which of these is a homo-atomic molecule?',o:['H₂O','O₂','CO₂','NaCl'],a:1,e:'O₂ is made of two identical oxygen atoms → homo-atomic (still an element). The others contain different atoms.',r:'s-atoms',rl:'§4 Molecules'},
+ {c:'Elements',q:'The scientist who introduced the term "atom" for the smallest indivisible particle was…',o:['Ernest Rutherford','John Dalton','Isaac Newton','Albert Einstein'],a:1,e:'John Dalton used "atom" (from Greek "atomos" = cannot be divided). Rutherford later discovered the nucleus.',r:'s-atoms',rl:'§4 Atoms'},
+ {c:'Atoms',q:'The small, positively-charged central core of an atom is the…',o:['electron','nucleus','molecule','proton cloud'],a:1,e:'The nucleus holds the protons and neutrons and carries almost all the atom\'s mass. Most of the atom is empty space.',r:'s-atom',rl:'§5 Atomic structure'},
+ {c:'Atoms',q:'The scientist who discovered that the atom has a positively charged nucleus was…',o:['John Dalton','Ernest Rutherford','Neils Bohr','Marie Curie'],a:1,e:'Ernest Rutherford discovered the nucleus — a large empty space with a tiny positive core.',r:'s-atom',rl:'§5 Nucleus'},
+ {c:'Atoms',q:'Which subatomic particle has NO charge?',o:['Proton','Electron','Neutron','Ion'],a:2,e:'The neutron is neutral (charge 0). The proton is +1 and the electron is −1.',r:'s-atom',rl:'§5 Subatomic particles'},
+ {c:'Atoms',q:'The relative charge of an electron is…',o:['+1','0','−1','+2'],a:2,e:'An electron has a relative charge of −1 and a tiny mass (1/1840 of a proton).',r:'s-atom',rl:'§5 Particle table'},
+ {c:'Atoms',q:'The atomic number (Z) of an element is the number of…',o:['neutrons','protons','protons + neutrons','electrons + neutrons'],a:1,e:'Atomic number Z = number of protons. In a neutral atom it also equals the number of electrons. It is unique to each element.',r:'s-numbers',rl:'§6 Atomic number'},
+ {c:'Atoms',q:'The mass number (A) of an atom equals…',o:['protons only','neutrons only','protons + neutrons','protons + electrons'],a:2,e:'Mass number A = protons + neutrons (the heavy particles in the nucleus). So neutrons = A − Z.',r:'s-numbers',rl:'§6 Mass number'},
+ {c:'Atoms',q:'In the atom ³⁵₁₇Cl, the numbers of protons, neutrons and electrons are…',o:['17, 18, 18','17, 18, 17','17, 17, 18','18, 17, 17'],a:1,e:'Z = 17 → 17 protons and 17 electrons. Neutrons = A − Z = 35 − 17 = 18. So 17, 18, 17.',r:'s-numbers',rl:'§6 Notation'},
+ {c:'Atoms',q:'A unique property that identifies a particular atom is its…',o:['number of neutrons','atomic number','mass number','number of protons + neutrons'],a:1,e:'The atomic number (proton count) is unique to each element — no two elements share it. Neutron/mass numbers can vary.',r:'s-numbers',rl:'§6 Atomic number'},
+ {c:'Compounds',q:'A compound is formed when…',o:['two or more elements combine chemically in a fixed ratio','two substances are simply mixed','an element is heated','atoms of the same kind join'],a:0,e:'A compound = two or more DIFFERENT elements chemically combined in a fixed ratio (e.g. H₂O). Simple mixing gives a mixture.',r:'s-compounds',rl:'§7 Compounds'},
+ {c:'Compounds',q:'The chemical formula of water is…',o:['HO₂','H₂O','H₂O₂','OH'],a:1,e:'Water is H₂O — two hydrogen atoms combined with one oxygen atom.',r:'s-compounds',rl:'§7 Formulas'},
+ {c:'Compounds',q:'A molecule made of atoms of two or more DIFFERENT elements is called…',o:['homo-atomic','hetero-atomic','monatomic','an element'],a:1,e:'Hetero-atomic molecules contain different atoms (H₂O, CO₂) — these are compounds. Same atoms = homo-atomic (element).',r:'s-atoms',rl:'§4 Molecules'},
+ {c:'Compounds',q:'The compound NaCl (common salt) contains the elements…',o:['Nitrogen and Chlorine','Sodium and Carbon','Sodium and Chlorine','Neon and Calcium'],a:2,e:'NaCl = Sodium (Na) + Chlorine (Cl). Interestingly, both are dangerous alone but form harmless table salt together.',r:'s-compounds',rl:'§7 Compounds table'},
+ {c:'Compounds',q:'Among air, salt solution, vinegar and copper sulphate, the PURE substance (a compound) is…',o:['Air','Salt solution','Vinegar','Copper sulphate'],a:3,e:'Copper sulphate (CuSO₄) is a pure compound. Air, salt solution and vinegar are all mixtures.',r:'s-compounds',rl:'§7 Compounds'},
+ {c:'Mixtures',q:'The constituents of a mixture can be separated by…',o:['chemical methods only','physical methods','breaking atoms','heating until they react'],a:1,e:'Because a mixture\'s constituents aren\'t chemically joined, they separate by physical methods (sifting, distillation, magnets…).',r:'s-mixtures',rl:'§8 Mixtures'},
+ {c:'Mixtures',q:'Muddy water is an example of a…',o:['homogeneous mixture','heterogeneous mixture','compound','pure substance'],a:1,e:'Muddy water is uneven — the clay is not uniformly spread and settles. That makes it heterogeneous.',r:'s-homhet',rl:'§9 Heterogeneous'},
+ {c:'Mixtures',q:'A salt solution is an example of a…',o:['heterogeneous mixture','homogeneous mixture','compound','element'],a:1,e:'A salt solution is uniform throughout — same colour and composition everywhere — so it is homogeneous.',r:'s-homhet',rl:'§9 Homogeneous'},
+ {c:'Mixtures',q:'Which method is used to obtain salt from sea water?',o:['Winnowing','Vapourisation','Using magnets','Sifting'],a:1,e:'Vapourisation evaporates the water and leaves the salt behind. Winnowing separates chaff; magnets separate magnetic minerals.',r:'s-mixtures',rl:'§8 Separation'},
+ {c:'Mixtures',q:'Air is best described as a…',o:['pure substance','compound','mixture','single element'],a:2,e:'Air is a mixture of several gases (nitrogen, oxygen, argon, CO₂, water vapour) that can be separated physically.',r:'s-pure',rl:'§2 Mixtures'}
+];
+document.getElementById('qm-total').textContent=Q.length;
+
+/* ===== QUIZ ENGINE ===== */
+const LSKEY='matter_ol_v1';
+function loadLS(){try{return JSON.parse(localStorage.getItem(LSKEY))||{}}catch(e){return{}}}
+function saveLS(d){try{localStorage.setItem(LSKEY,JSON.stringify(d))}catch(e){}}
+let store=loadLS();if(!store.correctSet)store.correctSet=[];if(!store.history)store.history=[];
+let activeCat='all',deck=[],pos=0,ansMap={};
+function buildDeck(){deck=Q.map((q,i)=>i).filter(i=>activeCat==='all'||Q[i].c===activeCat);pos=0;}
+function renderDots(){const d=document.getElementById('dots');d.innerHTML='';deck.forEach((qi,k)=>{const i=document.createElement('i');
+  if(ansMap[qi])i.classList.add(ansMap[qi].ok?'done':'miss');if(k===pos)i.classList.add('cur');i.onclick=()=>{pos=k;renderCard();};d.appendChild(i);});}
+function updateMeta(){const answered=deck.filter(qi=>ansMap[qi]).length;const correct=deck.filter(qi=>ansMap[qi]&&ansMap[qi].ok).length;
+  document.getElementById('qm-done').textContent=answered;document.getElementById('qm-correct').textContent=correct;
+  document.getElementById('qm-total').textContent=deck.length;document.getElementById('qm-score').textContent=(answered?Math.round(correct/answered*100):0)+'%';}
+function renderCard(){const card=document.getElementById('flipcard');card.classList.remove('flipped');
+  const qi=deck[pos],item=Q[qi],front=document.getElementById('cardFront'),cs=CAT_COLORS[item.c],already=ansMap[qi];
+  front.innerHTML=`<div class="q-top"><span class="q-cat" style="background:${cs.split(';')[0]};color:${cs.split('color:')[1]}">${item.c}</span><span class="q-idx">${pos+1} / ${deck.length}</span></div>
+    <div class="q-text">${item.q}</div>
+    <div class="opts">${item.o.map((op,j)=>`<button class="opt" onclick="answer(${qi},${j})" ${already?'disabled':''}><span class="k">${'ABCD'[j]}</span><span>${op}</span></button>`).join('')}</div>
+    <div class="q-hint">${already?'Already answered — flip to review.':'Tap an answer to check yourself'}</div>`;
+  if(already){const opts=front.querySelectorAll('.opt');opts[item.a].classList.add('correct');if(!already.ok)opts[already.chosen].classList.add('wrong');
+    setTimeout(()=>{buildBack(qi);card.classList.add('flipped');},60);}
+  document.getElementById('prevBtn').disabled=(pos===0);document.getElementById('nextBtn').disabled=(pos===deck.length-1);
+  renderDots();updateMeta();}
+function buildBack(qi){const item=Q[qi],ok=ansMap[qi]&&ansMap[qi].ok,back=document.getElementById('cardBack');
+  back.innerHTML=`<div class="a-verdict ${ok?'ok':'no'}">${ok?'✓ Correct!':'✗ Not quite'}</div>
+    <div class="a-answer">Answer: <b>${'ABCD'[item.a]}. ${item.o[item.a]}</b></div>
+    <div class="a-expl">${item.e}</div>
+    <div class="a-actions"><a class="a-ref" href="#${item.r}">📖 Review: ${item.rl}</a><button class="a-ref" onclick="flipToFront()">↺ See question</button></div>`;}
+function flipToFront(){document.getElementById('flipcard').classList.remove('flipped');}
+function answer(qi,j){if(ansMap[qi])return;const ok=(j===Q[qi].a);ansMap[qi]={chosen:j,ok};
+  if(ok&&!store.correctSet.includes(qi)){store.correctSet.push(qi);saveLS(store);}
+  const front=document.getElementById('cardFront'),opts=front.querySelectorAll('.opt');opts.forEach(o=>o.disabled=true);
+  opts[Q[qi].a].classList.add('correct');if(!ok)opts[j].classList.add('wrong');buildBack(qi);
+  setTimeout(()=>document.getElementById('flipcard').classList.add('flipped'),450);
+  renderDots();updateMeta();renderDashboard();
+  if(deck.every(x=>ansMap[x]))setTimeout(showResult,700);}
+function goCard(dir){const np=pos+dir;if(np<0||np>=deck.length)return;pos=np;renderCard();}
+function restartQuiz(){ansMap={};document.getElementById('result').classList.remove('show');buildDeck();renderCard();document.getElementById('quiz').scrollIntoView({behavior:'smooth'});}
+document.querySelectorAll('#qfilter button').forEach(b=>{b.onclick=()=>{document.querySelectorAll('#qfilter button').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');activeCat=b.dataset.cat;ansMap={};document.getElementById('result').classList.remove('show');buildDeck();renderCard();};});
+function showResult(){const correct=deck.filter(qi=>ansMap[qi].ok).length,score=Math.round(correct/deck.length*100),res=document.getElementById('result');
+  document.getElementById('resBig').textContent=score+'%';let msg;
+  if(score>=90)msg=`Outstanding — ${correct}/${deck.length}. You've mastered matter! 🎉`;
+  else if(score>=70)msg=`Great work — ${correct}/${deck.length}. Nearly there; review the misses.`;
+  else if(score>=50)msg=`Good start — ${correct}/${deck.length}. Revisit the cheat sheet and try again.`;
+  else msg=`${correct}/${deck.length}. Re-read the lessons and come back — you'll improve fast.`;
+  document.getElementById('resMsg').textContent=msg;res.classList.add('show');res.scrollIntoView({behavior:'smooth'});
+  if(activeCat==='all'){const today=new Date().toISOString().slice(0,10);store.attempts=(store.attempts||0)+1;store.last=score;
+    const prevBest=store.best||0;store.best=Math.max(prevBest,score);
+    if(store.lastDay){const diff=(new Date(today)-new Date(store.lastDay))/86400000;if(diff===1)store.streak=(store.streak||1)+1;else if(diff>1)store.streak=1;}else store.streak=1;
+    store.lastDay=today;store.history.push({date:today,score});if(store.history.length>8)store.history=store.history.slice(-8);saveLS(store);
+    if(score>=80)confetti();if(score>prevBest&&store.attempts>1)toast('🎉 New personal best: '+score+'%!');}
+  else if(score>=80)confetti();
+  renderDashboard();}
+function renderDashboard(){document.getElementById('st-best').textContent=(store.best||0)+'%';
+  document.getElementById('st-last').textContent=(store.last!=null?store.last+'%':'–');
+  document.getElementById('st-attempts').textContent=store.attempts||0;document.getElementById('st-streak').textContent=store.streak||0;
+  document.getElementById('scorechip-txt').textContent='Best '+(store.best||0)+'%';
+  const cats=['Classification','Elements','Atoms','Compounds','Mixtures'],ml=document.getElementById('masteryList');ml.innerHTML='';
+  cats.forEach(cat=>{const total=Q.filter(q=>q.c===cat).length,got=Q.filter((q,i)=>q.c===cat&&store.correctSet.includes(i)).length,pc=Math.round(got/total*100);
+    const row=document.createElement('div');row.className='row';row.innerHTML=`<span class="nm">${cat}</span><span class="bar"><i style="width:${pc}%"></i></span><span class="pc">${pc}%</span>`;ml.appendChild(row);});
+  const hl=document.getElementById('historyList');hl.innerHTML=(store.history&&store.history.length)?'Recent attempts: '+store.history.map(h=>`<span>${h.date.slice(5)} · ${h.score}%</span>`).join(''):'';
+  const note=document.getElementById('improveNote');
+  if(store.history&&store.history.length>=2){const d=store.history[store.history.length-1].score-store.history[store.history.length-2].score;
+    note.textContent=d>0?`⬆ Up ${d}% since your last full attempt — keep going!`:(d<0?`You dipped ${Math.abs(d)}% — review the weak topics above and bounce back.`:'Holding steady. Aim to push your best higher!');}else note.textContent='';}
+function confetti(){const box=document.createElement('div');box.className='confetti';document.body.appendChild(box);
+  const cols=['#a78bfa','#22d3ee','#4ade80','#fbbf24','#f472b6'];
+  for(let i=0;i<80;i++){const p=document.createElement('div');const sz=6+Math.random()*8;
+    p.style.cssText=`position:absolute;top:-20px;left:${Math.random()*100}%;width:${sz}px;height:${sz}px;background:${cols[i%cols.length]};border-radius:${Math.random()>.5?'50%':'2px'};opacity:.9`;box.appendChild(p);
+    const dur=1800+Math.random()*1600;p.animate([{transform:'translateY(0) rotate(0)',opacity:1},{transform:`translateY(${innerHeight+60}px) rotate(${Math.random()*720}deg)`,opacity:.7}],{duration:dur,easing:'cubic-bezier(.3,.6,.5,1)'});setTimeout(()=>p.remove(),dur);}
+  setTimeout(()=>box.remove(),3600);}
+function resetAll(){if(confirm('Reset all quiz scores and progress on this device?')){localStorage.removeItem(LSKEY);store=loadLS();store.correctSet=[];store.history=[];ansMap={};buildDeck();renderCard();renderDashboard();toast('Progress reset.');}}
+
+/* ===== INIT ===== */
+renderAtom();renderDecodePick();decode(0);
+buildDeck();renderCard();renderDashboard();
+</script>
+</body>
+</html>
