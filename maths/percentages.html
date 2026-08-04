@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Percentages — Master It | Grade 9 Maths</title>
+<style>
+  :root{
+    --bg:#0f1020; --bg2:#171830; --card:#1e2140; --card2:#262a4e;
+    --ink:#eef0ff; --muted:#a6acd4; --line:#33375f;
+    --cyan:#5ac8fa; --violet:#9b8cff; --gold:#ffd166;
+    --profit:#41e88a; --loss:#ff6b6b; --save:#f9a03f;
+    --easy:#3ecf8e; --med:#f6b93b; --hard:#ff6b6b;
+    --accent:#9b8cff;
+    --shadow:0 18px 45px rgba(0,0,0,.5); --r:18px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+    background:radial-gradient(1200px 700px at 80% -10%,#232449 0%,var(--bg) 55%) fixed;
+    color:var(--ink);line-height:1.65;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+  h1,h2,h3{line-height:1.2;font-weight:800;letter-spacing:.2px}
+  .eq{font-family:'Cambria Math','Times New Roman',Georgia,serif;font-style:italic;font-size:1.05em}
+  .mono{font-family:ui-monospace,Consolas,monospace}
+
+  header.hero{padding:64px 0 40px;text-align:center;position:relative;overflow:hidden}
+  .badge{display:inline-block;padding:6px 16px;border:1px solid var(--line);border-radius:999px;
+    color:var(--cyan);font-size:.8rem;letter-spacing:2px;text-transform:uppercase;background:rgba(90,200,250,.08)}
+  header.hero h1{font-size:clamp(2.1rem,6vw,3.6rem);margin:18px 0 8px;
+    background:linear-gradient(100deg,#fff 10%,var(--cyan) 50%,var(--violet) 92%);
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  header.hero p.sub{color:var(--muted);max-width:640px;margin:0 auto;font-size:1.05rem}
+  .floaters{position:absolute;inset:0;pointer-events:none;z-index:-1;opacity:.4}
+  .floaters span{position:absolute;color:var(--violet);font-weight:800;font-size:1.5rem;animation:float 7s ease-in-out infinite}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-22px)}}
+
+  nav.toc{position:sticky;top:0;z-index:40;background:rgba(15,16,32,.85);backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);padding:10px 0}
+  nav.toc .wrap{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+  nav.toc .wrap::-webkit-scrollbar{display:none}
+  nav.toc a{white-space:nowrap;color:var(--muted);text-decoration:none;font-size:.88rem;padding:7px 14px;border-radius:999px;transition:.2s}
+  nav.toc a:hover{color:#fff;background:var(--card)}
+  nav.toc a.home{position:sticky;left:0;z-index:1;flex:0 0 auto;font-weight:800;color:var(--cyan);
+    background:var(--card2);border:1px solid var(--line)}
+  nav.toc a.home:hover{color:#fff;border-color:var(--violet);background:var(--card2)}
+
+  section{padding:46px 0}
+  .sec-tag{color:var(--cyan);font-weight:700;letter-spacing:2px;text-transform:uppercase;font-size:.78rem}
+  section h2{font-size:clamp(1.5rem,4vw,2.1rem);margin:6px 0 14px}
+  section h2 .n{color:var(--cyan);opacity:.6;margin-right:10px}
+  p.lead{color:#d2d7f5;font-size:1.05rem}
+  .muted{color:var(--muted)}
+
+  .card{background:linear-gradient(180deg,var(--card),var(--bg2));border:1px solid var(--line);
+    border-radius:var(--r);padding:24px;box-shadow:var(--shadow);margin:18px 0}
+  .card.tight{padding:18px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:720px){.grid2{grid-template-columns:1fr}}
+
+  .keybox{border-left:4px solid var(--cyan);background:rgba(90,200,250,.08);padding:14px 18px;border-radius:10px;margin:14px 0}
+  .keybox b{color:var(--cyan)}
+  .analogy{border-left:4px solid var(--gold);background:rgba(255,209,102,.08);padding:14px 18px;border-radius:10px;margin:14px 0}
+  .analogy b{color:var(--gold)}
+  .warn{border-left:4px solid var(--loss);background:rgba(255,107,107,.08);padding:14px 18px;border-radius:10px;margin:14px 0}
+  .formula{display:inline-block;background:rgba(155,140,255,.14);border:1px solid #4a4a86;padding:10px 18px;border-radius:12px;font-size:1.1rem;color:#fff;margin:6px 0}
+  .frac{display:inline-flex;flex-direction:column;text-align:center;vertical-align:middle;margin:0 4px}
+  .frac .num{border-bottom:2px solid currentColor;padding:0 6px}
+  .frac .den{padding:0 6px}
+
+  /* money bars */
+  .bars{margin:10px 0}
+  .barrow{display:flex;align-items:center;gap:12px;margin:10px 0}
+  .barrow .tag{width:90px;font-weight:700;font-size:.9rem;text-align:right;color:var(--muted)}
+  .bar{height:34px;border-radius:8px;display:flex;align-items:center;padding:0 12px;font-weight:800;color:#04121a;
+    transition:width .5s cubic-bezier(.4,.2,.2,1);white-space:nowrap;min-width:40px}
+  .bar.cost{background:linear-gradient(90deg,#8fa0ff,#6d7dff)}
+  .bar.sell{background:linear-gradient(90deg,#5affa0,#17b35f)}
+  .bar.sell.isloss{background:linear-gradient(90deg,#ff9a8b,#ff5b5b)}
+
+  /* explorer */
+  .exp .rowc{display:flex;gap:24px;flex-wrap:wrap}
+  .ctrl{flex:1;min-width:210px}
+  .ctrl label{display:flex;justify-content:space-between;font-weight:700;margin-bottom:6px}
+  .ctrl label span.v{color:var(--cyan)}
+  input[type=range]{width:100%;-webkit-appearance:none;height:8px;border-radius:6px;background:linear-gradient(90deg,var(--cyan),var(--violet));outline:none}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:#fff;border:3px solid var(--cyan);cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.4)}
+  input[type=range].g::-webkit-slider-thumb{border-color:var(--save)}
+  input[type=range].g{background:linear-gradient(90deg,var(--save),var(--gold))}
+  .verdict{text-align:center;margin-top:18px;font-size:1.5rem;font-weight:800}
+  .verdict .pct{font-size:1.05rem;display:block;margin-top:4px}
+  .win{color:var(--profit)}.lose{color:var(--loss)}.even{color:var(--muted)}
+  .pill{display:inline-block;padding:6px 12px;margin:4px;border-radius:10px;background:var(--card2);border:1px solid var(--line);font-weight:800}
+  .pill b{color:var(--cyan)}
+  .segwrap{display:flex;justify-content:center;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+  .seg{padding:8px 18px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--muted);cursor:pointer;font-weight:800;font-size:.9rem}
+  .seg.active{color:#fff;border-color:var(--cyan);background:rgba(90,200,250,.12)}
+
+  /* practice */
+  .tabs{display:flex;gap:10px;justify-content:center;margin:8px 0 22px;flex-wrap:wrap}
+  .tab{cursor:pointer;padding:10px 22px;border-radius:999px;font-weight:800;border:1px solid var(--line);background:var(--card);color:var(--muted);transition:.2s}
+  .tab .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px;vertical-align:middle}
+  .tab.easy .dot{background:var(--easy)}.tab.med .dot{background:var(--med)}.tab.hard .dot{background:var(--hard)}
+  .tab.active{color:#fff;transform:translateY(-2px)}
+  .tab.active.easy{border-color:var(--easy);box-shadow:0 6px 18px rgba(62,207,142,.25)}
+  .tab.active.med{border-color:var(--med);box-shadow:0 6px 18px rgba(246,185,59,.25)}
+  .tab.active.hard{border-color:var(--hard);box-shadow:0 6px 18px rgba(255,107,107,.25)}
+  .hint{text-align:center;color:var(--muted);font-size:.9rem;margin-bottom:16px}
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:720px){.cards{grid-template-columns:1fr}}
+  .flip{perspective:1600px;min-height:260px;cursor:pointer}
+  .flip-in{position:relative;width:100%;height:100%;min-height:260px;transition:transform .65s cubic-bezier(.4,.2,.2,1);transform-style:preserve-3d}
+  .flip.flipped .flip-in{transform:rotateY(180deg)}
+  .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--r);padding:20px;border:1px solid var(--line);display:flex;flex-direction:column;overflow:auto}
+  .front{background:linear-gradient(180deg,var(--card),var(--bg2))}
+  .back{background:linear-gradient(180deg,#20243f,#15172c);transform:rotateY(180deg)}
+  .qhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+  .qno{font-weight:800;color:var(--muted);font-size:.85rem;letter-spacing:1px}
+  .lvl{font-size:.72rem;font-weight:800;padding:3px 10px;border-radius:999px;text-transform:uppercase}
+  .lvl.easy{background:rgba(62,207,142,.18);color:var(--easy)}
+  .lvl.med{background:rgba(246,185,59,.18);color:var(--med)}
+  .lvl.hard{background:rgba(255,107,107,.18);color:var(--hard)}
+  .qtext{font-size:1.02rem;font-weight:600}
+  .flip-cue{margin-top:auto;color:var(--cyan);font-size:.82rem;font-weight:700;display:flex;align-items:center;gap:6px}
+  .flip-cue svg{width:16px;height:16px}
+  .ans{color:var(--gold);font-weight:800;font-size:1.05rem;margin:2px 0 10px}
+  .exp2{font-size:.92rem;color:#dbe0f7}.exp2 b{color:#fff}
+  .step{background:rgba(155,140,255,.1);border-left:3px solid var(--accent);padding:6px 12px;border-radius:8px;margin:6px 0;font-size:.9rem}
+  .back .qno{color:#8b90bf}
+
+  .cheat{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:720px){.cheat{grid-template-columns:1fr}}
+  .cheat .c{background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:16px}
+  .cheat .c h4{color:var(--cyan);margin-bottom:6px;font-size:1rem}
+
+  footer{padding:40px 0 60px;text-align:center;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line);margin-top:30px}
+  .prog{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--cyan),var(--violet));z-index:60;width:0}
+  ::selection{background:var(--violet);color:#0a0a1a}
+</style>
+</head>
+<body>
+<div class="prog" id="prog"></div>
+
+<header class="hero">
+  <div class="floaters">
+    <span style="left:8%;top:20%">%</span><span style="left:20%;top:62%;animation-delay:1s">Rs</span>
+    <span style="left:82%;top:24%;animation-delay:.6s">20%</span><span style="left:70%;top:70%;animation-delay:1.6s">%</span>
+    <span style="left:45%;top:12%;animation-delay:2s">▲</span><span style="left:90%;top:56%;animation-delay:2.4s">▼</span>
+  </div>
+  <div class="wrap">
+    <span class="badge">Grade 9 · O/L Maths · Chapter 4</span>
+    <h1>Percentages</h1>
+    <p class="sub">Profit, loss, discounts and commissions — the maths behind every price tag and every deal. Slide the numbers, watch the money bars move, then lock it in with 30 flip-to-reveal questions.</p>
+  </div>
+</header>
+
+<nav class="toc">
+  <div class="wrap">
+    <a class="home" href="../index.html" title="Back to all lessons">← Home</a>
+    <a href="#c1">① Profit &amp; loss</a>
+    <a href="#c2">② Whole stock</a>
+    <a href="#c3">③ Why percentages</a>
+    <a href="#c4">④ Profit% / Loss%</a>
+    <a href="#c5">⑤ Working backwards</a>
+    <a href="#c6">⑥ Discounts</a>
+    <a href="#c7">⑦ Commissions</a>
+    <a href="#play">🧮 Deal Explorer</a>
+    <a href="#disc">🏷️ Discount tool</a>
+    <a href="#practice">📝 Practice ×30</a>
+    <a href="#cheat">⭐ Cheat sheet</a>
+  </div>
+</nav>
+
+<!-- ① -->
+<section id="c1"><div class="wrap">
+  <span class="sec-tag">The starting point</span>
+  <h2><span class="n">①</span>Profit and loss: compare two prices</h2>
+  <p class="lead">Every sale has two prices: the <b>cost price</b> (what the seller paid to make or buy the item) and the <b>selling price</b> (what they sold it for). Comparing them tells you everything.</p>
+  <div class="card">
+    <div class="bars">
+      <div class="barrow"><span class="tag">Cost</span><div class="bar cost" style="width:45%">Rs 1000</div></div>
+      <div class="barrow"><span class="tag">Sells for</span><div class="bar sell" style="width:100%">Rs 2600</div></div>
+    </div>
+    <p style="text-align:center;margin-top:8px">Selling price &gt; cost → <b style="color:var(--profit)">profit = 2600 − 1000 = Rs 1600</b></p>
+  </div>
+  <div class="keybox">
+    If <b>selling price &gt; cost</b> → profit, and <span class="eq">profit = selling price − cost</span>.<br>
+    If <b>cost &gt; selling price</b> → loss, and <span class="eq">loss = cost − selling price</span>.<br>
+    If they're equal → no profit, no loss.
+  </div>
+  <div class="analogy"><b>Think of it as a tug-of-war between two prices.</b> Whichever is bigger decides whether it's a profit or a loss, and the <em>gap</em> between them is how much. That's the whole idea — everything else in this chapter is built on this one comparison.</div>
+</div></section>
+
+<!-- ② -->
+<section id="c2"><div class="wrap">
+  <span class="sec-tag">Scaling up</span>
+  <h2><span class="n">②</span>Buying and selling a whole stock</h2>
+  <p class="lead">Vendors rarely sell one item. Two easy ways to handle a whole stock — pick whichever feels natural.</p>
+  <div class="grid2">
+    <div class="card">
+      <h3 style="font-size:1.05rem;color:var(--cyan)">Way 1 · Totals first</h3>
+      <p class="muted">Work out total cost and total income, then compare.</p>
+      <div class="step">Buy 50 coconuts @ Rs 45 → cost = 45×50 = <b>Rs 2250</b></div>
+      <div class="step">Sell 50 @ Rs 60 → income = 60×50 = <b>Rs 3000</b></div>
+      <div class="step">Profit = 3000 − 2250 = <b style="color:var(--profit)">Rs 750</b></div>
+    </div>
+    <div class="card">
+      <h3 style="font-size:1.05rem;color:var(--gold)">Way 2 · Per item first</h3>
+      <p class="muted">Find profit on one item, then multiply by the quantity.</p>
+      <div class="step">Profit per coconut = 60 − 45 = <b>Rs 15</b></div>
+      <div class="step">For 50 coconuts = 15 × 50 = <b style="color:var(--profit)">Rs 750</b></div>
+      <p class="muted" style="font-size:.88rem">Same answer — Way 2 is often quicker.</p>
+    </div>
+  </div>
+  <div class="warn"><b>Watch out for mixed sales &amp; leftovers.</b> If a stock is sold in parts at different prices (or some is discarded), add up the actual money received across <em>all</em> parts, then compare to the total cost. Discarded goods still count in the cost — they were paid for.</div>
+</div></section>
+
+<!-- ③ -->
+<section id="c3"><div class="wrap">
+  <span class="sec-tag">The key insight</span>
+  <h2><span class="n">③</span>Why we need percentages</h2>
+  <p class="lead">Ramesh makes Rs 100 profit on trousers. Suresh makes Rs 100 profit on a kettle. Equal profit — so equally good deals? <b>No.</b></p>
+  <div class="card">
+    <div class="grid2" style="gap:14px">
+      <div>
+        <p><b>Ramesh</b> spent Rs 800 to make Rs 100.</p>
+        <div class="bars"><div class="barrow"><span class="tag">spent</span><div class="bar cost" style="width:60%">800</div></div>
+        <div class="barrow"><span class="tag">profit</span><div class="bar sell" style="width:20%">100</div></div></div>
+        <p style="text-align:center">profit = <span class="frac"><span class="num">100</span><span class="den">800</span></span> of cost</p>
+      </div>
+      <div>
+        <p><b>Suresh</b> spent Rs 2500 to make Rs 100.</p>
+        <div class="bars"><div class="barrow"><span class="tag">spent</span><div class="bar cost" style="width:100%">2500</div></div>
+        <div class="barrow"><span class="tag">profit</span><div class="bar sell" style="width:8%">100</div></div></div>
+        <p style="text-align:center">profit = <span class="frac"><span class="num">100</span><span class="den">2500</span></span> of cost</p>
+      </div>
+    </div>
+    <p style="text-align:center;margin-top:6px">The <b>same</b> Rs 100 profit is a much bigger slice of Ramesh's small spend. His deal is better.</p>
+  </div>
+  <div class="keybox"><b>To compare deals fairly, ask: how much profit per Rs 100 spent?</b> That's exactly what a percentage is. Converting each profit into "per hundred" puts every deal on the same scale — that's why percentages are the language of buying and selling.</div>
+</div></section>
+
+<!-- ④ -->
+<section id="c4"><div class="wrap">
+  <span class="sec-tag">The formula</span>
+  <h2><span class="n">④</span>Profit % and Loss %</h2>
+  <p class="lead">Write the profit (or loss) as a fraction of the <b>cost</b>, then multiply by 100%. The cost is always the "base" — the thing we compare against.</p>
+  <div class="card" style="text-align:center">
+    <p class="formula">profit % = <span class="frac"><span class="num">profit</span><span class="den">cost price</span></span> × 100%</p>
+    <p class="formula">loss % = <span class="frac"><span class="num">loss</span><span class="den">cost price</span></span> × 100%</p>
+  </div>
+  <div class="grid2">
+    <div class="card tight">
+      <h3 style="font-size:1rem;color:var(--profit)">Profit example</h3>
+      <div class="step">Buy book Rs 25, sell Rs 30 → profit Rs 5.</div>
+      <div class="step">profit % = (5 ÷ 25) × 100% = <b>20%</b></div>
+    </div>
+    <div class="card tight">
+      <h3 style="font-size:1rem;color:var(--loss)">Loss example</h3>
+      <div class="step">Buy trousers Rs 500, sell Rs 450 → loss Rs 50.</div>
+      <div class="step">loss % = (50 ÷ 500) × 100% = <b>10%</b></div>
+    </div>
+  </div>
+  <div class="warn"><b>The #1 mistake:</b> dividing by the selling price. Always divide by the <b>cost</b> (the buying price or production cost). Profit/loss is measured against what you <em>put in</em>.</div>
+</div></section>
+
+<!-- ⑤ -->
+<section id="c5"><div class="wrap">
+  <span class="sec-tag">Reverse gear</span>
+  <h2><span class="n">⑤</span>Working backwards with the "Rs 100" trick</h2>
+  <p class="lead">Often you're given the percentage and asked for a price. The cleanest way: imagine the cost is <b>Rs 100</b> and scale up.</p>
+  <div class="grid2">
+    <div class="card">
+      <h3 style="font-size:1.05rem;color:var(--cyan)">Find the selling price</h3>
+      <p class="muted">Almirah costs Rs 30 000, sold at 15% profit.</p>
+      <div class="step">If cost were Rs 100, it sells for Rs <b>115</b> (100 + 15).</div>
+      <div class="step">So SP = <span class="frac"><span class="num">115</span><span class="den">100</span></span> × 30 000 = <b style="color:var(--profit)">Rs 34 500</b></div>
+      <p class="muted" style="font-size:.86rem">Loss works the same: 2% loss → sells for Rs 98 per Rs 100.</p>
+    </div>
+    <div class="card">
+      <h3 style="font-size:1.05rem;color:var(--gold)">Find the cost (given SP + %)</h3>
+      <p class="muted">TV sold at Rs 22 000, at 10% profit. Cost?</p>
+      <div class="step">If cost were Rs 100, SP would be Rs <b>110</b>.</div>
+      <div class="step">So cost = <span class="frac"><span class="num">100</span><span class="den">110</span></span> × 22 000 = <b>Rs 20 000</b></div>
+      <p class="muted" style="font-size:.86rem">Loss of 15% → SP is Rs 85 per Rs 100, so cost = SP × 100/85.</p>
+    </div>
+  </div>
+  <div class="keybox"><b>The pattern in one line:</b> profit p% means <span class="eq">SP = cost × (100+p)/100</span>; loss L% means <span class="eq">SP = cost × (100−L)/100</span>. To go from SP back to cost, flip the fraction.</div>
+</div></section>
+
+<!-- ⑥ -->
+<section id="c6"><div class="wrap">
+  <span class="sec-tag">Shopping</span>
+  <h2><span class="n">⑥</span>Discounts — a cut off the marked price</h2>
+  <p class="lead">The <b>marked price</b> is the price written on the item. A <b>discount</b> is an amount taken off it — usually given as a percentage of the marked price.</p>
+  <div class="card">
+    <p><b>Example:</b> books marked Rs 1500, discount 20%.</p>
+    <div class="step">Discount = 1500 × <span class="frac"><span class="num">20</span><span class="den">100</span></span> = <b class="mono" style="color:var(--save)">Rs 300</b></div>
+    <div class="step">You pay = 1500 − 300 = <b>Rs 1200</b> &nbsp; (or directly: 1500 × 80/100)</div>
+    <p class="muted" style="text-align:center;margin-top:6px">Discount % = (discount ÷ marked price) × 100%. To find the marked price from what you paid, use SP × 100/(100 − discount%).</p>
+  </div>
+  <div class="analogy"><b>Discount is to the marked price what loss is to the cost</b> — a percentage <em>subtracted</em>. If the discount is 10%, you pay for 90 out of every 100 of the marked price. Same "Rs 100" trick as before.</div>
+</div></section>
+
+<!-- ⑦ -->
+<section id="c7"><div class="wrap">
+  <span class="sec-tag">Middlemen</span>
+  <h2><span class="n">⑦</span>Commissions — a cut of the deal</h2>
+  <p class="lead">When an agent (a broker) helps sell a house, car or land, they charge a <b>commission</b> — a percentage of the transaction value.</p>
+  <div class="grid2">
+    <div class="card tight"><h3 style="font-size:1rem;color:var(--cyan)">Find the commission</h3>
+      <div class="step">Car worth Rs 3 000 000, commission 5%.</div>
+      <div class="step">= 3 000 000 × 5/100 = <b>Rs 150 000</b></div>
+    </div>
+    <div class="card tight"><h3 style="font-size:1rem;color:var(--gold)">Find the commission %</h3>
+      <div class="step">Fee Rs 36 000 on land worth Rs 1 200 000.</div>
+      <div class="step">= (36 000 ÷ 1 200 000) × 100% = <b>3%</b></div>
+    </div>
+  </div>
+  <div class="keybox"><b>Same shape as everything else in this chapter:</b> commission = value × rate/100, and commission % = (commission ÷ value) × 100%. The seller's take-home is the sale value <em>minus</em> the commission.</div>
+</div></section>
+
+<!-- DEAL EXPLORER -->
+<section id="play"><div class="wrap">
+  <span class="sec-tag">Learn by playing</span>
+  <h2>🧮 Deal Explorer</h2>
+  <p class="lead">Slide the cost and selling price. Watch the money bars, and see instantly whether it's a profit or a loss — and the exact percentage.</p>
+  <div class="card exp">
+    <div class="rowc">
+      <div class="ctrl"><label>Cost price <span class="v" id="cpv">Rs 800</span></label><input type="range" id="cp" min="50" max="3000" step="10" value="800"></div>
+      <div class="ctrl"><label>Selling price <span class="v" id="spv">Rs 1000</span></label><input type="range" id="sp" min="50" max="3000" step="10" value="1000"></div>
+    </div>
+    <div class="bars" style="margin-top:18px">
+      <div class="barrow"><span class="tag">Cost</span><div class="bar cost" id="barCost">Rs 800</div></div>
+      <div class="barrow"><span class="tag">Selling</span><div class="bar sell" id="barSell">Rs 1000</div></div>
+    </div>
+    <div class="verdict" id="verdict"></div>
+    <div style="text-align:center;margin-top:10px" id="dealPills"></div>
+  </div>
+</div></section>
+
+<!-- DISCOUNT / COMMISSION TOOL -->
+<section id="disc"><div class="wrap">
+  <span class="sec-tag">Try the numbers</span>
+  <h2>🏷️ Discount &amp; Commission Tool</h2>
+  <p class="lead">Set a price and a percentage. See the amount taken off (or charged) and what's left. Flip between the two modes.</p>
+  <div class="card exp">
+    <div class="segwrap">
+      <div class="seg active" data-mode="discount">🏷️ Discount</div>
+      <div class="seg" data-mode="commission">🤝 Commission</div>
+    </div>
+    <div class="rowc">
+      <div class="ctrl"><label id="priceLbl">Marked price <span class="v" id="mpv">Rs 1500</span></label><input type="range" id="mp" min="100" max="50000" step="100" value="1500"></div>
+      <div class="ctrl"><label id="rateLbl">Discount % <span class="v" id="rtv">20%</span></label><input type="range" id="rt" class="g" min="0" max="50" step="1" value="20"></div>
+    </div>
+    <div class="bars" style="margin-top:18px">
+      <div class="barrow"><span class="tag" id="tagTop">Marked</span><div class="bar cost" id="barMarked" style="background:linear-gradient(90deg,#8fa0ff,#6d7dff)">Rs 1500</div></div>
+      <div class="barrow"><span class="tag" id="tagCut">Discount</span><div class="bar" id="barCut" style="background:linear-gradient(90deg,#f9a03f,#ffd166);color:#04121a">Rs 300</div></div>
+      <div class="barrow"><span class="tag" id="tagLeft">You pay</span><div class="bar sell" id="barLeft">Rs 1200</div></div>
+    </div>
+    <p class="muted" id="discNote" style="text-align:center;margin-top:12px"></p>
+  </div>
+</div></section>
+
+<!-- PRACTICE -->
+<section id="practice"><div class="wrap">
+  <span class="sec-tag">Test yourself</span>
+  <h2>📝 Practice — 30 questions</h2>
+  <p class="lead">Work each one out, then <b>tap the card to flip</b> and check the full worked answer. Ten questions at each level.</p>
+  <div class="tabs">
+    <div class="tab easy active" data-lvl="easy"><span class="dot"></span>Easy · 10</div>
+    <div class="tab med" data-lvl="med"><span class="dot"></span>Medium · 10</div>
+    <div class="tab hard" data-lvl="hard"><span class="dot"></span>Hard · 10</div>
+  </div>
+  <p class="hint">👆 Tap any card to reveal the answer &amp; step-by-step working. Tap again to hide.</p>
+  <div class="cards" id="cards"></div>
+</div></section>
+
+<!-- CHEAT -->
+<section id="cheat"><div class="wrap">
+  <span class="sec-tag">Keep this in your head</span>
+  <h2>⭐ One-glance cheat sheet</h2>
+  <div class="card">
+    <div class="cheat">
+      <div class="c"><h4>Profit / Loss</h4><span class="muted">profit = SP − cost. loss = cost − SP. Bigger price wins; the gap is the amount.</span></div>
+      <div class="c"><h4>Profit % / Loss %</h4><span class="muted">(profit or loss) ÷ <b>cost</b> × 100%. Always divide by the cost, never the SP.</span></div>
+      <div class="c"><h4>SP from cost + %</h4><span class="muted">profit p%: SP = cost × (100+p)/100. loss L%: cost × (100−L)/100.</span></div>
+      <div class="c"><h4>Cost from SP + %</h4><span class="muted">profit p%: cost = SP × 100/(100+p). loss L%: SP × 100/(100−L).</span></div>
+      <div class="c"><h4>Discount</h4><span class="muted">discount = marked × d/100. You pay marked × (100−d)/100.</span></div>
+      <div class="c"><h4>Commission</h4><span class="muted">commission = value × c/100. Seller keeps value − commission.</span></div>
+    </div>
+  </div>
+</div></section>
+
+<footer>
+  <div class="wrap">
+    <p><b>Percentages</b> · Grade 9 O/L Mathematics · Chapter 4</p>
+    <p class="muted" style="margin-top:6px">Understand it, slide the numbers, then prove it with 30 questions.</p>
+  </div>
+</footer>
+
+<script>
+const prog=document.getElementById('prog');
+addEventListener('scroll',()=>{const h=document.documentElement;prog.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';});
+const rs=n=>'Rs '+Math.round(n).toLocaleString('en-US');
+
+/* ---------- DEAL EXPLORER ---------- */
+const cp=document.getElementById('cp'), sp=document.getElementById('sp');
+function deal(){
+  const c=+cp.value, s=+sp.value, max=Math.max(c,s,1);
+  document.getElementById('cpv').textContent=rs(c);
+  document.getElementById('spv').textContent=rs(s);
+  const bc=document.getElementById('barCost'), bs=document.getElementById('barSell');
+  bc.style.width=(c/max*100)+'%'; bc.textContent=rs(c);
+  bs.style.width=(s/max*100)+'%'; bs.textContent=rs(s);
+  const v=document.getElementById('verdict'); const diff=s-c;
+  bs.classList.toggle('isloss', diff<0);
+  if(diff>0){const pct=diff/c*100;
+    v.className='verdict win'; v.innerHTML=`▲ Profit of ${rs(diff)}<span class="pct">profit % = ${diff}/${c} × 100 = <b>${(+pct.toFixed(2))}%</b></span>`;}
+  else if(diff<0){const pct=-diff/c*100;
+    v.className='verdict lose'; v.innerHTML=`▼ Loss of ${rs(-diff)}<span class="pct">loss % = ${-diff}/${c} × 100 = <b>${(+pct.toFixed(2))}%</b></span>`;}
+  else{v.className='verdict even'; v.innerHTML=`No profit, no loss<span class="pct">selling price equals cost</span>`;}
+  document.getElementById('dealPills').innerHTML=
+    `<span class="pill">Cost <b>${rs(c)}</b></span><span class="pill">Sells <b>${rs(s)}</b></span><span class="pill">Gap <b>${rs(Math.abs(diff))}</b></span>`;
+}
+cp.oninput=deal; sp.oninput=deal; deal();
+
+/* ---------- DISCOUNT / COMMISSION ---------- */
+let mode='discount';
+const mp=document.getElementById('mp'), rt=document.getElementById('rt');
+function disc(){
+  const price=+mp.value, rate=+rt.value, max=price||1;
+  document.getElementById('mpv').textContent=rs(price);
+  document.getElementById('rtv').textContent=rate+'%';
+  const cut=price*rate/100, left=price-cut;
+  document.getElementById('barMarked').style.width='100%';
+  document.getElementById('barMarked').textContent=rs(price);
+  const bcut=document.getElementById('barCut'), bleft=document.getElementById('barLeft');
+  bcut.style.width=Math.max(cut/max*100,6)+'%'; bcut.textContent=rs(cut);
+  bleft.style.width=Math.max(left/max*100,6)+'%'; bleft.textContent=rs(left);
+  if(mode==='discount'){
+    document.getElementById('priceLbl').firstChild.textContent='Marked price ';
+    document.getElementById('rateLbl').firstChild.textContent='Discount % ';
+    document.getElementById('tagTop').textContent='Marked';
+    document.getElementById('tagCut').textContent='Discount';
+    document.getElementById('tagLeft').textContent='You pay';
+    document.getElementById('discNote').innerHTML=`Discount = ${price} × ${rate}/100 = <b style="color:var(--save)">${rs(cut)}</b>. You pay ${price} − ${Math.round(cut)} = <b style="color:var(--profit)">${rs(left)}</b> (= marked × ${100-rate}/100).`;
+  }else{
+    document.getElementById('priceLbl').firstChild.textContent='Sale value ';
+    document.getElementById('rateLbl').firstChild.textContent='Commission % ';
+    document.getElementById('tagTop').textContent='Sale value';
+    document.getElementById('tagCut').textContent='Commission';
+    document.getElementById('tagLeft').textContent='Seller keeps';
+    document.getElementById('discNote').innerHTML=`Commission = ${price} × ${rate}/100 = <b style="color:var(--save)">${rs(cut)}</b>. The seller keeps ${price} − ${Math.round(cut)} = <b style="color:var(--profit)">${rs(left)}</b>.`;
+  }
+}
+mp.oninput=disc; rt.oninput=disc;
+document.querySelectorAll('.seg').forEach(s=>s.onclick=()=>{
+  document.querySelectorAll('.seg').forEach(x=>x.classList.remove('active'));
+  s.classList.add('active'); mode=s.dataset.mode;
+  if(mode==='commission'){ mp.min=100000; mp.max=6000000; mp.step=100000; mp.value=3000000; }
+  else { mp.min=100; mp.max=50000; mp.step=100; mp.value=1500; }
+  disc();
+});
+disc();
+
+/* ---------- PRACTICE ---------- */
+const Q={easy:[],med:[],hard:[]};
+function q(l,text,ans,steps){Q[l].push({text,ans,steps});}
+
+/* EASY */
+q('easy','A company makes a pair of shoes for Rs 1000 and sells it for Rs 2600. Find the profit.','Rs 1600',
+ ['Selling price (2600) is greater than cost (1000), so it is a profit.','profit = selling price − cost = 2600 − 1000.','Profit = <b>Rs 1600</b>.']);
+q('easy','A pair of trousers bought for Rs 500 is sold for Rs 450. Find the loss.','Rs 50',
+ ['Cost (500) is greater than selling price (450), so it is a loss.','loss = cost − selling price = 500 − 450.','Loss = <b>Rs 50</b>.']);
+q('easy','A vendor buys coconuts at Rs 45 each and sells them at Rs 60 each. What is the profit on one coconut?','Rs 15',
+ ['profit per coconut = selling price − cost = 60 − 45.','Profit = <b>Rs 15</b> per coconut.']);
+q('easy','A book bought for Rs 25 is sold for Rs 30. Find the profit percentage.','20%',
+ ['Profit = 30 − 25 = Rs 5.','profit % = (profit ÷ cost) × 100 = (5 ÷ 25) × 100.','= <b>20%</b>.']);
+q('easy','An item bought for Rs 500 is sold at a loss of Rs 50. Find the loss percentage.','10%',
+ ['loss % = (loss ÷ cost) × 100 = (50 ÷ 500) × 100.','= <b>10%</b>.']);
+q('easy','Books are marked Rs 1500. A discount of 20% is given. Find the discount amount.','Rs 300',
+ ['discount = marked price × rate/100 = 1500 × 20/100.','= <b>Rs 300</b>.']);
+q('easy','A pair of trousers bought for Rs 800 is sold for Rs 900. Find the profit.','Rs 100',
+ ['profit = selling price − cost = 900 − 800.','Profit = <b>Rs 100</b>.']);
+q('easy','A company charges 5% commission to sell a car worth Rs 3 000 000. Find the commission.','Rs 150 000',
+ ['commission = value × rate/100 = 3 000 000 × 5/100.','= <b>Rs 150 000</b>.']);
+q('easy','A discount of Rs 250 is given on a watch marked Rs 2000. Find the discount percentage.','12.5%',
+ ['discount % = (discount ÷ marked price) × 100 = (250 ÷ 2000) × 100.','= <b>12.5%</b>.']);
+q('easy','A vendor buys exercise books at Rs 25 and sells them at Rs 30 each. Find the profit per book.','Rs 5',
+ ['profit = selling price − cost = 30 − 25.','Profit = <b>Rs 5</b> per book.']);
+
+/* MEDIUM */
+q('med','A pair of trousers is bought for Rs 500 and sold for Rs 650. Find the profit percentage.','30%',
+ ['Profit = 650 − 500 = Rs 150.','profit % = (150 ÷ 500) × 100.','= <b>30%</b>.']);
+q('med','An electric iron worth Rs 2500 is sold for Rs 2300. Find the loss percentage.','8%',
+ ['Loss = 2500 − 2300 = Rs 200.','loss % = (200 ÷ 2500) × 100.','= <b>8%</b>.']);
+q('med','A carpenter makes a table for Rs 4000 and sells it for Rs 5600. Find the profit percentage.','40%',
+ ['Profit = 5600 − 4000 = Rs 1600.','profit % = (1600 ÷ 4000) × 100.','= <b>40%</b>.']);
+q('med','A vendor buys an almirah for Rs 30 000 and sells it at 15% profit. Find the selling price.','Rs 34 500',
+ ['At 15% profit, Rs 100 of cost sells for Rs 115.','SP = (115 ÷ 100) × 30 000.','= <b>Rs 34 500</b>. (Or: profit 4500, added to 30 000.)']);
+q('med','A pair of shoes bought for Rs 1500 is sold at a loss of 2%. Find the selling price.','Rs 1470',
+ ['At 2% loss, Rs 100 of cost sells for Rs 98.','SP = (98 ÷ 100) × 1500.','= <b>Rs 1470</b>.']);
+q('med','A mobile phone costs Rs 9000 to make and is marked to keep a Rs 3000 profit. It is sold at a 10% discount. Find the selling price.','Rs 10 800',
+ ['Marked price = 9000 + 3000 = Rs 12 000.','At 10% discount, you pay 90 per 100: SP = (90 ÷ 100) × 12 000.','= <b>Rs 10 800</b>.']);
+q('med','A real-estate company charges Rs 36 000 to sell land worth Rs 1 200 000. Find the commission percentage.','3%',
+ ['commission % = (commission ÷ value) × 100.','= (36 000 ÷ 1 200 000) × 100.','= <b>3%</b>.']);
+q('med','A bookseller earns 25% profit selling a novel worth Rs 300. Find the selling price.','Rs 375',
+ ['At 25% profit, Rs 100 of cost sells for Rs 125.','SP = (125 ÷ 100) × 300.','= <b>Rs 375</b>.']);
+q('med','A bicycle worth Rs 12 000 is sold at a loss of 10%. Find the selling price.','Rs 10 800',
+ ['At 10% loss, Rs 100 of cost sells for Rs 90.','SP = (90 ÷ 100) × 12 000.','= <b>Rs 10 800</b>.']);
+q('med','A storybook is sold for Rs 460 at a discount of 8%. Find the marked price.','Rs 500',
+ ['At 8% discount, Rs 460 is 92% of the marked price.','marked price = 460 × 100/92.','= <b>Rs 500</b>.']);
+
+/* HARD */
+q('hard','A vendor earns 10% profit by selling a TV for Rs 22 000. Find the purchase price.','Rs 20 000',
+ ['At 10% profit, an item costing Rs 100 sells for Rs 110.','cost = (100 ÷ 110) × 22 000.','= <b>Rs 20 000</b>. (Check: 20 000 + 10% = 22 000 ✓.)']);
+q('hard','A sports item is sold for Rs 6800 at a loss of 15%. Find the purchase price.','Rs 8000',
+ ['At 15% loss, an item costing Rs 100 sells for Rs 85.','cost = (100 ÷ 85) × 6800.','= <b>Rs 8000</b>. (Check: 8000 − 15% = 6800 ✓.)']);
+q('hard','A vendor buys 60 kg of manioc at Rs 50/kg. He sells 20 kg at Rs 70, 15 kg at Rs 60, 5 kg at Rs 50, 10 kg at Rs 40, and discards the last 10 kg. Profit or loss, and how much?','Loss of Rs 50',
+ ['Total cost = 50 × 60 = Rs 3000 (all 60 kg were paid for).','Income = 20×70 + 15×60 + 5×50 + 10×40 = 1400 + 900 + 250 + 400 = Rs 2950.','Cost 3000 &gt; income 2950 → <b>loss of Rs 50</b>.']);
+q('hard','A vendor earns 10% profit by selling a refrigerator for Rs 33 000. Find the purchase price.','Rs 30 000',
+ ['At 10% profit, Rs 100 cost → Rs 110 SP.','cost = (100 ÷ 110) × 33 000.','= <b>Rs 30 000</b>.']);
+q('hard','A vendor incurs a 5% loss selling an electric stove for Rs 28 500. Find the purchase price.','Rs 30 000',
+ ['At 5% loss, Rs 100 cost → Rs 95 SP.','cost = (100 ÷ 95) × 28 500.','= <b>Rs 30 000</b>.']);
+q('hard','A carpenter spends Rs 1800 on a chair and sells it to a vendor at 20% profit. The vendor sells it to a customer at 20% profit. How much does the customer pay, and who earns the greater profit?','Customer pays Rs 2592; the vendor earns more',
+ ['Carpenter’s SP = 1800 × 120/100 = Rs 2160 (profit Rs 360).','Vendor buys at 2160, sells at 120% → 2160 × 120/100 = <b>Rs 2592</b> (profit Rs 432).','Both use 20%, but the vendor’s 20% is on a bigger amount, so the <b>vendor earns more</b> (432 vs 360).']);
+q('hard','A clock is sold for Rs 3240 at a profit of 8%. Find the purchase price.','Rs 3000',
+ ['At 8% profit, Rs 100 cost → Rs 108 SP.','cost = (100 ÷ 108) × 3240.','= <b>Rs 3000</b>.']);
+q('hard','A camera is sold for Rs 12 048 at a loss of 4%. Find the purchase price.','Rs 12 550',
+ ['At 4% loss, Rs 100 cost → Rs 96 SP.','cost = (100 ÷ 96) × 12 048.','= <b>Rs 12 550</b>.']);
+q('hard','Shop A gives 8% off everything. Shop B gives Rs 100 off any purchase over Rs 1000. For shoes marked Rs 1500: what is paid at each shop, what is Shop B’s discount %, and which is cheaper?','A: Rs 1380; B: Rs 1400 (6.67%); Shop A is cheaper',
+ ['Shop A: discount = 1500 × 8/100 = 120 → pay <b>Rs 1380</b>.','Shop B: flat Rs 100 off → pay <b>Rs 1400</b>; discount % = (100 ÷ 1500) × 100 = <b>6.67%</b>.','1380 &lt; 1400, so <b>Shop A is cheaper</b>.']);
+q('hard','A car dealer buys a car for Rs 5 000 000 and prices it at Rs 6 000 000. He gives the buyer a 3% discount and pays a 2% commission to a broker. Find his profit.','Rs 703 600',
+ ['Selling price after 3% discount = 6 000 000 × 97/100 = Rs 5 820 000.','Broker commission = 2% of 5 820 000 = Rs 116 400.','Profit = 5 820 000 − 116 400 − 5 000 000 = <b>Rs 703 600</b>.']);
+
+const flipIcon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>';
+function render(lvl){
+  const host=document.getElementById('cards'); host.innerHTML='';
+  Q[lvl].forEach((item,i)=>{
+    const steps=item.steps.map(s=>`<div class="step">${s}</div>`).join('');
+    const div=document.createElement('div'); div.className='flip';
+    div.innerHTML=`<div class="flip-in">
+      <div class="face front">
+        <div class="qhead"><span class="qno">Q${i+1}</span><span class="lvl ${lvl}">${lvl==='med'?'medium':lvl}</span></div>
+        <div class="qtext">${item.text}</div>
+        <div class="flip-cue">${flipIcon} tap to reveal answer</div>
+      </div>
+      <div class="face back">
+        <div class="qhead"><span class="qno">Q${i+1} · answer</span><span class="lvl ${lvl}">${lvl==='med'?'medium':lvl}</span></div>
+        <div class="ans">✓ ${item.ans}</div>
+        <div class="exp2">${steps}</div>
+        <div class="flip-cue">${flipIcon} tap to hide</div>
+      </div></div>`;
+    div.onclick=()=>div.classList.toggle('flipped');
+    host.appendChild(div);
+  });
+}
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  t.classList.add('active'); render(t.dataset.lvl);
+});
+render('easy');
+</script>
+</body>
+</html>
