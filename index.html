@@ -105,6 +105,7 @@ section p.lead{color:var(--ink-soft);max-width:660px}
 .t-binary  {--acc:#2ec5e6;--acc2:#41e88a;--accsoft:rgba(65,232,138,.10)}
 .t-fractions{--acc:#a78bfa;--acc2:#2dd4bf;--accsoft:rgba(167,139,250,.12)}
 .t-percent {--acc:#5ac8fa;--acc2:#9b8cff;--accsoft:rgba(90,200,250,.12)}
+.t-algebra {--acc:#38d6c6;--acc2:#a78bfa;--accsoft:rgba(56,214,198,.12)}
 .t-tables  {--acc:#7c6bff;--acc2:#00d4ff;--accsoft:rgba(124,107,255,.13)}
 .t-microbes{--acc:#2dd4bf;--acc2:#4ade80;--accsoft:rgba(45,212,191,.10)}
 .t-eye     {--acc:#38bdf8;--acc2:#a78bfa;--accsoft:rgba(56,189,248,.10)}
@@ -148,6 +149,8 @@ section p.lead{color:var(--ink-soft);max-width:660px}
 .glyph{width:52px;height:52px;flex:0 0 auto;border-radius:14px;display:grid;place-items:center;
   font-size:1.4rem;font-weight:800;border:1px solid var(--line);background:var(--panel2);
   color:var(--acc2);box-shadow:inset 0 0 22px rgba(255,255,255,.03)}
+.glyph.eqg,.eqi{font-family:'Cambria Math','Times New Roman',Georgia,serif;font-style:italic}
+.eqi{color:var(--acc2);font-weight:700;white-space:nowrap}
 .chap{font-size:.71rem;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;color:var(--acc)}
 .lcard h3{font-size:1.16rem;margin-top:2px}
 .tagline{color:var(--acc2);font-size:.9rem;font-weight:700;margin-bottom:8px}
@@ -211,11 +214,12 @@ footer b{color:var(--ink-soft)}
     <span style="left:12%;top:46%;animation-delay:3.2s;color:var(--amber)">→F</span>
     <span style="left:88%;top:14%;animation-delay:1.8s;color:var(--violet)">¾</span>
     <span style="left:25%;top:78%;animation-delay:2.6s;color:var(--grn)">25%</span>
+    <span style="left:53%;top:66%;animation-delay:.4s;color:var(--cyan2)">x²</span>
   </div>
   <div class="wrap">
     <span class="kicker">Everything you need · O/L Grades 9–11</span>
     <h1>Maths &amp; Science,<br>Actually Understood</h1>
-    <p class="sub">Nine pages built to make the ideas <em>click</em> — interactive tools you can play with, plain-English explanations, and 238 questions to prove you've got it. Pick a grade, then pick a chapter.</p>
+    <p class="sub">Ten pages built to make the ideas <em>click</em> — interactive tools you can play with, plain-English explanations, and 268 questions to prove you've got it. Pick a grade, then pick a chapter.</p>
     <div class="hero-cta">
       <a class="btn btn-primary" href="#grades">▶ Browse lessons</a>
       <a class="btn btn-ghost" href="#howto">How to use this</a>
@@ -237,10 +241,10 @@ footer b{color:var(--ink-soft)}
     <span class="gcount" id="gcount"></span>
   </div>
   <div class="stats reveal">
-    <div class="stat"><div class="big" id="stPages">9</div><div class="lbl">Pages</div></div>
-    <div class="stat"><div class="big" id="stChapters">8</div><div class="lbl">Chapters</div></div>
-    <div class="stat"><div class="big" id="stQuestions">238</div><div class="lbl">Questions</div></div>
-    <div class="stat"><div class="big" id="stTools">30</div><div class="lbl">Live tools</div></div>
+    <div class="stat"><div class="big" id="stPages">10</div><div class="lbl">Pages</div></div>
+    <div class="stat"><div class="big" id="stChapters">9</div><div class="lbl">Chapters</div></div>
+    <div class="stat"><div class="big" id="stQuestions">268</div><div class="lbl">Questions</div></div>
+    <div class="stat"><div class="big" id="stTools">32</div><div class="lbl">Live tools</div></div>
   </div>
 </div>
 
@@ -327,6 +331,26 @@ footer b{color:var(--ink-soft)}
         <span class="chip">7 concepts</span>
         <span class="chip hot">🧮 Deal explorer</span>
         <span class="chip hot">🏷️ Discount tool</span>
+        <span class="chip go">📝 30 flip cards</span>
+      </div>
+      <div class="open">Open lesson <span class="arr">→</span></div>
+    </a>
+
+    <a class="lcard t-algebra" href="maths/algebraic-expressions.html"
+       data-grade="9" data-chapter="5" data-q="30" data-tools="2">
+      <div class="ltop">
+        <div class="glyph eqg">x²</div>
+        <div>
+          <div class="chap">Grade 9 · Chapter 5</div>
+          <h3>Algebraic Expressions</h3>
+        </div>
+      </div>
+      <div class="tagline">Expansion you can actually see</div>
+      <p class="desc">Substituting values into expressions, then multiplying two brackets — with an area model that rescales its four coloured tiles as you drag the numbers, so <span class="eqi">(x+a)(x+b)</span> stops being a rule to memorise.</p>
+      <div class="chips">
+        <span class="chip">6 concepts</span>
+        <span class="chip hot">🎰 Substitution machine</span>
+        <span class="chip hot">🟦 Area explorer</span>
         <span class="chip go">📝 30 flip cards</span>
       </div>
       <div class="open">Open lesson <span class="arr">→</span></div>

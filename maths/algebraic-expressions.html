@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Algebraic Expressions — Master It | Grade 9 Maths</title>
+<style>
+  :root{
+    --bg:#0d1522; --bg2:#132033; --card:#1a2a42; --card2:#213551;
+    --ink:#eaf2ff; --muted:#9fb4d4; --line:#2c4165;
+    --cyan:#38d6c6; --blue:#4aa8ff; --violet:#a78bfa; --gold:#ffd166;
+    --x2:#4aa8ff; --ax:#ffb454; --bx:#41e0a3; --ab:#ff7a9c;
+    --easy:#3ecf8e; --med:#f6b93b; --hard:#ff6b6b; --accent:#a78bfa;
+    --shadow:0 18px 45px rgba(0,0,0,.5); --r:18px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+    background:radial-gradient(1200px 700px at 82% -10%,#1a2d49 0%,var(--bg) 55%) fixed;
+    color:var(--ink);line-height:1.65;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+  h1,h2,h3{line-height:1.2;font-weight:800;letter-spacing:.2px}
+  .eq{font-family:'Cambria Math','Times New Roman',Georgia,serif;font-style:italic;font-size:1.06em}
+  .mono{font-family:ui-monospace,Consolas,monospace}
+  sup{font-size:.72em}
+
+  header.hero{padding:64px 0 40px;text-align:center;position:relative;overflow:hidden}
+  .badge{display:inline-block;padding:6px 16px;border:1px solid var(--line);border-radius:999px;
+    color:var(--cyan);font-size:.8rem;letter-spacing:2px;text-transform:uppercase;background:rgba(56,214,198,.08)}
+  header.hero h1{font-size:clamp(2rem,6vw,3.5rem);margin:18px 0 8px;
+    background:linear-gradient(100deg,#fff 10%,var(--cyan) 50%,var(--violet) 92%);
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  header.hero p.sub{color:var(--muted);max-width:650px;margin:0 auto;font-size:1.05rem}
+  .floaters{position:absolute;inset:0;pointer-events:none;z-index:-1;opacity:.4}
+  .floaters span{position:absolute;color:var(--violet);font-weight:800;font-size:1.5rem;font-style:italic;font-family:Georgia,serif;animation:float 7s ease-in-out infinite}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-22px)}}
+
+  nav.toc{position:sticky;top:0;z-index:40;background:rgba(13,21,34,.86);backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);padding:10px 0}
+  nav.toc .wrap{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+  nav.toc .wrap::-webkit-scrollbar{display:none}
+  nav.toc a{white-space:nowrap;color:var(--muted);text-decoration:none;font-size:.88rem;padding:7px 14px;border-radius:999px;transition:.2s}
+  nav.toc a:hover{color:#fff;background:var(--card)}
+  nav.toc a.home{position:sticky;left:0;z-index:1;flex:0 0 auto;font-weight:800;color:var(--cyan);
+    background:var(--card2);border:1px solid var(--line)}
+  nav.toc a.home:hover{color:#fff;border-color:var(--violet);background:var(--card2)}
+
+  section{padding:44px 0;scroll-margin-top:60px}
+  .sec-tag{color:var(--cyan);font-weight:700;letter-spacing:2px;text-transform:uppercase;font-size:.78rem}
+  section h2{font-size:clamp(1.5rem,4vw,2.1rem);margin:6px 0 14px}
+  section h2 .n{color:var(--cyan);opacity:.6;margin-right:10px}
+  p.lead{color:#d3ddf5;font-size:1.05rem}
+  .muted{color:var(--muted)}
+  .flash{animation:flash 1.6s ease}
+  @keyframes flash{0%,100%{box-shadow:var(--shadow)}25%{box-shadow:0 0 0 3px var(--cyan),var(--shadow)}}
+
+  .card{background:linear-gradient(180deg,var(--card),var(--bg2));border:1px solid var(--line);
+    border-radius:var(--r);padding:24px;box-shadow:var(--shadow);margin:18px 0}
+  .card.tight{padding:18px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:720px){.grid2{grid-template-columns:1fr}}
+
+  .keybox{border-left:4px solid var(--cyan);background:rgba(56,214,198,.08);padding:14px 18px;border-radius:10px;margin:14px 0}
+  .keybox b{color:var(--cyan)}
+  .analogy{border-left:4px solid var(--gold);background:rgba(255,209,102,.08);padding:14px 18px;border-radius:10px;margin:14px 0}
+  .analogy b{color:var(--gold)}
+  .warn{border-left:4px solid var(--hard);background:rgba(255,107,107,.08);padding:14px 18px;border-radius:10px;margin:14px 0}
+  .warn b{color:var(--hard)}
+  .formula{display:inline-block;background:rgba(167,139,250,.14);border:1px solid #4b4a86;padding:10px 18px;border-radius:12px;font-size:1.15rem;color:#fff;margin:6px 0}
+  .step{background:rgba(167,139,250,.1);border-left:3px solid var(--accent);padding:6px 12px;border-radius:8px;margin:6px 0;font-size:.92rem}
+
+  /* distribution arcs */
+  .distro{text-align:center;font-size:1.3rem;margin:16px 0;line-height:2.4}
+  .t1{color:var(--x2)} .t2{color:var(--ab)}
+  .four{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:6px}
+  .prod{padding:8px 14px;border-radius:10px;font-weight:800;font-size:1.05rem;opacity:0;transform:translateY(8px);transition:.4s}
+  .prod.show{opacity:1;transform:none}
+  .prod.first{background:rgba(74,168,255,.16);border:1px solid var(--x2);color:#bfe0ff}
+  .prod.outer{background:rgba(255,180,84,.16);border:1px solid var(--ax);color:#ffe0bb}
+  .prod.inner{background:rgba(65,224,163,.16);border:1px solid var(--bx);color:#bff3dd}
+  .prod.last{background:rgba(255,122,156,.16);border:1px solid var(--ab);color:#ffcdd8}
+
+  /* AREA MODEL */
+  .amwrap{display:flex;gap:26px;flex-wrap:wrap;align-items:center;justify-content:center}
+  .amgrid{position:relative;background:#0e1728;border-radius:10px;padding:34px 0 0 34px;margin:0 auto}
+  .amrow{display:flex}
+  .tile{display:flex;align-items:center;justify-content:center;font-weight:800;border:1.5px solid rgba(255,255,255,.15);
+    transition:width .4s,height .4s;overflow:hidden;font-size:1rem;color:#04121a;text-align:center}
+  .tile.x2{background:var(--x2)} .tile.ax{background:var(--ax)} .tile.bx{background:var(--bx)} .tile.ab{background:var(--ab)}
+  .amgrid .lab{position:absolute;font-weight:800;font-size:.95rem}
+  .amgrid .lab.top{top:8px} .amgrid .lab.left{left:6px;writing-mode:vertical-rl;transform:rotate(180deg)}
+  .amctrl{min-width:230px}
+  .amctrl .ctrl{margin-bottom:16px}
+  .amresult{margin-top:8px;font-size:1.15rem;text-align:center}
+  .amresult .big{font-size:1.35rem;font-weight:800}
+
+  .ctrl label{display:flex;justify-content:space-between;font-weight:700;margin-bottom:6px}
+  .ctrl label span.v{color:var(--cyan)}
+  input[type=range]{width:100%;-webkit-appearance:none;height:8px;border-radius:6px;background:linear-gradient(90deg,var(--cyan),var(--violet));outline:none}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:#fff;border:3px solid var(--cyan);cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.4)}
+  select{background:#0e1728;color:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:1rem}
+
+  /* substitution machine */
+  .subm .chips{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:6px 0 14px}
+  .chip{padding:8px 16px;border-radius:999px;border:1px solid var(--line);background:var(--card2);color:var(--muted);cursor:pointer;font-weight:800;font-family:Georgia,serif;font-style:italic}
+  .chip.active{color:#fff;border-color:var(--cyan);background:rgba(56,214,198,.14)}
+  .subout{background:#0e1728;border:1px solid var(--line);border-radius:12px;padding:18px;font-size:1.15rem;text-align:center;line-height:2.1}
+  .subout .rowl{opacity:0;transform:translateX(-6px);transition:.35s}
+  .subout .rowl.show{opacity:1;transform:none}
+  .subout .final{color:var(--cyan);font-weight:800;font-size:1.3rem}
+  .valsel{display:flex;gap:14px;justify-content:center;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+
+  /* practice */
+  .tabs{display:flex;gap:10px;justify-content:center;margin:8px 0 22px;flex-wrap:wrap}
+  .tab{cursor:pointer;padding:10px 22px;border-radius:999px;font-weight:800;border:1px solid var(--line);background:var(--card);color:var(--muted);transition:.2s}
+  .tab .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px;vertical-align:middle}
+  .tab.easy .dot{background:var(--easy)}.tab.med .dot{background:var(--med)}.tab.hard .dot{background:var(--hard)}
+  .tab.active{color:#fff;transform:translateY(-2px)}
+  .tab.active.easy{border-color:var(--easy);box-shadow:0 6px 18px rgba(62,207,142,.25)}
+  .tab.active.med{border-color:var(--med);box-shadow:0 6px 18px rgba(246,185,59,.25)}
+  .tab.active.hard{border-color:var(--hard);box-shadow:0 6px 18px rgba(255,107,107,.25)}
+  .hint{text-align:center;color:var(--muted);font-size:.9rem;margin-bottom:16px}
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:720px){.cards{grid-template-columns:1fr}}
+  .flip{perspective:1600px;min-height:280px}
+  .flip-in{position:relative;width:100%;height:100%;min-height:280px;transition:transform .65s cubic-bezier(.4,.2,.2,1);transform-style:preserve-3d}
+  .flip.flipped .flip-in{transform:rotateY(180deg)}
+  .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--r);padding:20px;border:1px solid var(--line);display:flex;flex-direction:column;overflow:auto}
+  .front{background:linear-gradient(180deg,var(--card),var(--bg2));cursor:pointer}
+  .back{background:linear-gradient(180deg,#1c2c44,#122032);transform:rotateY(180deg)}
+  .qhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+  .qno{font-weight:800;color:var(--muted);font-size:.85rem;letter-spacing:1px}
+  .lvl{font-size:.72rem;font-weight:800;padding:3px 10px;border-radius:999px;text-transform:uppercase}
+  .lvl.easy{background:rgba(62,207,142,.18);color:var(--easy)}
+  .lvl.med{background:rgba(246,185,59,.18);color:var(--med)}
+  .lvl.hard{background:rgba(255,107,107,.18);color:var(--hard)}
+  .qtext{font-size:1.05rem;font-weight:600}
+  .flip-cue{margin-top:auto;color:var(--cyan);font-size:.82rem;font-weight:700;display:flex;align-items:center;gap:6px}
+  .flip-cue svg{width:16px;height:16px}
+  .ans{color:var(--gold);font-weight:800;font-size:1.08rem;margin:2px 0 8px;font-family:Georgia,serif}
+  .deriv{font-size:.9rem;color:#dbe6fb}
+  .deriv .d{background:rgba(56,214,198,.09);border-left:3px solid var(--cyan);padding:5px 10px;border-radius:7px;margin:5px 0;font-family:Georgia,serif}
+  .back .qno{color:#8ba0c4}
+  .seclink{margin-top:10px;display:inline-flex;align-items:center;gap:6px;align-self:flex-start;
+    background:rgba(167,139,250,.15);border:1px solid var(--accent);color:#d9ccff;text-decoration:none;
+    padding:7px 14px;border-radius:999px;font-size:.82rem;font-weight:700;cursor:pointer}
+  .seclink:hover{background:rgba(167,139,250,.28);color:#fff}
+  .backfoot{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+
+  .cheat{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:720px){.cheat{grid-template-columns:1fr}}
+  .cheat .c{background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:16px}
+  .cheat .c h4{color:var(--cyan);margin-bottom:6px;font-size:1rem}
+
+  footer{padding:40px 0 60px;text-align:center;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line);margin-top:30px}
+  .prog{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--cyan),var(--violet));z-index:60;width:0}
+  ::selection{background:var(--violet);color:#0a0a1a}
+</style>
+</head>
+<body>
+<div class="prog" id="prog"></div>
+
+<header class="hero">
+  <div class="floaters">
+    <span style="left:8%;top:20%">x²</span><span style="left:20%;top:62%;animation-delay:1s">a</span>
+    <span style="left:82%;top:24%;animation-delay:.6s">(x+3)</span><span style="left:70%;top:70%;animation-delay:1.6s">b</span>
+    <span style="left:45%;top:12%;animation-delay:2s">2x</span><span style="left:90%;top:56%;animation-delay:2.4s">+</span>
+  </div>
+  <div class="wrap">
+    <span class="badge">Grade 9 · O/L Maths · Chapter 5</span>
+    <h1>Algebraic Expressions</h1>
+    <p class="sub">Plugging in values, and multiplying two brackets — made visual. See the area-model tiles build an expansion, run the substitution machine, then test yourself with 30 questions that show <em>how</em> each answer is derived and link you back to the exact lesson.</p>
+  </div>
+</header>
+
+<nav class="toc">
+  <div class="wrap">
+    <a class="home" href="../index.html" title="Back to all lessons">← Home</a>
+    <a href="#c1">① Substitution</a>
+    <a href="#c2">② Terms &amp; binomials</a>
+    <a href="#c3">③ Multiply brackets</a>
+    <a href="#c4">④ Area model</a>
+    <a href="#c5">⑤ The pattern &amp; signs</a>
+    <a href="#c6">⑥ Verifying</a>
+    <a href="#subm">🎰 Substitution machine</a>
+    <a href="#area">🟦 Area explorer</a>
+    <a href="#practice">📝 Practice ×30</a>
+    <a href="#cheat">⭐ Cheat sheet</a>
+  </div>
+</nav>
+
+<!-- ① SUBSTITUTION -->
+<section id="c1"><div class="wrap">
+  <span class="sec-tag">Warm-up skill</span>
+  <h2><span class="n">①</span>Substitution — swap the letter for a number</h2>
+  <p class="lead">An algebraic expression like <span class="eq">2a + 3</span> is a recipe. <b>Substituting</b> means replacing each letter with a given value and working out the number that comes out.</p>
+  <div class="card">
+    <p><b>Example:</b> find <span class="eq">2a + 3</span> when <span class="eq">a = ½</span>.</p>
+    <div class="step eq">2a + 3 = 2 × ½ + 3</div>
+    <div class="step eq">= 1 + 3</div>
+    <div class="step eq">= 4</div>
+  </div>
+  <div class="warn"><b>Directed numbers need care.</b> When the value is negative or a fraction, keep it in brackets while you substitute. For <span class="eq">5 − 6b</span> with <span class="eq">b = −⅔</span>: &nbsp;<span class="eq">5 − 6 × (−⅔) = 5 + 4 = 9</span>. A minus times a minus becomes a plus — that trips up more students than anything else in this chapter.</div>
+  <div class="keybox"><b>Two golden rules:</b> ① a number written next to a letter means <b>multiply</b> (2a = 2 × a). ② substitute the value <em>inside brackets</em>, then apply the sign rules carefully. Play with this in the <a href="#subm" style="color:var(--gold)">Substitution Machine</a>.</div>
+</div></section>
+
+<!-- ② TERMS -->
+<section id="c2"><div class="wrap">
+  <span class="sec-tag">Vocabulary</span>
+  <h2><span class="n">②</span>Terms, expressions &amp; binomials</h2>
+  <p class="lead">A quick map of the words, so the rest of the chapter reads easily.</p>
+  <div class="grid2">
+    <div class="card tight"><h3 style="font-size:1rem;color:var(--cyan)">Algebraic term</h3><p class="muted">A single chunk: a letter, or letters and numbers multiplied/divided. e.g. <span class="eq">x</span>, <span class="eq">2x</span>, <span class="eq">xy</span>, <span class="eq">−3ab</span>.</p></div>
+    <div class="card tight"><h3 style="font-size:1rem;color:var(--blue)">Algebraic expression</h3><p class="muted">Terms joined by + or −. e.g. <span class="eq">x + y</span>, <span class="eq">2a + xyz</span>, <span class="eq">4 + x</span>.</p></div>
+    <div class="card tight"><h3 style="font-size:1rem;color:var(--gold)">Binomial</h3><p class="muted"><b>Exactly two</b> terms. e.g. <span class="eq">x + 3</span>, <span class="eq">x − 5</span>, <span class="eq">2x + y</span>. ("bi" = two.)</p></div>
+    <div class="card tight"><h3 style="font-size:1rem;color:var(--violet)">This chapter's goal</h3><p class="muted">Multiply two binomials, e.g. <span class="eq">(x + 3)(x + 2)</span>, and write the answer as a tidy expression.</p></div>
+  </div>
+</div></section>
+
+<!-- ③ MULTIPLY -->
+<section id="c3"><div class="wrap">
+  <span class="sec-tag">The main method</span>
+  <h2><span class="n">③</span>Multiplying two binomials — every term meets every term</h2>
+  <p class="lead">To expand <span class="eq">(x + 3)(x + 2)</span>, each term in the first bracket multiplies <b>each</b> term in the second. Two terms × two terms = <b>four</b> products.</p>
+  <div class="card">
+    <div class="distro">
+      (<span class="t1">x</span> + <span class="t2">3</span>)(x + 2)
+      &nbsp;=&nbsp; <span class="t1">x</span>(x + 2) + <span class="t2">3</span>(x + 2)
+    </div>
+    <div class="four" id="fourProds">
+      <span class="prod first">x·x = x²</span>
+      <span class="prod outer">x·2 = 2x</span>
+      <span class="prod inner">3·x = 3x</span>
+      <span class="prod last">3·2 = 6</span>
+    </div>
+    <div style="text-align:center;margin-top:16px" class="eq">
+      = x² + 2x + 3x + 6 &nbsp;=&nbsp; <b style="color:var(--cyan)">x² + 5x + 6</b>
+    </div>
+    <p class="muted" style="text-align:center;margin-top:8px">The two middle terms (2x and 3x) are "like terms", so we add them into 5x.</p>
+  </div>
+  <div class="analogy"><b>Like a handshake between two teams.</b> Everyone in bracket one shakes hands with everyone in bracket two — no one is skipped. Four people paired up = four products. Collect the like terms at the end.</div>
+</div></section>
+
+<!-- ④ AREA MODEL -->
+<section id="c4"><div class="wrap">
+  <span class="sec-tag">See why it works</span>
+  <h2><span class="n">④</span>The area model — the picture behind the algebra</h2>
+  <p class="lead">A rectangle of sides <span class="eq">(x + a)</span> and <span class="eq">(x + b)</span> splits into four smaller rectangles. Their areas <b>are</b> the four products — so the total area is the expansion.</p>
+  <div class="card">
+    <p>Sides <span class="eq">(x + 3)</span> and <span class="eq">(x + 2)</span> give four tiles:</p>
+    <div style="display:flex;justify-content:center;margin:14px 0">
+      <div style="display:grid;grid-template-columns:120px 70px;grid-template-rows:120px 70px;gap:4px;font-weight:800;color:#04121a;text-align:center">
+        <div style="background:var(--x2);display:flex;align-items:center;justify-content:center">x²</div>
+        <div style="background:var(--ax);display:flex;align-items:center;justify-content:center">3x</div>
+        <div style="background:var(--bx);display:flex;align-items:center;justify-content:center">2x</div>
+        <div style="background:var(--ab);display:flex;align-items:center;justify-content:center">6</div>
+      </div>
+    </div>
+    <p style="text-align:center" class="eq">total area = x² + 3x + 2x + 6 = <b style="color:var(--cyan)">x² + 5x + 6</b></p>
+  </div>
+  <div class="keybox">The big square is <span class="eq">x·x = x²</span>. The two side strips are <span class="eq">3x</span> and <span class="eq">2x</span>. The small corner is <span class="eq">3·2 = 6</span>. Add them and you get the same answer as the algebra — that's the <b>proof by area</b>. Build any rectangle yourself in the <a href="#area" style="color:var(--gold)">Area Explorer</a>.</div>
+</div></section>
+
+<!-- ⑤ PATTERN -->
+<section id="c5"><div class="wrap">
+  <span class="sec-tag">The shortcut</span>
+  <h2><span class="n">⑤</span>The pattern — and how signs behave</h2>
+  <p class="lead">Once you've done a few, a pattern appears that lets you expand in one line.</p>
+  <div class="card" style="text-align:center">
+    <p class="formula eq">(x + a)(x + b) = x² + (a + b)x + a·b</p>
+    <p class="muted">middle number = <b>sum</b> of the two numbers &nbsp;·&nbsp; last number = their <b>product</b></p>
+  </div>
+  <div class="grid2">
+    <div class="card tight"><h3 style="font-size:1rem;color:var(--bx)">Both positive</h3><p class="eq">(x+5)(x+3) = x² + 8x + 15</p><p class="muted">5+3 = 8, &nbsp;5×3 = 15.</p></div>
+    <div class="card tight"><h3 style="font-size:1rem;color:var(--ab)">One negative</h3><p class="eq">(x+5)(x−3) = x² + 2x − 15</p><p class="muted">5+(−3) = 2, &nbsp;5×(−3) = −15.</p></div>
+    <div class="card tight"><h3 style="font-size:1rem;color:var(--ax)">The other negative</h3><p class="eq">(x−5)(x+3) = x² − 2x − 15</p><p class="muted">(−5)+3 = −2, &nbsp;(−5)×3 = −15.</p></div>
+    <div class="card tight"><h3 style="font-size:1rem;color:var(--x2)">Both negative</h3><p class="eq">(x−5)(x−3) = x² − 8x + 15</p><p class="muted">(−5)+(−3) = −8, &nbsp;(−5)×(−3) = +15.</p></div>
+  </div>
+  <div class="warn"><b>Sign watch:</b> two negatives multiply to a <b>positive</b> last term, but add to a <b>negative</b> middle term. And <span class="eq">(x−5)(x+5) = x² − 25</span> — the middle vanishes because −5 + 5 = 0. Keep the signs glued to their numbers.</div>
+</div></section>
+
+<!-- ⑥ VERIFYING -->
+<section id="c6"><div class="wrap">
+  <span class="sec-tag">Check your work</span>
+  <h2><span class="n">⑥</span>Verifying an expansion</h2>
+  <p class="lead">Not sure your expansion is right? Pick a number for <span class="eq">x</span>, put it into <b>both</b> sides. If they match, your expansion is almost certainly correct.</p>
+  <div class="card">
+    <p><b>Check</b> <span class="eq">(x + 8)(x − 3) = x² + 5x − 24</span> at <span class="eq">x = 5</span>:</p>
+    <div class="grid2" style="gap:12px">
+      <div><p class="muted">Left side</p><div class="step eq">(5 + 8)(5 − 3) = 13 × 2 = 26</div></div>
+      <div><p class="muted">Right side</p><div class="step eq">5² + 5×5 − 24 = 25 + 25 − 24 = 26</div></div>
+    </div>
+    <p style="text-align:center;margin-top:8px">Both give <b style="color:var(--cyan)">26</b> → the expansion checks out. ✓</p>
+  </div>
+  <div class="keybox"><b>Why it works:</b> if two expressions are truly equal, they must give the same value for <em>every</em> number you put in. Testing one value won't prove it beyond doubt, but it catches almost all mistakes — and it's fast.</div>
+</div></section>
+
+<!-- SUBSTITUTION MACHINE -->
+<section id="subm"><div class="wrap">
+  <span class="sec-tag">Interactive</span>
+  <h2>🎰 Substitution Machine</h2>
+  <p class="lead">Choose an expression and a value for the letter — watch it substitute and simplify, one line at a time. Try the negative and fraction values; those are the ones worth practising.</p>
+  <div class="card subm">
+    <div class="chips" id="exprChips"></div>
+    <div class="valsel">
+      <span class="muted">value:</span>
+      <select id="valSel"></select>
+    </div>
+    <div class="subout" id="subOut"></div>
+  </div>
+</div></section>
+
+<!-- AREA EXPLORER -->
+<section id="area"><div class="wrap">
+  <span class="sec-tag">Interactive · the star diagram</span>
+  <h2>🟦 Area Model Explorer</h2>
+  <p class="lead">Drag the two numbers. The rectangle re-sizes, the four coloured tiles rescale, and the expansion rebuilds itself. This is <span class="eq">(x + a)(x + b) = x² + (a + b)x + ab</span> you can <em>see</em>.</p>
+  <div class="card">
+    <div class="amwrap">
+      <div>
+        <div class="amgrid" id="amgrid"></div>
+      </div>
+      <div class="amctrl">
+        <div class="ctrl"><label><span class="eq">a</span> (first number) <span class="v" id="av">3</span></label><input type="range" id="aA" min="1" max="8" step="1" value="3"></div>
+        <div class="ctrl"><label><span class="eq">b</span> (second number) <span class="v" id="bv">2</span></label><input type="range" id="bB" min="1" max="8" step="1" value="2"></div>
+        <div class="amresult">
+          <div class="eq" id="amExpr">(x + 3)(x + 2)</div>
+          <div class="eq" id="amMid" style="color:var(--muted);margin:6px 0">= x² + (3 + 2)x + 3·2</div>
+          <div class="big eq" id="amFinal" style="color:var(--cyan)">= x² + 5x + 6</div>
+        </div>
+        <div style="margin-top:10px;font-size:.82rem" class="muted">
+          <span style="color:var(--x2)">■</span> x²&nbsp;
+          <span style="color:var(--ax)">■</span> a·x&nbsp;
+          <span style="color:var(--bx)">■</span> b·x&nbsp;
+          <span style="color:var(--ab)">■</span> a·b
+        </div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<!-- PRACTICE -->
+<section id="practice"><div class="wrap">
+  <span class="sec-tag">Test yourself</span>
+  <h2>📝 Practice — 30 questions</h2>
+  <p class="lead">Work it out, then <b>tap a card to flip</b>. The back shows exactly <em>how</em> the answer is derived — and a button to jump back to the matching lesson if you want a refresher.</p>
+  <div class="tabs">
+    <div class="tab easy active" data-lvl="easy"><span class="dot"></span>Easy · 10</div>
+    <div class="tab med" data-lvl="med"><span class="dot"></span>Medium · 10</div>
+    <div class="tab hard" data-lvl="hard"><span class="dot"></span>Hard · 10</div>
+  </div>
+  <p class="hint">👆 Tap to flip · the derivation is on the back · use "Review" to revisit the lesson</p>
+  <div class="cards" id="cards"></div>
+</div></section>
+
+<!-- CHEAT -->
+<section id="cheat"><div class="wrap">
+  <span class="sec-tag">Keep this in your head</span>
+  <h2>⭐ One-glance cheat sheet</h2>
+  <div class="card">
+    <div class="cheat">
+      <div class="c"><h4>Substitution</h4><span class="muted">Swap the letter for its value in brackets, then simplify. 2a means 2 × a.</span></div>
+      <div class="c"><h4>Sign rules</h4><span class="muted">− × − = +, &nbsp;− × + = −. Subtracting a negative adds.</span></div>
+      <div class="c"><h4>Expand (2 brackets)</h4><span class="muted">Every term × every term = 4 products, then collect like terms.</span></div>
+      <div class="c"><h4>The pattern</h4><span class="eq">(x+a)(x+b) = x²+(a+b)x+ab</span><br><span class="muted">middle = sum, last = product.</span></div>
+      <div class="c"><h4>Area model</h4><span class="muted">Four tiles: x², ax, bx, ab. Their total area = the expansion.</span></div>
+      <div class="c"><h4>Verify</h4><span class="muted">Put one value of x into both sides; equal answers = correct.</span></div>
+    </div>
+  </div>
+</div></section>
+
+<footer>
+  <div class="wrap">
+    <p><b>Algebraic Expressions</b> · Grade 9 O/L Mathematics · Chapter 5</p>
+    <p class="muted" style="margin-top:6px">Understand it, see it, then prove it with 30 questions.</p>
+  </div>
+</footer>
+
+<script>
+const prog=document.getElementById('prog');
+addEventListener('scroll',()=>{const h=document.documentElement;prog.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';});
+
+/* animate the 4 products on scroll into view */
+const fpObs=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){
+  document.querySelectorAll('#fourProds .prod').forEach((el,i)=>setTimeout(()=>el.classList.add('show'),i*220));
+  fpObs.disconnect();
+}})},{threshold:.4});
+fpObs.observe(document.getElementById('fourProds'));
+
+/* ---------- SUBSTITUTION MACHINE (exact fractions) ---------- */
+function gcd(a,b){a=Math.abs(a);b=Math.abs(b);while(b){[a,b]=[b,a%b];}return a||1;}
+function F(n,d=1){ if(d<0){n=-n;d=-d;} const g=gcd(n,d); return {n:n/g,d:d/g}; }
+const Fadd=(x,y)=>F(x.n*y.d+y.n*x.d, x.d*y.d);
+const Fmul=(x,y)=>F(x.n*y.n, x.d*y.d);
+function Fstr(x){ // signed string, uses unicode fractions where nice
+  if(x.d===1) return (x.n<0?'−':'')+Math.abs(x.n);
+  const nice={'1/2':'½','-1/2':'−½','1/4':'¼','-1/4':'−¼','3/4':'¾','-3/4':'−¾','1/3':'⅓','-1/3':'−⅓','2/3':'⅔','-2/3':'−⅔'};
+  const key=x.n+'/'+x.d; if(nice[key]) return nice[key];
+  return (x.n<0?'−':'')+Math.abs(x.n)+'/'+x.d;
+}
+const Fabs=x=>F(Math.abs(x.n),x.d);
+const Fneg=x=>({n:-x.n,d:x.d});
+// term joined onto a running expression with correct sign: returns " + 3" or " − ½"
+function joinTerm(x){ return (x.n<0? ' − ':' + ')+Fstr(Fabs(x)); }
+
+const EXPR=[
+  {t:'2a + 3', letter:'a', build:a=>{const p=Fmul(F(2),a); return {
+    lines:[ `2 × (${Fstr(a)}) + 3`, `= ${Fstr(p)}${joinTerm(F(3))}`, `= ${Fstr(Fadd(p,F(3)))}` ] };}},
+  {t:'6 − 4a', letter:'a', build:a=>{const p=Fmul(F(4),a); return {
+    lines:[ `6 − 4 × (${Fstr(a)})`, `= 6${joinTerm(Fneg(p))}`, `= ${Fstr(Fadd(F(6),Fneg(p)))}` ] };}},
+  {t:'3a − 1', letter:'a', build:a=>{const p=Fmul(F(3),a); return {
+    lines:[ `3 × (${Fstr(a)}) − 1`, `= ${Fstr(p)}${joinTerm(F(-1))}`, `= ${Fstr(Fadd(p,F(-1)))}` ] };}},
+];
+const VALS=[{s:'½',f:F(1,2)},{s:'−⅔',f:F(-2,3)},{s:'−1',f:F(-1)},{s:'2',f:F(2)},{s:'−½',f:F(-1,2)},{s:'¼',f:F(1,4)}];
+let curExpr=0;
+const chipHost=document.getElementById('exprChips');
+EXPR.forEach((e,i)=>{const c=document.createElement('span');c.className='chip'+(i===0?' active':'');c.textContent=e.t;
+  c.onclick=()=>{curExpr=i;document.querySelectorAll('#exprChips .chip').forEach(x=>x.classList.remove('active'));c.classList.add('active');runSub();};
+  chipHost.appendChild(c);});
+const valSel=document.getElementById('valSel');
+VALS.forEach((v,i)=>{const o=document.createElement('option');o.value=i;o.textContent=`a = ${v.s}`;valSel.appendChild(o);});
+valSel.onchange=runSub;
+function runSub(){
+  const e=EXPR[curExpr], v=VALS[+valSel.value];
+  [...valSel.options].forEach((o,i)=>o.textContent=`${e.letter} = ${VALS[i].s}`);
+  const r=e.build(v.f);
+  const host=document.getElementById('subOut');
+  host.innerHTML=`<div class="rowl"><b class="eq">${e.t}</b> &nbsp;when ${e.letter} = ${v.s}</div>`+
+    r.lines.map((l,i)=>`<div class="rowl eq${i===r.lines.length-1?' final':''}">${l}</div>`).join('');
+  [...host.querySelectorAll('.rowl')].forEach((el,i)=>setTimeout(()=>el.classList.add('show'),i*260));
+}
+runSub();
+
+/* ---------- AREA MODEL EXPLORER ---------- */
+const aA=document.getElementById('aA'), bB=document.getElementById('bB');
+function buildArea(){
+  const a=+aA.value, b=+bB.value;
+  document.getElementById('av').textContent=a;
+  document.getElementById('bv').textContent=b;
+  const X=90;                      // px representing "x"
+  const ua=Math.round(a/8*70)+14;  // px for number a strip
+  const ub=Math.round(b/8*70)+14;  // px for number b strip
+  const grid=document.getElementById('amgrid');
+  grid.innerHTML=
+   `<div class="lab top" style="left:34px;width:${X}px;text-align:center;color:#cfe6ff">x</div>`+
+   `<div class="lab top" style="left:${34+X}px;width:${ua}px;text-align:center;color:#ffe0bb">${a}</div>`+
+   `<div class="lab left" style="top:34px;height:${X}px;text-align:center;color:#cfe6ff">x</div>`+
+   `<div class="lab left" style="top:${34+X}px;height:${ub}px;text-align:center;color:#bff3dd">${b}</div>`+
+   `<div class="amrow">
+      <div class="tile x2" style="width:${X}px;height:${X}px">x²</div>
+      <div class="tile ax" style="width:${ua}px;height:${X}px">${a}x</div>
+    </div>
+    <div class="amrow">
+      <div class="tile bx" style="width:${X}px;height:${ub}px">${b}x</div>
+      <div class="tile ab" style="width:${ua}px;height:${ub}px">${a*b}</div>
+    </div>`;
+  document.getElementById('amExpr').textContent=`(x + ${a})(x + ${b})`;
+  document.getElementById('amMid').textContent=`= x² + (${a} + ${b})x + ${a}·${b}`;
+  document.getElementById('amFinal').textContent=`= x² + ${a+b}x + ${a*b}`;
+}
+aA.oninput=buildArea; bB.oninput=buildArea; buildArea();
+
+/* ---------- PRACTICE ---------- */
+const SECT={
+  sub:{id:'c1',name:'Substitution'},
+  mul:{id:'c3',name:'Multiplying binomials'},
+  area:{id:'c4',name:'The area model'},
+  pat:{id:'c5',name:'The pattern & signs'},
+  ver:{id:'c6',name:'Verifying an expansion'}
+};
+const Q={easy:[],med:[],hard:[]};
+function q(l,text,ans,sec,deriv){Q[l].push({text,ans,sec,deriv});}
+
+/* EASY */
+q('easy','Find the value of <span class="eq">2a + 3</span> when <span class="eq">a = ½</span>.','4','sub',
+ ['2a + 3 = 2 × ½ + 3','= 1 + 3','= <b>4</b>']);
+q('easy','Find the value of <span class="eq">6 − 4a</span> when <span class="eq">a = ½</span>.','4','sub',
+ ['6 − 4a = 6 − 4 × ½','= 6 − 2','= <b>4</b>']);
+q('easy','Find the value of <span class="eq">4x</span> when <span class="eq">x = ¼</span>.','1','sub',
+ ['4x = 4 × ¼','= 4/4','= <b>1</b>']);
+q('easy','Find the value of <span class="eq">3y</span> when <span class="eq">y = −⅓</span>.','−1','sub',
+ ['3y = 3 × (−⅓)','= −3/3','= <b>−1</b>']);
+q('easy','Expand <span class="eq">(x + 2)(x + 4)</span>.','x² + 6x + 8','pat',
+ ['middle = 2 + 4 = 6','last = 2 × 4 = 8','= <b>x² + 6x + 8</b>']);
+q('easy','Expand <span class="eq">(x + 1)(x + 3)</span>.','x² + 4x + 3','pat',
+ ['middle = 1 + 3 = 4','last = 1 × 3 = 3','= <b>x² + 4x + 3</b>']);
+q('easy','Find the value of <span class="eq">3a − 1</span> when <span class="eq">a = ½</span>.','½','sub',
+ ['3a − 1 = 3 × ½ − 1','= 3/2 − 1 = 3/2 − 2/2','= <b>½</b>']);
+q('easy','Expand <span class="eq">(a + 3)(a + 2)</span>.','a² + 5a + 6','pat',
+ ['middle = 3 + 2 = 5','last = 3 × 2 = 6','= <b>a² + 5a + 6</b>']);
+q('easy','Find the value of <span class="eq">−8x</span> when <span class="eq">x = ¼</span>.','−2','sub',
+ ['−8x = −8 × ¼','= −8/4','= <b>−2</b>']);
+q('easy','Expand <span class="eq">(m + 3)(m + 5)</span>.','m² + 8m + 15','pat',
+ ['middle = 3 + 5 = 8','last = 3 × 5 = 15','= <b>m² + 8m + 15</b>']);
+
+/* MEDIUM */
+q('med','Find the value of <span class="eq">3b + 5</span> when <span class="eq">b = −⅔</span>.','3','sub',
+ ['3b + 5 = 3 × (−⅔) + 5','= −2 + 5','= <b>3</b>']);
+q('med','Find the value of <span class="eq">5 − 6b</span> when <span class="eq">b = −⅔</span>.','9','sub',
+ ['5 − 6b = 5 − 6 × (−⅔)','= 5 + 4  (minus × minus = plus)','= <b>9</b>']);
+q('med','Expand <span class="eq">(x + 2)(x − 5)</span>.','x² − 3x − 10','pat',
+ ['middle = 2 + (−5) = −3','last = 2 × (−5) = −10','= <b>x² − 3x − 10</b>']);
+q('med','Expand <span class="eq">(x − 3)(x − 4)</span>.','x² − 7x + 12','pat',
+ ['middle = (−3) + (−4) = −7','last = (−3) × (−4) = +12','= <b>x² − 7x + 12</b>']);
+q('med','Find the value of <span class="eq">2x + 4y</span> when <span class="eq">x = ½</span>, <span class="eq">y = −¼</span>.','0','sub',
+ ['2x + 4y = 2 × ½ + 4 × (−¼)','= 1 + (−1)','= <b>0</b>']);
+q('med','Expand <span class="eq">(x − 5)(x + 5)</span>.','x² − 25','pat',
+ ['middle = (−5) + 5 = 0  (so no middle term)','last = (−5) × 5 = −25','= <b>x² − 25</b>']);
+q('med','Expand <span class="eq">(p − 4)(p − 3)</span>.','p² − 7p + 12','pat',
+ ['middle = (−4) + (−3) = −7','last = (−4) × (−3) = +12','= <b>p² − 7p + 12</b>']);
+q('med','Find the value of <span class="eq">4xy</span> when <span class="eq">x = ½</span>, <span class="eq">y = −¼</span>.','−½','sub',
+ ['4xy = 4 × ½ × (−¼)','= 2 × (−¼)','= <b>−½</b>']);
+q('med','Expand <span class="eq">(m + 6)(m − 1)</span>.','m² + 5m − 6','pat',
+ ['middle = 6 + (−1) = 5','last = 6 × (−1) = −6','= <b>m² + 5m − 6</b>']);
+q('med','Find the value of <span class="eq">3x − 2y</span> when <span class="eq">x = ⅔</span>, <span class="eq">y = ¾</span>.','½','sub',
+ ['3x − 2y = 3 × ⅔ − 2 × ¾','= 2 − 3/2','= 4/2 − 3/2 = <b>½</b>']);
+
+/* HARD */
+q('hard','Find the value of <span class="eq">2b + ⅓</span> when <span class="eq">b = −⅔</span>.','−1','sub',
+ ['2b + ⅓ = 2 × (−⅔) + ⅓','= −4/3 + 1/3','= −3/3 = <b>−1</b>']);
+q('hard','Find the value of <span class="eq">2x − 2y</span> when <span class="eq">x = ½</span>, <span class="eq">y = −¼</span>.','1½','sub',
+ ['2x − 2y = 2 × ½ − 2 × (−¼)','= 1 + ½  (subtracting a negative adds)','= <b>1½</b>']);
+q('hard','Expand and simplify <span class="eq">(x − 3)(2 − x)</span>.','−x² + 5x − 6','mul',
+ ['Each term × each term: x·2 − x·x − 3·2 + 3·x','= 2x − x² − 6 + 3x','collect: <b>−x² + 5x − 6</b>']);
+q('hard','Expand <span class="eq">(x + 8)(x − 3)</span>, then verify your answer at <span class="eq">x = 5</span>.','x² + 5x − 24 (both sides give 26)','ver',
+ ['Expand: middle 8+(−3)=5, last 8×(−3)=−24 → x² + 5x − 24','Left at x=5: (13)(2) = 26','Right at x=5: 25 + 25 − 24 = 26 → equal ✓']);
+q('hard','Verify that <span class="eq">(x + 5)(x + 6) = x² + 11x + 30</span> when <span class="eq">x = −2</span>.','Both sides give 12 ✓','ver',
+ ['Left at x=−2: (−2+5)(−2+6) = (3)(4) = 12','Right at x=−2: 4 + 11(−2) + 30 = 4 − 22 + 30 = 12','12 = 12 → verified ✓']);
+q('hard','If <span class="eq">(x + a)(x + 4) = x² + bx + 12</span>, find <span class="eq">a</span> and <span class="eq">b</span>.','a = 3, b = 7','pat',
+ ['last term: a × 4 = 12 → a = 3','middle: b = a + 4 = 3 + 4','so <b>a = 3, b = 7</b>']);
+q('hard','A rectangle <span class="eq">(x + 8)</span> by <span class="eq">(x + 5)</span> has a rectangular hole <span class="eq">(x + 2)</span> by <span class="eq">(x + 1)</span> cut out. Find the shaded (remaining) area.','10x + 38','area',
+ ['Outer area = (x+8)(x+5) = x² + 13x + 40','Hole area = (x+2)(x+1) = x² + 3x + 2','Shaded = outer − hole = <b>10x + 38</b>']);
+q('hard','A flower bed is <span class="eq">x</span> m long and 2 m wide. Its length is reduced by 2 m and its width increased by <span class="eq">x</span> m. Find the new area.','x² − 4','area',
+ ['New length = x − 2, new width = 2 + x = x + 2','Area = (x − 2)(x + 2)','middle (−2)+2 = 0, last (−2)(2) = −4 → <b>x² − 4</b>']);
+q('hard','A 15 cm × 8 cm sheet has a strip of width <span class="eq">x</span> cut off the length and off the breadth. Find the remaining area.','x² − 23x + 120','area',
+ ['Remaining rectangle = (15 − x)(8 − x)','= 120 − 15x − 8x + x²','= <b>x² − 23x + 120</b>']);
+q('hard','Verify that <span class="eq">(x − 2)(x + 3) = x² + x − 6</span> when <span class="eq">x = 4</span>.','Both sides give 14 ✓','ver',
+ ['Left at x=4: (4−2)(4+3) = (2)(7) = 14','Right at x=4: 16 + 4 − 6 = 14','14 = 14 → verified ✓']);
+
+const flipIcon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>';
+const bookIcon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>';
+function jumpTo(id){
+  const el=document.getElementById(id);
+  el.scrollIntoView({behavior:'smooth',block:'start'});
+  el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash');
+}
+function render(lvl){
+  const host=document.getElementById('cards'); host.innerHTML='';
+  Q[lvl].forEach((item,i)=>{
+    const sec=SECT[item.sec];
+    const deriv=item.deriv.map(s=>`<div class="d">${s}</div>`).join('');
+    const div=document.createElement('div'); div.className='flip';
+    div.innerHTML=`<div class="flip-in">
+      <div class="face front">
+        <div class="qhead"><span class="qno">Q${i+1}</span><span class="lvl ${lvl}">${lvl==='med'?'medium':lvl}</span></div>
+        <div class="qtext">${item.text}</div>
+        <div class="flip-cue">${flipIcon} tap to reveal how it's derived</div>
+      </div>
+      <div class="face back">
+        <div class="qhead"><span class="qno">Q${i+1} · derivation</span><span class="lvl ${lvl}">${lvl==='med'?'medium':lvl}</span></div>
+        <div class="ans">✓ ${item.ans}</div>
+        <div class="deriv">${deriv}</div>
+        <div class="backfoot">
+          <a class="seclink" data-go="${sec.id}">${bookIcon} Review: ${sec.name}</a>
+          <span class="flip-cue" style="margin:0">${flipIcon} tap to hide</span>
+        </div>
+      </div></div>`;
+    // flip only when NOT clicking the review link
+    div.querySelector('.front').onclick=()=>div.classList.add('flipped');
+    div.querySelector('.face.back').onclick=(e)=>{ if(!e.target.closest('.seclink')) div.classList.remove('flipped'); };
+    div.querySelector('.seclink').onclick=(e)=>{ e.stopPropagation(); jumpTo(e.currentTarget.dataset.go); };
+    host.appendChild(div);
+  });
+}
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  t.classList.add('active'); render(t.dataset.lvl);
+});
+render('easy');
+</script>
+</body>
+</html>
