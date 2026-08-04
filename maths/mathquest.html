@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MathQuest — Grade 9 Chapters 1–5</title>
+<style>
+  :root{
+    --bg:#0b1020; --bg2:#121a30; --card:#182541; --card2:#20304f; --ink:#eef2ff; --muted:#9fb0d4; --line:#2c3d63;
+    --cyan:#39d6e6; --violet:#a78bfa; --gold:#ffd166; --green:#41e88a; --red:#ff6b6b; --orange:#ffab48;
+    --patterns:#39d6e6; --binary:#41e88a; --percent:#ffab48; --algebra:#a78bfa;
+    --shadow:0 18px 45px rgba(0,0,0,.55); --r:20px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',system-ui,-apple-system,Roboto,Arial,sans-serif;color:var(--ink);
+    background:radial-gradient(1100px 650px at 80% -10%,#1b2748 0%,var(--bg) 55%) fixed;line-height:1.55;
+    -webkit-font-smoothing:antialiased;min-height:100vh;overflow-x:hidden}
+  .wrap{max-width:760px;margin:0 auto;padding:20px}
+  .eq{font-family:'Cambria Math','Times New Roman',Georgia,serif;font-style:italic}
+  .mono{font-family:ui-monospace,Consolas,monospace}
+  button{font-family:inherit;cursor:pointer;border:none}
+  .hidden{display:none!important}
+  sup{font-size:.72em}
+
+  /* screens */
+  .screen{animation:fade .4s both}
+  @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+  /* HOME */
+  .hero{text-align:center;padding:30px 0 10px}
+  .logo{font-size:clamp(2.4rem,8vw,4rem);font-weight:900;letter-spacing:1px;
+    background:linear-gradient(100deg,#fff,var(--cyan) 45%,var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .logo .q{color:var(--gold);-webkit-text-fill-color:var(--gold)}
+  .tagline{color:var(--muted);margin-top:6px}
+  .badges-row{display:flex;justify-content:center;gap:8px;margin:14px 0;flex-wrap:wrap}
+  .mini{font-size:.75rem;padding:5px 12px;border-radius:999px;border:1px solid var(--line);background:var(--card);font-weight:700}
+  .modes{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  @media(max-width:560px){.modes{grid-template-columns:1fr}}
+  .mode{background:linear-gradient(180deg,var(--card),var(--bg2));border:1px solid var(--line);border-radius:var(--r);
+    padding:20px;text-align:left;transition:.18s;box-shadow:var(--shadow)}
+  .mode:hover{transform:translateY(-3px);border-color:var(--cyan)}
+  .mode .ic{font-size:1.8rem}
+  .mode h3{font-size:1.15rem;margin:6px 0 2px}
+  .mode p{color:var(--muted);font-size:.86rem}
+  .mode.big{grid-column:1/-1;display:flex;align-items:center;gap:16px;background:linear-gradient(110deg,#1d2c4e,#182541)}
+  .mode.big .ic{font-size:2.6rem}
+  .worldgrid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin-top:14px}
+  @media(max-width:560px){.worldgrid{grid-template-columns:1fr 1fr}}
+  .wbtn{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 8px;text-align:center;transition:.18s;color:var(--ink)}
+  .wbtn:hover{transform:translateY(-2px)}
+  .wbtn .wic{font-size:1.6rem}
+  .wbtn .wn{font-size:.8rem;font-weight:800;margin-top:4px}
+  .subtle{color:var(--muted);font-size:.8rem;text-align:center;margin-top:14px}
+  .toprow{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px}
+  .icbtn{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px;color:var(--ink);font-weight:700;font-size:.85rem}
+  a.icbtn{display:inline-block;text-decoration:none;white-space:nowrap;transition:.2s}
+  a.icbtn:hover{border-color:var(--cyan);color:#fff}
+
+  /* HUD */
+  .hud{display:flex;align-items:center;gap:10px;justify-content:space-between;background:var(--card);
+    border:1px solid var(--line);border-radius:14px;padding:10px 14px;margin-bottom:12px;flex-wrap:wrap}
+  .hud .worldtag{font-weight:800;display:flex;align-items:center;gap:6px}
+  .hud .hearts{letter-spacing:2px;font-size:1.05rem}
+  .hud .stat{font-size:.85rem;color:var(--muted)}
+  .hud .stat b{color:var(--ink);font-size:1rem}
+  .streak{color:var(--gold);font-weight:800}
+  .pbar{height:8px;background:#0e1728;border-radius:6px;overflow:hidden;margin-bottom:14px}
+  .pbar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--violet));transition:width .35s}
+
+  /* question card */
+  .qcard{background:linear-gradient(180deg,var(--card),var(--bg2));border:1px solid var(--line);border-radius:var(--r);
+    padding:22px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+  .qcard .chapter{font-size:.72rem;letter-spacing:2px;text-transform:uppercase;font-weight:800;margin-bottom:8px}
+  .qprompt{font-size:1.25rem;font-weight:700;margin-bottom:16px}
+  .stage{margin:10px 0 4px}
+
+  /* MC choices */
+  .choices{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media(max-width:520px){.choices{grid-template-columns:1fr}}
+  .choice{background:var(--card2);border:1.5px solid var(--line);border-radius:14px;padding:14px 16px;font-size:1.1rem;
+    color:var(--ink);text-align:left;transition:.14s;font-family:'Cambria Math',Georgia,serif;font-style:italic}
+  .choice:hover{border-color:var(--cyan);transform:translateY(-2px)}
+  .choice.correct{border-color:var(--green);background:rgba(65,232,138,.16)}
+  .choice.wrong{border-color:var(--red);background:rgba(255,107,107,.16)}
+  .choice:disabled{cursor:default}
+
+  /* numeric input */
+  .numrow{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+  .numin{width:180px;padding:14px 18px;border-radius:14px;border:1.5px solid var(--line);background:#0e1728;color:#fff;
+    font-size:1.4rem;text-align:center;font-weight:800}
+  .numin:focus{outline:none;border-color:var(--cyan)}
+  .go{padding:0 26px;border-radius:14px;background:linear-gradient(90deg,var(--cyan),var(--violet));color:#04121a;font-weight:800;font-size:1.05rem}
+  .go:disabled{opacity:.5}
+
+  /* SEQUENCE STAIRS */
+  .stairs{display:flex;align-items:flex-end;justify-content:center;gap:8px;min-height:170px;padding-top:10px;margin-bottom:30px;flex-wrap:nowrap}
+  .stair{width:56px;background:linear-gradient(180deg,#3a5aa8,#26407e);border:1px solid #4a6bc0;border-radius:8px 8px 0 0;
+    display:flex;align-items:flex-start;justify-content:center;padding-top:6px;font-weight:800;color:#dbe6ff;position:relative;
+    transform-origin:bottom;animation:grow .4s both}
+  @keyframes grow{from{transform:scaleY(.3);opacity:0}to{transform:scaleY(1);opacity:1}}
+  .stair.q{background:repeating-linear-gradient(45deg,#2a3a5e,#2a3a5e 8px,#22304f 8px,#22304f 16px);border:2px dashed var(--gold);color:var(--gold)}
+  .stair .base{position:absolute;bottom:-22px;left:0;right:0;text-align:center;font-size:.75rem;color:var(--muted)}
+
+  /* BINARY LIGHTS */
+  .board{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:6px 0}
+  .sw{width:66px;text-align:center;user-select:none}
+  .sw .bulb{width:100%;aspect-ratio:1;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;
+    font-weight:800;border:2px solid var(--off,#3a4a68);background:#111b30;color:#5b6c8f;transition:.2s;cursor:pointer}
+  .sw.on .bulb{border-color:var(--green);background:radial-gradient(circle at 50% 35%,#63ffab,#15a357);color:#04220f;box-shadow:0 0 20px rgba(65,232,138,.5)}
+  .sw.read .bulb{cursor:default}
+  .sw .pv{font-size:.72rem;color:var(--muted);margin-top:5px;font-weight:700}
+  .binread{text-align:center;margin-top:10px;font-weight:800;font-size:1.05rem}
+  .binread b{color:var(--green)}
+
+  /* PRICE TAG */
+  .tag{max-width:280px;margin:0 auto;background:linear-gradient(180deg,#22304f,#182541);border:1px solid var(--line);
+    border-radius:14px;padding:16px 18px;position:relative}
+  .tag:before{content:'';position:absolute;left:-9px;top:22px;width:16px;height:16px;background:#182541;border-left:1px solid var(--line);
+    border-bottom:1px solid var(--line);transform:rotate(45deg);border-radius:3px}
+  .tag .hole{position:absolute;left:8px;top:26px;width:8px;height:8px;border-radius:50%;background:#0b1020;border:1px solid var(--line)}
+  .tag .row{display:flex;justify-content:space-between;padding:4px 0;font-size:.95rem}
+  .tag .row b{color:var(--orange)}
+
+  /* ALGEBRA TILES */
+  .tiles{display:flex;justify-content:center;margin:6px 0}
+  .tilegrid{display:grid;gap:3px;font-weight:800;color:#04121a;text-align:center}
+  .tl{display:flex;align-items:center;justify-content:center;border-radius:4px;font-size:.9rem}
+  .tl.x2{background:#4aa8ff}.tl.ax{background:#ffb454}.tl.bx{background:#41e0a3}.tl.ab{background:#ff7a9c}
+
+  /* feedback */
+  .fb{margin-top:16px;border-radius:14px;padding:12px 16px;font-size:.95rem;display:none;animation:fade .3s both}
+  .fb.good{background:rgba(65,232,138,.12);border:1px solid var(--green)}
+  .fb.bad{background:rgba(255,107,107,.12);border:1px solid var(--red)}
+  .fb .h{font-weight:800;margin-bottom:2px}
+  .fb.good .h{color:var(--green)}.fb.bad .h{color:var(--red)}
+  .nextbtn{margin-top:14px;width:100%;padding:14px;border-radius:14px;background:linear-gradient(90deg,var(--cyan),var(--violet));
+    color:#04121a;font-weight:800;font-size:1.05rem;display:none}
+  .floatpts{position:absolute;right:18px;top:14px;font-weight:900;color:var(--gold);font-size:1.4rem;opacity:0;pointer-events:none}
+  .floatpts.pop{animation:fp 1s ease both}
+  @keyframes fp{0%{opacity:0;transform:translateY(6px)}20%{opacity:1}100%{opacity:0;transform:translateY(-28px)}}
+
+  /* world intro */
+  .intro{text-align:center;padding:36px 20px}
+  .intro .big{font-size:3.4rem}
+  .intro h2{font-size:1.8rem;margin:8px 0}
+  .intro p{color:var(--muted);max-width:420px;margin:0 auto 18px}
+
+  /* end screen */
+  .end{text-align:center;padding:20px}
+  .medal{font-size:4.5rem;animation:pop .5s both}
+  @keyframes pop{from{transform:scale(.3);opacity:0}to{transform:scale(1);opacity:1}}
+  .end h2{font-size:2rem;margin:6px 0}
+  .scoreline{font-size:1.1rem;color:var(--muted);margin:6px 0}
+  .scoreline b{color:var(--gold);font-size:1.3rem}
+  .statgrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:18px 0}
+  .statcard{background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:14px 8px}
+  .statcard .v{font-size:1.5rem;font-weight:900}
+  .statcard .l{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+  .earned{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+  .abadge{padding:8px 14px;border-radius:999px;font-weight:800;font-size:.85rem;border:1px solid;animation:pop .4s both}
+  .btnrow{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+
+  #confetti{position:fixed;inset:0;pointer-events:none;z-index:80}
+  .footer{text-align:center;color:var(--muted);font-size:.78rem;margin:24px 0 10px}
+</style>
+</head>
+<body>
+<canvas id="confetti"></canvas>
+<div class="wrap">
+
+<!-- HOME -->
+<div id="home" class="screen">
+  <div class="toprow">
+    <a class="icbtn" href="../index.html" title="Back to all lessons">← Home</a>
+    <span class="subtle" style="margin:0">Grade 9 · O/L Maths</span>
+    <button class="icbtn" id="sound">🔊 Sound: on</button>
+  </div>
+  <div class="hero">
+    <div class="logo">Math<span class="q">Quest</span></div>
+    <p class="tagline">One game, four worlds — everything from Chapters 1&nbsp;to&nbsp;5.</p>
+    <div class="badges-row">
+      <span class="mini" style="color:var(--patterns)">➰ Patterns</span>
+      <span class="mini" style="color:var(--binary)">💡 Binary</span>
+      <span class="mini" style="color:var(--percent)">🏷️ Percentages</span>
+      <span class="mini" style="color:var(--algebra)">🟦 Algebra</span>
+    </div>
+  </div>
+  <div class="modes">
+    <button class="mode big" data-mode="campaign">
+      <span class="ic">🏆</span>
+      <span><h3>Campaign</h3><p>Climb all four worlds, one topic at a time. 5 lives. Beat every world to become Math Champion.</p></span>
+    </button>
+    <button class="mode" data-mode="rush">
+      <span class="ic">⚡</span>
+      <h3>Mixed Rush</h3>
+      <p>Random questions from every topic. 3 lives, build your streak, chase a high score.</p>
+    </button>
+    <button class="mode" data-mode="practice">
+      <span class="ic">🎯</span>
+      <h3>Practice a World</h3>
+      <p>Pick one topic below. No game-over — just learn at your pace.</p>
+    </button>
+  </div>
+  <div class="worldgrid" id="worldPick"></div>
+  <p class="subtle" id="bestline"></p>
+  <div class="footer">Tip: answer correctly in a row to raise your streak multiplier ✨</div>
+</div>
+
+<!-- WORLD INTRO -->
+<div id="introScreen" class="screen hidden">
+  <div class="intro">
+    <div class="big" id="introIc">➰</div>
+    <h2 id="introTitle"></h2>
+    <p id="introDesc"></p>
+    <button class="go" id="introGo" style="padding:14px 34px">Enter →</button>
+  </div>
+</div>
+
+<!-- GAME -->
+<div id="game" class="screen hidden">
+  <div class="hud">
+    <span class="worldtag" id="hudWorld">➰ Patterns</span>
+    <span class="hearts" id="hudHearts">❤️❤️❤️</span>
+    <span class="stat">Streak <span class="streak" id="hudStreak">×1</span></span>
+    <span class="stat">Score <b id="hudScore">0</b></span>
+  </div>
+  <div class="pbar"><i id="pbar"></i></div>
+  <div class="qcard" id="qcard">
+    <div class="floatpts" id="floatpts"></div>
+    <div class="chapter" id="qchapter"></div>
+    <div class="qprompt" id="qprompt"></div>
+    <div class="stage" id="stage"></div>
+    <div class="fb" id="fb"></div>
+    <button class="nextbtn" id="nextbtn">Next →</button>
+  </div>
+  <div class="footer"><button class="icbtn" id="quitbtn">← Quit to menu</button></div>
+</div>
+
+<!-- END -->
+<div id="end" class="screen hidden">
+  <div class="end">
+    <div class="medal" id="medal">🏅</div>
+    <h2 id="endTitle">Well played!</h2>
+    <div class="scoreline">Final score <b id="endScore">0</b></div>
+    <div class="statgrid">
+      <div class="statcard"><div class="v" id="endCorrect" style="color:var(--green)">0</div><div class="l">Correct</div></div>
+      <div class="statcard"><div class="v" id="endAcc" style="color:var(--cyan)">0%</div><div class="l">Accuracy</div></div>
+      <div class="statcard"><div class="v" id="endBest" style="color:var(--gold)">×1</div><div class="l">Best streak</div></div>
+    </div>
+    <div class="earned" id="earned"></div>
+    <div class="btnrow">
+      <button class="go" id="againbtn" style="padding:14px 24px">Play again</button>
+      <button class="icbtn" id="menubtn" style="padding:14px 20px">Menu</button>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+const BANK = [{"world": "patterns", "type": "seq", "prompt": "Find the next term:", "seq": [3, 7, 11, 15], "answer": 19, "explain": "Common difference is 4 (7−3). 15 + 4 = 19."}, {"world": "patterns", "type": "seq", "prompt": "What is the 10th term of this sequence?", "seq": [5, 8, 11, 14], "nth": 10, "answer": 32, "explain": "d=3, T₁=5 → Tₙ=3n+2. T₁₀ = 3×10+2 = 32."}, {"world": "patterns", "type": "mc", "prompt": "Common difference of  20, 17, 14, 11, … ?", "answer": "−3", "choices": ["−3", "3", "−17", "−7"], "explain": "17−20 = −3; the terms go down by 3."}, {"world": "patterns", "type": "num", "prompt": "If Tₙ = 2n + 3, find the 5th term.", "answer": 13, "explain": "T₅ = 2×5 + 3 = 13."}, {"world": "patterns", "type": "seq", "prompt": "Find the next term:", "seq": [2, 5, 8, 11], "answer": 14, "explain": "d = 3, so 11 + 3 = 14."}, {"world": "patterns", "type": "num", "prompt": "What is the 6th term of  1, 7, 13, 19, … ?", "answer": 31, "explain": "d=6, T₁=1 → Tₙ=6n−5. T₆ = 6×6−5 = 31."}, {"world": "patterns", "type": "num", "prompt": "If Tₙ = 4n − 3, find the 3rd term.", "answer": 9, "explain": "T₃ = 4×3 − 3 = 9."}, {"world": "patterns", "type": "mc", "prompt": "Common difference of  7, 12, 17, 22, … ?", "answer": "5", "choices": ["5", "4", "7", "−5"], "explain": "12−7 = 5."}, {"world": "patterns", "type": "seq", "prompt": "Find the next term:", "seq": [100, 90, 80], "answer": 70, "explain": "d = −10, so 80 − 10 = 70."}, {"world": "patterns", "type": "num", "prompt": "If Tₙ = 5n, find the 8th term.", "answer": 40, "explain": "T₈ = 5×8 = 40."}, {"world": "binary", "type": "bbuild", "prompt": "Flip the switches to build the number 13", "target": 13, "bits": 5, "explain": "13 = 8 + 4 + 1 → binary 1101."}, {"world": "binary", "type": "bbuild", "prompt": "Flip the switches to build the number 22", "target": 22, "bits": 5, "explain": "22 = 16 + 4 + 2 → binary 10110."}, {"world": "binary", "type": "bbuild", "prompt": "Flip the switches to build the number 9", "target": 9, "bits": 5, "explain": "9 = 8 + 1 → binary 1001."}, {"world": "binary", "type": "bbuild", "prompt": "Flip the switches to build the number 6", "target": 6, "bits": 5, "explain": "6 = 4 + 2 → binary 110."}, {"world": "binary", "type": "bbuild", "prompt": "Flip the switches to build the number 25", "target": 25, "bits": 5, "explain": "25 = 16 + 8 + 1 → binary 11001."}, {"world": "binary", "type": "bbuild", "prompt": "Flip the switches to build the number 19", "target": 19, "bits": 5, "explain": "19 = 16 + 2 + 1 → binary 10011."}, {"world": "binary", "type": "bread", "prompt": "Read the lights. What decimal number is shown?", "bitstr": "1011", "answer": 11, "explain": "1011₂ = 8 + 2 + 1 = 11."}, {"world": "binary", "type": "bread", "prompt": "Read the lights. What decimal number is shown?", "bitstr": "10101", "answer": 21, "explain": "10101₂ = 16 + 4 + 1 = 21."}, {"world": "binary", "type": "mc", "prompt": "Convert the decimal 20 to binary.", "answer": "10100", "choices": ["10100", "10010", "11000", "10110"], "explain": "20 = 16 + 4 → 10100₂."}, {"world": "binary", "type": "num", "prompt": "Convert 11111₂ to a decimal number.", "answer": 31, "explain": "16+8+4+2+1 = 31."}, {"world": "binary", "type": "mc", "prompt": "Work out  101₂ + 11₂  (in binary).", "answer": "1000", "choices": ["1000", "110", "1010", "111"], "explain": "5 + 3 = 8 = 1000₂."}, {"world": "percent", "type": "num", "prompt": "Cost Rs 1000, sold for Rs 2600. Find the profit (Rs).", "answer": 1600, "explain": "profit = 2600 − 1000 = Rs 1600."}, {"world": "percent", "type": "mc", "prompt": "Buy Rs 500, sell Rs 450. What is the loss %?", "answer": "10%", "choices": ["10%", "9%", "11%", "50%"], "explain": "loss 50; 50/500 × 100 = 10%."}, {"world": "percent", "type": "mc", "prompt": "Book bought Rs 25, sold Rs 30. Profit %?", "answer": "20%", "choices": ["20%", "16.7%", "5%", "25%"], "explain": "profit 5; 5/25 × 100 = 20%."}, {"world": "percent", "type": "num", "prompt": "Marked price Rs 1500, discount 20%. Discount amount (Rs)?", "answer": 300, "explain": "1500 × 20/100 = Rs 300."}, {"world": "percent", "type": "mc", "prompt": "Iron worth Rs 2500 sold for Rs 2300. Loss %?", "answer": "8%", "choices": ["8%", "20%", "2%", "8.7%"], "explain": "loss 200; 200/2500 × 100 = 8%."}, {"world": "percent", "type": "num", "prompt": "Almirah costs Rs 30000, sold at 15% profit. Selling price (Rs)?", "answer": 34500, "explain": "30000 × 115/100 = Rs 34 500."}, {"world": "percent", "type": "num", "prompt": "Commission of 5% on a car worth Rs 3000000. Commission (Rs)?", "answer": 150000, "explain": "3 000 000 × 5/100 = Rs 150 000."}, {"world": "percent", "type": "num", "prompt": "A TV sold for Rs 22000 at 10% profit. Purchase price (Rs)?", "answer": 20000, "explain": "cost = 100/110 × 22000 = Rs 20 000."}, {"world": "percent", "type": "mc", "prompt": "Discount of Rs 250 on marked price Rs 2000. Discount %?", "answer": "12.5%", "choices": ["12.5%", "8%", "25%", "20%"], "explain": "250/2000 × 100 = 12.5%."}, {"world": "percent", "type": "num", "prompt": "Novel worth Rs 300 sold at 25% profit. Selling price (Rs)?", "answer": 375, "explain": "300 × 125/100 = Rs 375."}, {"world": "algebra", "type": "mc", "prompt": "Expand  (x + 2)(x + 4).", "answer": "x² + 6x + 8", "choices": ["x² + 6x + 8", "x² + 8x + 6", "x² + 6x + 6", "x² + 2x + 8"], "explain": "middle 2+4=6, last 2×4=8."}, {"world": "algebra", "type": "mc", "prompt": "Expand  (x + 5)(x − 3).", "answer": "x² + 2x − 15", "choices": ["x² + 2x − 15", "x² − 2x − 15", "x² + 8x − 15", "x² + 2x + 15"], "explain": "middle 5+(−3)=2, last 5×(−3)=−15."}, {"world": "algebra", "type": "num", "prompt": "Find the value of  2a + 3  when a = ½.", "answer": 4, "explain": "2×½ + 3 = 1 + 3 = 4."}, {"world": "algebra", "type": "mc", "prompt": "Expand  (x − 3)(x − 4).", "answer": "x² − 7x + 12", "choices": ["x² − 7x + 12", "x² + 7x + 12", "x² − 7x − 12", "x² − x + 12"], "explain": "middle (−3)+(−4)=−7, last (−3)(−4)=+12."}, {"world": "algebra", "type": "num", "prompt": "In  (x + 6)(x − 1) = x² + ?x − 6,  what is the middle coefficient?", "answer": 5, "explain": "6 + (−1) = 5."}, {"world": "algebra", "type": "mc", "prompt": "Expand  (x − 5)(x + 5).", "answer": "x² − 25", "choices": ["x² − 25", "x² + 25", "x² − 10x − 25", "x² − 25x"], "explain": "middle (−5)+5=0, last (−5)(5)=−25."}, {"world": "algebra", "type": "num", "prompt": "Find the value of  5 − 6b  when b = −⅔.", "answer": 9, "explain": "5 − 6×(−⅔) = 5 + 4 = 9."}, {"world": "algebra", "type": "mc", "prompt": "Expand  (m + 3)(m + 5).", "answer": "m² + 8m + 15", "choices": ["m² + 8m + 15", "m² + 15m + 8", "m² + 8m + 8", "m² + 2m + 15"], "explain": "middle 3+5=8, last 3×5=15."}, {"world": "algebra", "type": "num", "prompt": "In  (x + 8)(x − 3),  what is the constant (last) term?", "answer": -24, "explain": "8 × (−3) = −24."}, {"world": "algebra", "type": "num", "prompt": "If  (x + a)(x + 4) = x² + bx + 12,  find a.", "answer": 3, "explain": "a × 4 = 12 → a = 3."}];
+
+
+/* ---------- world meta ---------- */
+const WORLDS={
+  patterns:{name:'Patterns',ic:'➰',color:'var(--patterns)',title:'Sequence Peaks',desc:'Spot the rule, climb the steps, and find any term of a number pattern.'},
+  binary:{name:'Binary',ic:'💡',color:'var(--binary)',title:'Circuit City',desc:'Flip light switches and read glowing bits to convert between decimal and binary.'},
+  percent:{name:'Percentages',ic:'🏷️',color:'var(--percent)',title:'Market Street',desc:'Profit, loss, discounts and commissions — do the deals in your head.'},
+  algebra:{name:'Algebra',ic:'🟦',color:'var(--algebra)',title:'Tile Temple',desc:'Substitute values and expand brackets using the area-model tiles.'}
+};
+const $=id=>document.getElementById(id);
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+// seedless RNG wrapper (Math.random is fine in a browser game)
+function rnd(){return Math.random();}
+
+/* ---------- sound ---------- */
+let soundOn=true, actx=null;
+function beep(freq,dur,type='sine',vol=.15){
+  if(!soundOn)return;
+  try{ actx=actx||new (window.AudioContext||window.webkitAudioContext)();
+    const o=actx.createOscillator(),g=actx.createGain();
+    o.type=type;o.frequency.value=freq;o.connect(g);g.connect(actx.destination);
+    g.gain.setValueAtTime(vol,actx.currentTime);
+    g.gain.exponentialRampToValueAtTime(.0001,actx.currentTime+dur);
+    o.start();o.stop(actx.currentTime+dur);
+  }catch(e){}
+}
+const sGood=()=>{beep(660,.12);setTimeout(()=>beep(880,.16),90);};
+const sBad=()=>beep(180,.25,'square',.12);
+const sClick=()=>beep(420,.05,'triangle',.08);
+$('sound').onclick=()=>{soundOn=!soundOn;$('sound').textContent='🔊 Sound: '+(soundOn?'on':'off');if(soundOn)sClick();};
+
+/* ---------- state ---------- */
+let state=null;
+let best=0;
+
+/* ---------- home ---------- */
+const wp=$('worldPick');
+Object.entries(WORLDS).forEach(([k,w])=>{
+  const b=document.createElement('button');b.className='wbtn';b.style.borderColor='transparent';
+  b.innerHTML=`<div class="wic">${w.ic}</div><div class="wn" style="color:${w.color}">${w.name}</div>`;
+  b.onmouseover=()=>b.style.borderColor=w.color; b.onmouseout=()=>b.style.borderColor='transparent';
+  b.onclick=()=>{sClick();startGame('practice',k);};
+  wp.appendChild(b);
+});
+document.querySelectorAll('.mode').forEach(m=>m.onclick=()=>{sClick();startGame(m.dataset.mode);});
+
+function showScreen(id){['home','introScreen','game','end'].forEach(s=>$(s).classList.add('hidden'));$(id).classList.remove('hidden');}
+
+/* ---------- build queue ---------- */
+function startGame(mode,world){
+  actx=actx||null; // will init on first beep
+  let queue=[];
+  if(mode==='campaign'){
+    const order=['patterns','binary','percent','algebra'];
+    order.forEach(w=>{
+      queue.push({intro:w});
+      shuffle(BANK.filter(q=>q.world===w)).slice(0,5).forEach(q=>queue.push(q));
+    });
+    state={mode,queue,idx:0,score:0,hearts:5,maxHearts:5,streak:0,mult:1,bestStreak:0,correct:0,answered:0};
+  }else if(mode==='rush'){
+    queue=shuffle(BANK);
+    state={mode,queue,idx:0,score:0,hearts:3,maxHearts:3,streak:0,mult:1,bestStreak:0,correct:0,answered:0};
+  }else{ // practice single world
+    queue=shuffle(BANK.filter(q=>q.world===world));
+    state={mode,world,queue,idx:0,score:0,hearts:Infinity,maxHearts:Infinity,streak:0,mult:1,bestStreak:0,correct:0,answered:0};
+  }
+  next();
+}
+$('quitbtn').onclick=()=>{sClick();showScreen('home');};
+$('menubtn').onclick=()=>{sClick();showScreen('home');};
+$('againbtn').onclick=()=>{sClick();startGame(state.mode,state.world);};
+
+/* ---------- flow ---------- */
+function next(){
+  if(state.idx>=state.queue.length){return endGame(true);}
+  const item=state.queue[state.idx];
+  if(item.intro){ showIntro(item.intro); return; }
+  showScreen('game'); renderQuestion(item);
+}
+function showIntro(w){
+  const meta=WORLDS[w];
+  $('introIc').textContent=meta.ic; $('introTitle').textContent=meta.title;
+  $('introTitle').style.color=meta.color; $('introDesc').textContent=meta.desc;
+  showScreen('introScreen');
+  $('introGo').onclick=()=>{sClick();state.idx++;next();};
+}
+
+function updateHUD(item){
+  const meta=WORLDS[item.world];
+  $('hudWorld').innerHTML=`${meta.ic} ${meta.name}`; $('hudWorld').style.color=meta.color;
+  $('hudHearts').textContent = state.hearts===Infinity ? '∞' : '❤️'.repeat(state.hearts)+'🖤'.repeat(Math.max(0,state.maxHearts-state.hearts));
+  $('hudStreak').textContent='×'+state.mult;
+  $('hudScore').textContent=state.score;
+  const done=state.queue.slice(0,state.idx).filter(q=>!q.intro).length;
+  const total=state.queue.filter(q=>!q.intro).length;
+  $('pbar').style.width=(total?done/total*100:0)+'%';
+}
+
+let currentAnswered=false, getUserAnswer=null, curItem=null;
+function renderQuestion(item){
+  curItem=item; currentAnswered=false;
+  updateHUD(item);
+  const meta=WORLDS[item.world];
+  $('qchapter').textContent=meta.title; $('qchapter').style.color=meta.color;
+  $('qprompt').innerHTML=item.prompt;
+  $('fb').style.display='none'; $('fb').className='fb'; $('nextbtn').style.display='none';
+  const stage=$('stage'); stage.innerHTML='';
+  const R=RENDER[item.type]; R(item,stage);
+}
+
+/* ---------- answer handling ---------- */
+function submitAnswer(isCorrect, userLabel){
+  if(currentAnswered)return; currentAnswered=true; state.answered++;
+  const fb=$('fb');
+  if(isCorrect){
+    state.correct++; state.streak++; state.bestStreak=Math.max(state.bestStreak,state.streak);
+    state.mult=Math.min(1+state.streak, 6);
+    const pts=100*state.mult; state.score+=pts;
+    const fp=$('floatpts'); fp.textContent='+'+pts; fp.classList.remove('pop'); void fp.offsetWidth; fp.classList.add('pop');
+    fb.className='fb good'; fb.innerHTML=`<div class="h">✔ Correct!  +${pts} points ${state.mult>1?'(×'+state.mult+' streak)':''}</div>${curItem.explain||''}`;
+    sGood();
+  }else{
+    state.streak=0; state.mult=1;
+    if(state.hearts!==Infinity)state.hearts--;
+    fb.className='fb bad'; fb.innerHTML=`<div class="h">✗ Not quite.</div>${answerText(curItem)}<br>${curItem.explain||''}`;
+    sBad();
+  }
+  fb.style.display='block'; updateHUD(curItem);
+  // game over?
+  if(state.hearts!==Infinity && state.hearts<=0){
+    $('nextbtn').style.display='block'; $('nextbtn').textContent='See results →';
+    $('nextbtn').onclick=()=>endGame(false);
+  }else{
+    $('nextbtn').style.display='block'; $('nextbtn').textContent='Next →';
+    $('nextbtn').onclick=()=>{state.idx++;next();};
+  }
+}
+function answerText(item){
+  if(item.type==='mc')return `The answer is <b class="eq">${item.answer}</b>.`;
+  if(item.type==='bbuild')return `The answer is <b>${item.target}</b> = <span class="mono">${dec2bin(item.target)}₂</span>.`;
+  if(item.type==='bread')return `The answer is <b>${item.answer}</b>.`;
+  return `The answer is <b>${item.answer}</b>.`;
+}
+const dec2bin=n=>n.toString(2);
+
+/* ---------- widget renderers ---------- */
+const RENDER={};
+RENDER.mc=(item,stage)=>{
+  const wrap=document.createElement('div');wrap.className='choices';
+  shuffle(item.choices).forEach(ch=>{
+    const b=document.createElement('button');b.className='choice';b.innerHTML=ch;
+    b.onclick=()=>{
+      if(currentAnswered)return;
+      const ok=ch===item.answer;
+      b.classList.add(ok?'correct':'wrong');
+      if(!ok){[...wrap.children].forEach(c=>{if(c.innerHTML===item.answer)c.classList.add('correct');});}
+      [...wrap.children].forEach(c=>c.disabled=true);
+      submitAnswer(ok,ch);
+    };
+    wrap.appendChild(b);
+  });
+  stage.appendChild(wrap);
+};
+function numericWidget(item,stage,parse){
+  const row=document.createElement('div');row.className='numrow';
+  const inp=document.createElement('input');inp.className='numin';inp.type='text';inp.inputMode='numeric';inp.placeholder='?';
+  const go=document.createElement('button');go.className='go';go.textContent='Check';
+  const doit=()=>{ if(currentAnswered)return;
+    const val=parse(inp.value.trim());
+    if(val===null){inp.style.borderColor='var(--red)';return;}
+    inp.disabled=true;go.disabled=true;
+    submitAnswer(Math.abs(val-item.answer)<1e-9, inp.value);
+  };
+  go.onclick=doit; inp.addEventListener('keydown',e=>{if(e.key==='Enter')doit();});
+  row.appendChild(inp);row.appendChild(go);stage.appendChild(row);
+  setTimeout(()=>inp.focus(),50);
+}
+function parseNum(s){ if(s==='')return null; s=s.replace('−','-').replace(/,/g,''); const v=parseFloat(s); return isNaN(v)?null:v; }
+RENDER.num=(item,stage)=>{
+  if(item.world==='percent'){ // price-tag flavour
+    const tag=document.createElement('div');tag.className='tag';tag.innerHTML='<div class="hole"></div><div class="row" style="color:var(--muted)">🏷️ Market Street</div><div class="row">Solve it & type the number</div>';
+    stage.appendChild(tag);
+  }
+  numericWidget(item,stage,parseNum);
+};
+RENDER.seq=(item,stage)=>{
+  const box=document.createElement('div');box.className='stairs';
+  let terms=item.seq.slice();
+  let display=terms.map(v=>({v,q:false}));
+  if(item.nth){ display.push({v:'?',q:true,label:'n='+item.nth}); }
+  else { display.push({v:'?',q:true}); }
+  const nums=terms.filter(v=>typeof v==='number');
+  const mx=Math.max(...nums,1);
+  display.forEach((d,i)=>{
+    const h=40+ (typeof d.v==='number'? d.v/mx*90 : 90);
+    const s=document.createElement('div');s.className='stair'+(d.q?' q':'');
+    s.style.height=h+'px';s.style.animationDelay=(i*0.08)+'s';
+    s.innerHTML=d.v+(d.label?`<span class="base">${d.label}</span>`:'');
+    box.appendChild(s);
+  });
+  stage.appendChild(box);
+  numericWidget(item,stage,parseNum);
+};
+RENDER.bread=(item,stage)=>{
+  const board=document.createElement('div');board.className='board';
+  const bits=item.bitstr.split('');
+  const pv=[16,8,4,2,1].slice(5-bits.length);
+  bits.forEach((bit,i)=>{
+    const sw=document.createElement('div');sw.className='sw read'+(bit==='1'?' on':'');
+    sw.innerHTML=`<div class="bulb">${bit}</div><div class="pv">${pv[i]}</div>`;
+    board.appendChild(sw);
+  });
+  stage.appendChild(board);
+  const hint=document.createElement('div');hint.className='binread';hint.textContent='Add the values under the lit (green) bulbs.';
+  stage.appendChild(hint);
+  numericWidget(item,stage,parseNum);
+};
+RENDER.bbuild=(item,stage)=>{
+  const pv=[16,8,4,2,1]; let bits=[0,0,0,0,0];
+  const board=document.createElement('div');board.className='board';
+  pv.forEach((v,i)=>{
+    const sw=document.createElement('div');sw.className='sw';
+    sw.innerHTML=`<div class="bulb">0</div><div class="pv">${v}</div>`;
+    sw.querySelector('.bulb').onclick=()=>{ if(currentAnswered)return; bits[i]^=1; sClick(); paint(); };
+    board.appendChild(sw);
+  });
+  stage.appendChild(board);
+  const read=document.createElement('div');read.className='binread';stage.appendChild(read);
+  const row=document.createElement('div');row.className='numrow';
+  const go=document.createElement('button');go.className='go';go.textContent='Check';
+  go.onclick=()=>{ if(currentAnswered)return; const val=bits.reduce((s,b,i)=>s+b*pv[i],0);
+    go.disabled=true; board.querySelectorAll('.bulb').forEach(bb=>bb.style.pointerEvents='none');
+    submitAnswer(val===item.target, ''+val); };
+  row.appendChild(go);stage.appendChild(row);
+  function paint(){
+    [...board.children].forEach((sw,i)=>{sw.classList.toggle('on',!!bits[i]);sw.querySelector('.bulb').textContent=bits[i];});
+    const val=bits.reduce((s,b,i)=>s+b*pv[i],0);
+    read.innerHTML=`Currently: <b>${val}</b> &nbsp;(<span class="mono">${bits.join('')}</span>₂) &nbsp;· target <b style="color:var(--gold)">${item.target}</b>`;
+  }
+  paint();
+};
+
+/* ---------- end ---------- */
+function endGame(finished){
+  const acc=state.answered? Math.round(state.correct/state.answered*100):0;
+  if(state.score>best){best=state.score;}
+  $('endScore').textContent=state.score;
+  $('endCorrect').textContent=state.correct;
+  $('endAcc').textContent=acc+'%';
+  $('endBest').textContent='×'+Math.min(1+state.bestStreak,6);
+  // medal + title
+  let medal='🥉',title='Nice effort!';
+  if(!finished && state.hearts<=0){ medal='💥'; title='Out of lives!'; }
+  if(acc>=90){medal='🥇';title='Outstanding!';}
+  else if(acc>=70){medal='🥈';title='Great work!';}
+  if(state.mode==='campaign'&&finished&&acc>=70){medal='👑';title='Math Champion!';}
+  $('medal').textContent=medal; $('endTitle').textContent=title;
+  // badges
+  const earned=$('earned');earned.innerHTML='';
+  const badges=[];
+  if(state.bestStreak>=5)badges.push(['🔥 Streak Master','var(--gold)']);
+  if(acc===100)badges.push(['💯 Flawless','var(--green)']);
+  if(state.score>=2000)badges.push(['💎 High Scorer','var(--cyan)']);
+  if(state.mode==='campaign'&&finished)badges.push(['🏆 World Conqueror','var(--violet)']);
+  if(state.mode==='rush'&&state.answered>=15)badges.push(['⚡ Rush Runner','var(--orange)']);
+  if(!badges.length)badges.push(['⭐ Keep practising','var(--muted)']);
+  badges.forEach(([t,c],i)=>{const b=document.createElement('span');b.className='abadge';b.style.color=c;b.style.borderColor=c;b.style.animationDelay=(i*.1)+'s';b.textContent=t;earned.appendChild(b);});
+  $('bestline').textContent='Best score so far: '+best;
+  showScreen('end');
+  if(acc>=70||medal==='👑'){confetti();sGood();}
+}
+</script>
+<script>
+/* small confetti */
+function confetti(){
+  const c=document.getElementById('confetti'),x=c.getContext('2d');
+  c.width=innerWidth;c.height=innerHeight;
+  const cols=['#39d6e6','#a78bfa','#ffd166','#41e88a','#ff6b6b','#ffab48'];
+  let ps=Array.from({length:140},()=>({x:Math.random()*c.width,y:-20-Math.random()*c.height*.5,
+    r:4+Math.random()*5,vy:2+Math.random()*3.5,vx:-1.5+Math.random()*3,col:cols[Math.floor(Math.random()*cols.length)],
+    rot:Math.random()*6,vr:-.2+Math.random()*.4}));
+  let t=0;
+  (function draw(){
+    x.clearRect(0,0,c.width,c.height);t++;
+    ps.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.rot+=p.vr;
+      x.save();x.translate(p.x,p.y);x.rotate(p.rot);x.fillStyle=p.col;x.fillRect(-p.r/2,-p.r/2,p.r,p.r*.6);x.restore();});
+    if(t<170)requestAnimationFrame(draw);else x.clearRect(0,0,c.width,c.height);
+  })();
+}
+</script>
+</body>
+</html>
