@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Binary Numbers — Master It | Grade 9 Maths</title>
+<style>
+  :root{
+    --bg:#0c1220; --bg2:#111a2e; --card:#182339; --card2:#1e2c48;
+    --ink:#eaf1ff; --muted:#9db0d0; --line:#2a3b5c;
+    --cyan:#2ec5e6; --cyan2:#39e0c4; --on:#41e88a; --off:#3a4a68;
+    --easy:#3ecf8e; --med:#f6b93b; --hard:#ff6b6b;
+    --accent:#7c8cff; --gold:#ffd166;
+    --shadow:0 18px 45px rgba(0,0,0,.5);
+    --r:18px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+    background:radial-gradient(1200px 700px at 82% -10%,#152442 0%,var(--bg) 55%) fixed;
+    color:var(--ink);line-height:1.65;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+  h1,h2,h3{line-height:1.2;font-weight:800;letter-spacing:.2px}
+  .mono{font-family:'SFMono-Regular',ui-monospace,'Cascadia Code',Consolas,monospace}
+  .eq{font-family:'Cambria Math','Times New Roman',Georgia,serif;font-style:italic;font-size:1.06em;white-space:nowrap}
+  sub{font-size:.7em}
+
+  header.hero{padding:64px 0 40px;text-align:center;position:relative;overflow:hidden}
+  .badge{display:inline-block;padding:6px 16px;border:1px solid var(--line);border-radius:999px;
+    color:var(--cyan);font-size:.8rem;letter-spacing:2px;text-transform:uppercase;background:rgba(46,197,230,.08)}
+  header.hero h1{font-size:clamp(2.1rem,6vw,3.6rem);margin:18px 0 8px;
+    background:linear-gradient(100deg,#fff 10%,var(--cyan) 55%,var(--on) 95%);
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  header.hero p.sub{color:var(--muted);max-width:640px;margin:0 auto;font-size:1.05rem}
+  .floaters{position:absolute;inset:0;pointer-events:none;z-index:-1;opacity:.45}
+  .floaters span{position:absolute;color:var(--cyan);font-weight:800;font-size:1.4rem;font-family:monospace;
+    animation:float 7s ease-in-out infinite}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-22px)}}
+
+  nav.toc{position:sticky;top:0;z-index:40;background:rgba(12,18,32,.85);backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);padding:10px 0}
+  nav.toc .wrap{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+  nav.toc .wrap::-webkit-scrollbar{display:none}
+  nav.toc a{white-space:nowrap;color:var(--muted);text-decoration:none;font-size:.88rem;
+    padding:7px 14px;border-radius:999px;transition:.2s}
+  nav.toc a:hover{color:#fff;background:var(--card)}
+
+  section{padding:46px 0}
+  .sec-tag{color:var(--cyan);font-weight:700;letter-spacing:2px;text-transform:uppercase;font-size:.78rem}
+  section h2{font-size:clamp(1.5rem,4vw,2.1rem);margin:6px 0 14px}
+  section h2 .n{color:var(--cyan);opacity:.6;margin-right:10px}
+  p.lead{color:#cdd9f2;font-size:1.05rem}
+  .muted{color:var(--muted)}
+
+  .card{background:linear-gradient(180deg,var(--card),var(--bg2));border:1px solid var(--line);
+    border-radius:var(--r);padding:24px;box-shadow:var(--shadow);margin:18px 0}
+  .card.tight{padding:18px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:720px){.grid2{grid-template-columns:1fr}}
+
+  .keybox{border-left:4px solid var(--cyan);background:rgba(46,197,230,.08);padding:14px 18px;border-radius:10px;margin:14px 0}
+  .keybox b{color:var(--cyan2)}
+  .analogy{border-left:4px solid var(--gold);background:rgba(255,209,102,.08);padding:14px 18px;border-radius:10px;margin:14px 0}
+  .analogy b{color:var(--gold)}
+  .warn{border-left:4px solid var(--hard);background:rgba(255,107,107,.08);padding:14px 18px;border-radius:10px;margin:14px 0}
+  .formula{display:inline-block;background:rgba(124,140,255,.12);border:1px solid #38477a;
+    padding:8px 16px;border-radius:12px;font-size:1.12rem;color:#fff;margin:6px 0}
+
+  /* place value chart */
+  .pvc{display:flex;justify-content:center;flex-wrap:wrap;gap:0;margin:14px 0}
+  .pv{min-width:70px;text-align:center;border:1px solid var(--line);background:var(--card2);
+    padding:10px 6px;position:relative}
+  .pv:first-child{border-radius:10px 0 0 10px}.pv:last-child{border-radius:0 10px 10px 0}
+  .pv .pow{color:var(--cyan2);font-weight:800}
+  .pv .val{color:var(--muted);font-size:.85rem}
+  .pv .bit{font-size:1.5rem;font-weight:800;margin-top:4px}
+
+  /* SWITCH BOARD */
+  .board{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin:8px 0 4px}
+  .switch{width:78px;cursor:pointer;user-select:none;text-align:center;transition:transform .12s}
+  .switch:active{transform:scale(.94)}
+  .bulb{width:100%;aspect-ratio:1;border-radius:14px;display:flex;align-items:center;justify-content:center;
+    font-size:1.7rem;font-weight:800;border:2px solid var(--off);background:#141f36;color:#5b6c8f;transition:.25s}
+  .switch.on .bulb{border-color:var(--on);background:radial-gradient(circle at 50% 35%,#5affa0,#17a35a);
+    color:#04220f;box-shadow:0 0 22px rgba(65,232,138,.55)}
+  .switch .lbl{margin-top:6px;font-size:.72rem;color:var(--muted);font-weight:700}
+  .switch .lblv{font-size:.72rem;color:var(--cyan2)}
+  .readout{text-align:center;margin-top:16px}
+  .bignum{font-size:1.35rem;font-weight:800;letter-spacing:2px}
+  .bignum .b{font-family:monospace;color:var(--on)}
+  .bignum .d{color:var(--cyan2)}
+  .expand{color:var(--muted);font-size:.95rem;margin-top:6px}
+  .expand b{color:#fff}
+  .prebtns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+  .pbtn{padding:6px 14px;border-radius:999px;border:1px solid var(--line);background:var(--card2);
+    color:var(--muted);cursor:pointer;font-weight:700;font-size:.85rem;transition:.2s}
+  .pbtn:hover{color:#fff;border-color:var(--cyan)}
+
+  /* division stepper */
+  .divbox{font-family:monospace;font-size:1.05rem;line-height:2;margin:10px auto;max-width:340px}
+  .divrow{display:flex;align-items:center;gap:10px;justify-content:flex-start;opacity:0;transform:translateX(-8px);
+    transition:.4s}
+  .divrow.show{opacity:1;transform:none}
+  .divrow .q{min-width:120px}
+  .divrow .rem{color:var(--gold);font-weight:800;border:1px solid var(--gold);border-radius:6px;padding:0 8px}
+  .divresult{text-align:center;margin-top:10px;font-weight:800}
+  .divresult .arrow-up{color:var(--cyan2)}
+  .ctrlrow{display:flex;gap:12px;justify-content:center;align-items:center;flex-wrap:wrap;margin-bottom:6px}
+  .ctrlrow input{width:110px;padding:8px 12px;border-radius:10px;border:1px solid var(--line);background:#0e1728;color:#fff;font-size:1rem;text-align:center}
+  .gobtn{padding:9px 20px;border-radius:10px;border:none;background:linear-gradient(90deg,var(--cyan),var(--accent));color:#04121a;font-weight:800;cursor:pointer}
+
+  /* column add/sub */
+  .colcalc{font-family:monospace;font-size:1.3rem;text-align:right;display:inline-block;line-height:1.5}
+  .colcalc .carry{color:var(--hard);font-size:.9rem}
+  .colcalc .rule{border-top:2px solid var(--muted);margin:2px 0}
+
+  .tabs{display:flex;gap:10px;justify-content:center;margin:8px 0 22px;flex-wrap:wrap}
+  .tab{cursor:pointer;padding:10px 22px;border-radius:999px;font-weight:800;border:1px solid var(--line);background:var(--card);color:var(--muted);transition:.2s}
+  .tab .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px;vertical-align:middle}
+  .tab.easy .dot{background:var(--easy)}.tab.med .dot{background:var(--med)}.tab.hard .dot{background:var(--hard)}
+  .tab.active{color:#fff;transform:translateY(-2px)}
+  .tab.active.easy{border-color:var(--easy);box-shadow:0 6px 18px rgba(62,207,142,.25)}
+  .tab.active.med{border-color:var(--med);box-shadow:0 6px 18px rgba(246,185,59,.25)}
+  .tab.active.hard{border-color:var(--hard);box-shadow:0 6px 18px rgba(255,107,107,.25)}
+  .hint{text-align:center;color:var(--muted);font-size:.9rem;margin-bottom:16px}
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:720px){.cards{grid-template-columns:1fr}}
+  .flip{perspective:1600px;min-height:255px;cursor:pointer}
+  .flip-in{position:relative;width:100%;height:100%;min-height:255px;transition:transform .65s cubic-bezier(.4,.2,.2,1);transform-style:preserve-3d}
+  .flip.flipped .flip-in{transform:rotateY(180deg)}
+  .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--r);padding:20px;border:1px solid var(--line);display:flex;flex-direction:column;overflow:auto}
+  .front{background:linear-gradient(180deg,var(--card),var(--bg2))}
+  .back{background:linear-gradient(180deg,#14263f,#0e1a30);transform:rotateY(180deg)}
+  .qhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+  .qno{font-weight:800;color:var(--muted);font-size:.85rem;letter-spacing:1px}
+  .lvl{font-size:.72rem;font-weight:800;padding:3px 10px;border-radius:999px;text-transform:uppercase}
+  .lvl.easy{background:rgba(62,207,142,.18);color:var(--easy)}
+  .lvl.med{background:rgba(246,185,59,.18);color:var(--med)}
+  .lvl.hard{background:rgba(255,107,107,.18);color:var(--hard)}
+  .qtext{font-size:1.02rem;font-weight:600}
+  .flip-cue{margin-top:auto;color:var(--cyan);font-size:.82rem;font-weight:700;display:flex;align-items:center;gap:6px}
+  .flip-cue svg{width:16px;height:16px}
+  .ans{color:var(--gold);font-weight:800;font-size:1.05rem;margin:2px 0 10px}
+  .exp{font-size:.92rem;color:#d5e0f5}.exp b{color:#fff}
+  .step{background:rgba(124,140,255,.08);border-left:3px solid var(--accent);padding:6px 12px;border-radius:8px;margin:6px 0;font-size:.9rem}
+  .step.mono{font-family:monospace}
+  .back .qno{color:#7f92b8}
+
+  .cheat{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:720px){.cheat{grid-template-columns:1fr}}
+  .cheat .c{background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:16px}
+  .cheat .c h4{color:var(--cyan2);margin-bottom:6px;font-size:1rem}
+
+  footer{padding:40px 0 60px;text-align:center;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line);margin-top:30px}
+  .prog{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--cyan),var(--on));z-index:60;width:0}
+  ::selection{background:var(--on);color:#04121a}
+</style>
+</head>
+<body>
+<div class="prog" id="prog"></div>
+
+<header class="hero">
+  <div class="floaters">
+    <span style="left:8%;top:20%">1</span><span style="left:20%;top:62%;animation-delay:1s">0</span>
+    <span style="left:82%;top:24%;animation-delay:.6s">101</span><span style="left:70%;top:70%;animation-delay:1.6s">1</span>
+    <span style="left:45%;top:12%;animation-delay:2s">10110</span><span style="left:90%;top:56%;animation-delay:2.4s">0</span>
+  </div>
+  <div class="wrap">
+    <span class="badge">Grade 9 · O/L Maths · Chapter 2</span>
+    <h1>Binary Numbers</h1>
+    <p class="sub">The language computers actually think in — built from just two digits, 0 and 1. Flip the switches, watch numbers convert themselves, then lock it in with 30 flip-to-reveal questions.</p>
+  </div>
+</header>
+
+<nav class="toc">
+  <div class="wrap">
+    <a href="#c1">① Number bases</a>
+    <a href="#c2">② Base two</a>
+    <a href="#c3">③ Decimal → Binary</a>
+    <a href="#c4">④ Binary → Decimal</a>
+    <a href="#c5">⑤ Adding</a>
+    <a href="#c6">⑥ Subtracting</a>
+    <a href="#c7">⑦ Why it matters</a>
+    <a href="#play">🎛️ Switch board</a>
+    <a href="#stepper">➗ Converter</a>
+    <a href="#practice">📝 Practice ×30</a>
+    <a href="#cheat">⭐ Cheat sheet</a>
+  </div>
+</nav>
+
+<!-- ① -->
+<section id="c1"><div class="wrap">
+  <span class="sec-tag">Start here</span>
+  <h2><span class="n">①</span>Every number is secretly a sum of place values</h2>
+  <p class="lead">The numbers you use every day are <b>base ten</b> (decimal). Each digit's spot has a <b>place value</b> that is a power of ten. The digit just says "how many of this place value".</p>
+  <div class="card">
+    <div class="pvc">
+      <div class="pv"><div class="pow">10³</div><div class="val">1000</div><div class="bit">3</div></div>
+      <div class="pv"><div class="pow">10²</div><div class="val">100</div><div class="bit">7</div></div>
+      <div class="pv"><div class="pow">10¹</div><div class="val">10</div><div class="bit">2</div></div>
+      <div class="pv"><div class="pow">10⁰</div><div class="val">1</div><div class="bit">5</div></div>
+    </div>
+    <p style="text-align:center;margin-top:14px">3725 = 3×1000 + 7×100 + 2×10 + 5×1</p>
+    <p style="text-align:center" class="muted">= 3×10³ + 7×10² + 2×10¹ + 5×10⁰</p>
+  </div>
+  <div class="keybox"><b>Base ten uses ten digits</b> (0–9) and place values that are powers of <b>ten</b>. But ten isn't magic — we can build the exact same idea on <b>any</b> base. Binary just switches the base to <b>two</b>.</div>
+  <p class="muted">One handy fact we'll use everywhere: any nonzero number to the power 0 equals 1. So 10⁰ = 1, and 2⁰ = 1.</p>
+</div></section>
+
+<!-- ② -->
+<section id="c2"><div class="wrap">
+  <span class="sec-tag">The big switch</span>
+  <h2><span class="n">②</span>Binary = base two (only 0 and 1)</h2>
+  <p class="lead">In <b>binary</b> we use just <b>two digits, 0 and 1</b>, and the place values become powers of <b>two</b> instead of ten.</p>
+  <div class="card">
+    <div class="pvc">
+      <div class="pv"><div class="pow">2⁷</div><div class="val">128</div></div>
+      <div class="pv"><div class="pow">2⁶</div><div class="val">64</div></div>
+      <div class="pv"><div class="pow">2⁵</div><div class="val">32</div></div>
+      <div class="pv"><div class="pow">2⁴</div><div class="val">16</div></div>
+      <div class="pv"><div class="pow">2³</div><div class="val">8</div></div>
+      <div class="pv"><div class="pow">2²</div><div class="val">4</div></div>
+      <div class="pv"><div class="pow">2¹</div><div class="val">2</div></div>
+      <div class="pv"><div class="pow">2⁰</div><div class="val">1</div></div>
+    </div>
+    <p class="muted" style="text-align:center;margin-top:12px">Memorise these — they double each step: 1, 2, 4, 8, 16, 32, 64, 128, 256, 512 …</p>
+  </div>
+  <div class="analogy"><b>Think of light switches in a row.</b> Each switch is worth a place value (1, 2, 4, 8 …). ON = 1, OFF = 0. To make a number, you flip ON exactly the switches that add up to it. That "which switches are ON" pattern <em>is</em> the binary number. Try it live in the <a href="#play" style="color:var(--gold)">Switch Board</a> below.</div>
+  <div class="keybox"><b>Writing the base.</b> To avoid confusion we tag the base as a subscript: 1101<sub>two</sub> is binary, 603<sub>ten</sub> is decimal. In this page "<b>₂</b>" means binary.</div>
+</div></section>
+
+<!-- ③ -->
+<section id="c3"><div class="wrap">
+  <span class="sec-tag">Going in</span>
+  <h2><span class="n">③</span>Decimal → Binary (two ways)</h2>
+  <p class="lead">Turning an ordinary number into binary. There's a quick way for small numbers and a reliable way for any number.</p>
+  <div class="grid2">
+    <div class="card">
+      <h3 style="font-size:1.05rem;color:var(--cyan2)">Way 1 · Sum of powers of two</h3>
+      <p class="muted">Pick the biggest powers of two that add up to your number, then mark 1 where used and 0 where not.</p>
+      <div class="step mono">13 = 8 + 4 + 1</div>
+      <div class="step mono">= 1×2³ + 1×2² + 0×2¹ + 1×2⁰</div>
+      <div class="step mono">13 = 1101₂ ✓</div>
+      <p class="muted" style="font-size:.88rem">Great for small numbers. Fiddly for big ones — that's why we have Way 2.</p>
+    </div>
+    <div class="card">
+      <h3 style="font-size:1.05rem;color:var(--gold)">Way 2 · Divide by 2 repeatedly</h3>
+      <p class="muted">Keep dividing by 2, writing the remainder each time, until the quotient is 0. Read the remainders <b>bottom to top</b>.</p>
+      <div class="step mono">22 ÷ 2 = 11 r <b style="color:var(--gold)">0</b></div>
+      <div class="step mono">11 ÷ 2 = 5&nbsp; r <b style="color:var(--gold)">1</b></div>
+      <div class="step mono">5 ÷ 2 = 2&nbsp; r <b style="color:var(--gold)">1</b></div>
+      <div class="step mono">2 ÷ 2 = 1&nbsp; r <b style="color:var(--gold)">0</b></div>
+      <div class="step mono">1 ÷ 2 = 0&nbsp; r <b style="color:var(--gold)">1</b></div>
+      <p style="text-align:center">Read up ↑ : 22 = <b class="mono" style="color:var(--on)">10110₂</b></p>
+    </div>
+  </div>
+  <div class="keybox"><b>Every number has exactly one binary form</b> — there's only one set of distinct powers of two that adds up to it. Use the <a href="#stepper" style="color:var(--gold)">Converter</a> below to watch Way 2 animate for any number.</div>
+</div></section>
+
+<!-- ④ -->
+<section id="c4"><div class="wrap">
+  <span class="sec-tag">Coming out</span>
+  <h2><span class="n">④</span>Binary → Decimal (add up the ON place values)</h2>
+  <p class="lead">Even easier. Under each digit write its place value; wherever the digit is 1, add that value. Zeros contribute nothing.</p>
+  <div class="card">
+    <div class="pvc">
+      <div class="pv"><div class="pow">2⁵</div><div class="val">32</div><div class="bit" style="color:var(--on)">1</div></div>
+      <div class="pv"><div class="pow">2⁴</div><div class="val">16</div><div class="bit" style="color:#5b6c8f">0</div></div>
+      <div class="pv"><div class="pow">2³</div><div class="val">8</div><div class="bit" style="color:var(--on)">1</div></div>
+      <div class="pv"><div class="pow">2²</div><div class="val">4</div><div class="bit" style="color:var(--on)">1</div></div>
+      <div class="pv"><div class="pow">2¹</div><div class="val">2</div><div class="bit" style="color:#5b6c8f">0</div></div>
+      <div class="pv"><div class="pow">2⁰</div><div class="val">1</div><div class="bit" style="color:#5b6c8f">0</div></div>
+    </div>
+    <p style="text-align:center;margin-top:14px">101100₂ = 32 + 8 + 4 = <b style="color:var(--cyan2)">44</b><sub>ten</sub></p>
+  </div>
+  <div class="keybox">The rightmost digit is always the <b>2⁰ = 1</b> place. Moving left, the place value <b>doubles</b> each step. Just add the values sitting above the 1s.</div>
+</div></section>
+
+<!-- ⑤ -->
+<section id="c5"><div class="wrap">
+  <span class="sec-tag">Arithmetic</span>
+  <h2><span class="n">⑤</span>Adding binary — "two makes a carry"</h2>
+  <p class="lead">Add column by column from the right, exactly like normal addition. The only new thing: in binary you run out of digits after 1, so <b>2 becomes a carry</b>.</p>
+  <div class="grid2">
+    <div class="card tight">
+      <h3 style="font-size:1rem;color:var(--cyan2)">The only rules you need</h3>
+      <div class="step mono">1 + 0 = 1</div>
+      <div class="step mono">1 + 1 = 10  (write 0, carry 1)</div>
+      <div class="step mono">1 + 1 + 1 = 11  (write 1, carry 1)</div>
+    </div>
+    <div class="card tight">
+      <h3 style="font-size:1rem;color:var(--gold)">Example: 101₂ + 1₂</h3>
+      <div style="text-align:center;margin:10px 0">
+        <span class="colcalc">
+          <span class="carry">1&nbsp;&nbsp;&nbsp;</span><br>
+          &nbsp;101<br>+&nbsp;&nbsp;&nbsp;1<br>
+          <span class="rule"></span>110
+        </span>
+      </div>
+      <p class="muted" style="font-size:.88rem;text-align:center">Right column 1+1 = 10 → write 0, carry 1. Next 0+1 = 1. Answer 110₂.</p>
+    </div>
+  </div>
+  <div class="analogy"><b>Same as an abacus with a "max of 1 per rod" rule.</b> The moment a rod would hold two beads, you clear it and drop one bead on the rod to its left. That "bump to the left" is the carry.</div>
+</div></section>
+
+<!-- ⑥ -->
+<section id="c6"><div class="wrap">
+  <span class="sec-tag">Arithmetic</span>
+  <h2><span class="n">⑥</span>Subtracting binary — borrow is worth two</h2>
+  <p class="lead">Subtract column by column from the right. When you can't take 1 from 0, <b>borrow from the left</b> — but a borrowed 1 is worth <b>2</b> in the column you bring it into.</p>
+  <div class="card">
+    <p><b>Example:</b> 110₂ − 1₂</p>
+    <p class="muted">Rightmost column is 0 − 1 — impossible. Borrow the 1 from the 2¹ column; it becomes 2 in the 2⁰ column. Now 2 − 1 = 1, and the 2¹ column is left with 0.</p>
+    <div style="text-align:center;margin:12px 0">
+      <span class="colcalc">
+        &nbsp;110<br>−&nbsp;&nbsp;&nbsp;1<br>
+        <span class="rule"></span>101
+      </span>
+    </div>
+    <p style="text-align:center">So 110₂ − 1₂ = <b style="color:var(--on)">101₂</b>.</p>
+  </div>
+  <div class="keybox"><b>Always check a subtraction by adding back.</b> 101₂ + 1₂ should give 110₂ — and it does. This catches almost every mistake.</div>
+</div></section>
+
+<!-- ⑦ -->
+<section id="c7"><div class="wrap">
+  <span class="sec-tag">Where it lives</span>
+  <h2><span class="n">⑦</span>Why binary runs the digital world</h2>
+  <p class="lead">A wire is either carrying current or it isn't — <b>on or off</b>. That's naturally two states, so it maps perfectly onto binary's 1 and 0.</p>
+  <div class="grid2">
+    <div class="card tight">💡 <b>Circuits &amp; computers.</b> ON = 1, OFF = 0. A row of lights showing 🔆⚪⚪🔆 stores the number 1001₂ = 9. All storage and computation in computers and calculators is built on this.</div>
+    <div class="card tight">🔢 <b>Any base is possible.</b> Base four uses digits 0–3 (decimal 4 = 10₄). Base five uses 0–4 (decimal 5 = 10₅). The place values are just powers of the base.</div>
+  </div>
+  <div class="keybox"><b>The pattern to notice:</b> in <em>any</em> base, "10" means "one lot of the base". 10₂ = 2, 10₄ = 4, 10₅ = 5, 10₁₀ = 10. The base is the value that forces a carry to the next column.</div>
+</div></section>
+
+<!-- SWITCH BOARD -->
+<section id="play"><div class="wrap">
+  <span class="sec-tag">Learn by playing</span>
+  <h2>🎛️ Binary Switch Board</h2>
+  <p class="lead">Tap the switches ON/OFF. Each lit switch adds its place value. Watch the binary number and its decimal value build in real time — this is the whole chapter in one toy.</p>
+  <div class="card">
+    <div class="board" id="board"></div>
+    <div class="readout">
+      <div class="bignum"><span class="b" id="binOut">00000000</span><sub>two</sub> &nbsp;=&nbsp; <span class="d" id="decOut">0</span><sub>ten</sub></div>
+      <div class="expand" id="expandOut">All switches off → 0.</div>
+    </div>
+    <div class="prebtns">
+      <span class="pbtn" data-n="13">show 13</span>
+      <span class="pbtn" data-n="22">show 22</span>
+      <span class="pbtn" data-n="44">show 44</span>
+      <span class="pbtn" data-n="97">show 97</span>
+      <span class="pbtn" data-n="168">show 168</span>
+      <span class="pbtn" data-n="255">max (255)</span>
+      <span class="pbtn" data-n="0">clear</span>
+    </div>
+  </div>
+</div></section>
+
+<!-- DIVISION STEPPER -->
+<section id="stepper"><div class="wrap">
+  <span class="sec-tag">Watch the method</span>
+  <h2>➗ Decimal → Binary Converter</h2>
+  <p class="lead">Type any whole number and watch the "divide by 2" method play out step by step. Read the remainders bottom-to-top to get the binary answer.</p>
+  <div class="card">
+    <div class="ctrlrow">
+      <input type="number" id="decIn" min="0" max="100000" value="22">
+      <button class="gobtn" id="goBtn">Convert →</button>
+    </div>
+    <div class="divbox" id="divBox"></div>
+    <div class="divresult" id="divRes"></div>
+  </div>
+</div></section>
+
+<!-- PRACTICE -->
+<section id="practice"><div class="wrap">
+  <span class="sec-tag">Test yourself</span>
+  <h2>📝 Practice — 30 questions</h2>
+  <p class="lead">Work each one out on paper, then <b>tap the card to flip</b> and check the full worked answer. Ten questions at each level.</p>
+  <div class="tabs">
+    <div class="tab easy active" data-lvl="easy"><span class="dot"></span>Easy · 10</div>
+    <div class="tab med" data-lvl="med"><span class="dot"></span>Medium · 10</div>
+    <div class="tab hard" data-lvl="hard"><span class="dot"></span>Hard · 10</div>
+  </div>
+  <p class="hint">👆 Tap any card to reveal the answer &amp; step-by-step working. Tap again to hide.</p>
+  <div class="cards" id="cards"></div>
+</div></section>
+
+<!-- CHEAT -->
+<section id="cheat"><div class="wrap">
+  <span class="sec-tag">Keep this in your head</span>
+  <h2>⭐ One-glance cheat sheet</h2>
+  <div class="card">
+    <div class="cheat">
+      <div class="c"><h4>Place values (powers of 2)</h4><span class="mono">1, 2, 4, 8, 16, 32, 64, 128 …</span><br><span class="muted">each one doubles the last.</span></div>
+      <div class="c"><h4>Decimal → Binary</h4><span class="muted">Divide by 2 over and over, write remainders, read them <b>bottom to top</b>.</span></div>
+      <div class="c"><h4>Binary → Decimal</h4><span class="muted">Add the place values sitting above each <b>1</b>. Zeros add nothing.</span></div>
+      <div class="c"><h4>Adding</h4><span class="mono">1+1 = 10 (carry 1)</span><br><span class="mono">1+1+1 = 11 (carry 1)</span></div>
+      <div class="c"><h4>Subtracting</h4><span class="muted">Borrow from the left; a borrow is worth <b>2</b> in the next column. Check by adding back.</span></div>
+      <div class="c"><h4>Why 0 &amp; 1</h4><span class="muted">On / off, current / no current — two states, so machines love binary.</span></div>
+    </div>
+  </div>
+</div></section>
+
+<footer>
+  <div class="wrap">
+    <p><b>Binary Numbers</b> · Grade 9 O/L Mathematics · Chapter 2</p>
+    <p class="muted" style="margin-top:6px">Understand it, flip the switches, then prove it with 30 questions.</p>
+  </div>
+</footer>
+
+<script>
+/* progress */
+const prog=document.getElementById('prog');
+addEventListener('scroll',()=>{const h=document.documentElement;prog.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';});
+
+/* ---------- SWITCH BOARD ---------- */
+const PV=[128,64,32,16,8,4,2,1], POW=['2⁷','2⁶','2⁵','2⁴','2³','2²','2¹','2⁰'];
+let bits=[0,0,0,0,0,0,0,0];
+const board=document.getElementById('board');
+PV.forEach((v,i)=>{
+  const sw=document.createElement('div'); sw.className='switch'; sw.dataset.i=i;
+  sw.innerHTML=`<div class="bulb">${bits[i]}</div><div class="lbl">${POW[i]}</div><div class="lblv">${v}</div>`;
+  sw.onclick=()=>{bits[i]^=1; drawBoard();};
+  board.appendChild(sw);
+});
+function drawBoard(){
+  const dec=bits.reduce((s,b,i)=>s+b*PV[i],0);
+  document.querySelectorAll('.switch').forEach((sw,i)=>{
+    sw.classList.toggle('on',!!bits[i]);
+    sw.querySelector('.bulb').textContent=bits[i];
+  });
+  document.getElementById('binOut').textContent=bits.join('');
+  document.getElementById('decOut').textContent=dec;
+  const on=PV.filter((v,i)=>bits[i]);
+  document.getElementById('expandOut').innerHTML = on.length
+    ? 'lit switches: '+on.map(v=>`<b>${v}</b>`).join(' + ')+` = <b style="color:var(--cyan2)">${dec}</b>`
+    : 'All switches off → 0.';
+}
+document.querySelectorAll('.pbtn').forEach(b=>b.onclick=()=>{
+  let n=+b.dataset.n; for(let i=0;i<8;i++){bits[7-i]=(n>>i)&1;} drawBoard();
+});
+drawBoard();
+
+/* ---------- DIVISION STEPPER ---------- */
+const divBox=document.getElementById('divBox'), divRes=document.getElementById('divRes');
+function convert(){
+  let n=parseInt(document.getElementById('decIn').value,10);
+  divBox.innerHTML=''; divRes.innerHTML='';
+  if(isNaN(n)||n<0){divRes.textContent='Enter a whole number ≥ 0.';return;}
+  if(n===0){divRes.innerHTML='0<sub>ten</sub> = <b class="mono" style="color:var(--on)">0</b><sub>two</sub>';return;}
+  const rows=[]; let x=n;
+  while(x>0){const r=x%2, q=Math.floor(x/2); rows.push({from:x,q,r}); x=q;}
+  rows.forEach((row,idx)=>{
+    const d=document.createElement('div'); d.className='divrow';
+    d.innerHTML=`<span class="q">${row.from} ÷ 2 = ${row.q}</span> remainder <span class="rem">${row.r}</span>`;
+    divBox.appendChild(d);
+    setTimeout(()=>d.classList.add('show'), 120*idx);
+  });
+  const bin=rows.map(r=>r.r).reverse().join('');
+  setTimeout(()=>{
+    divRes.innerHTML=`Read remainders <span class="arrow-up">bottom → top ↑</span> :&nbsp; ${n}<sub>ten</sub> = <b class="mono" style="color:var(--on);font-size:1.15em">${bin}</b><sub>two</sub>`;
+  }, 120*rows.length+150);
+}
+document.getElementById('goBtn').onclick=convert;
+document.getElementById('decIn').addEventListener('keydown',e=>{if(e.key==='Enter')convert();});
+convert();
+
+/* ---------- PRACTICE ---------- */
+const Q={easy:[],med:[],hard:[]};
+function q(l,text,ans,steps){Q[l].push({text,ans,steps});}
+
+/* EASY */
+q('easy','Which two digits are used to write binary (base two) numbers?','0 and 1',
+ ['Binary means base <b>two</b>, so there are only two symbols.','They are <b>0 and 1</b> — nothing else appears in a binary number.']);
+q('easy','What is the place value 2⁵ equal to?','32',
+ ['Powers of two double each step: 2⁰=1, 2¹=2, 2²=4, 2³=8, 2⁴=16, 2⁵=32.','So <b>2⁵ = 32</b>.']);
+q('easy','Convert 101₂ to a decimal number.','5',
+ ['Place values from the right: 2²=4, 2¹=2, 2⁰=1.','Digits: 1·4 + 0·2 + 1·1 = 4 + 0 + 1.','So 101₂ = <b>5</b>.']);
+q('easy','Convert the decimal number 4 to binary.','100₂',
+ ['4 is exactly the place value 2² = 4.','So we need a 1 in the 2² spot and 0s after: 1, 0, 0.','4 = <b>100₂</b>.']);
+q('easy','Convert 1101₂ to a decimal number.','13',
+ ['Place values: 2³=8, 2²=4, 2¹=2, 2⁰=1.','1·8 + 1·4 + 0·2 + 1·1 = 8 + 4 + 1.','So 1101₂ = <b>13</b>.']);
+q('easy','What is the value of 2⁰?','1',
+ ['Any nonzero number to the power 0 equals 1.','So <b>2⁰ = 1</b> — it is the rightmost place value in binary.']);
+q('easy','Convert 1000₂ to a decimal number.','8',
+ ['Only the 2³ place has a 1; the rest are 0.','2³ = 8, so the value is 8.','1000₂ = <b>8</b>.']);
+q('easy','Convert the decimal number 6 to binary.','110₂',
+ ['6 = 4 + 2 = 2² + 2¹.','Mark 1 in the 2² and 2¹ spots, 0 in the 2⁰ spot: 1, 1, 0.','6 = <b>110₂</b>.']);
+q('easy','Work out 1₂ + 1₂.','10₂',
+ ['In binary the digits stop at 1, so 1 + 1 cannot be written as a single digit.','1 + 1 = two = <b>10₂</b> (write 0, carry 1).']);
+q('easy','Convert 1111₂ to a decimal number.','15',
+ ['Place values: 8, 4, 2, 1 — all switched on.','8 + 4 + 2 + 1 = 15.','So 1111₂ = <b>15</b>.']);
+
+/* MEDIUM */
+q('med','Convert the decimal number 20 to binary.','10100₂',
+ ['Divide by 2: 20→10 r0, 10→5 r0, 5→2 r1, 2→1 r0, 1→0 r1.','Read remainders bottom-to-top: 1 0 1 0 0.','Check: 16 + 4 = 20 ✓. So 20 = <b>10100₂</b>.']);
+q('med','Convert 11111₂ to a decimal number.','31',
+ ['Place values: 16, 8, 4, 2, 1 — all on.','16 + 8 + 4 + 2 + 1 = 31.','So 11111₂ = <b>31</b>.']);
+q('med','Convert the decimal number 29 to binary.','11101₂',
+ ['Divide by 2: 29→14 r1, 14→7 r0, 7→3 r1, 3→1 r1, 1→0 r1.','Bottom-to-top: 1 1 1 0 1.','Check: 16 + 8 + 4 + 1 = 29 ✓. So 29 = <b>11101₂</b>.']);
+q('med','Convert 110111₂ to a decimal number.','55',
+ ['Place values: 32, 16, 8, 4, 2, 1.','1·32 + 1·16 + 0·8 + 1·4 + 1·2 + 1·1 = 32 + 16 + 4 + 2 + 1.','So 110111₂ = <b>55</b>.']);
+q('med','Add: 101₂ + 10₂.','111₂',
+ ['Line up columns: 101 and 010.','2⁰: 1+0=1.  2¹: 0+1=1.  2²: 1+0=1.','No carries needed → <b>111₂</b> (check: 5 + 2 = 7 ✓).']);
+q('med','Add: 111₂ + 101₂.','1100₂',
+ ['2⁰: 1+1=10 → write 0, carry 1.','2¹: 1+0+carry1 = 10 → write 0, carry 1.  2²: 1+1+carry1 = 11 → write 1, carry 1.','Leading carry 1. Answer <b>1100₂</b> (check: 7 + 5 = 12 ✓).']);
+q('med','A lamp circuit reads ON, OFF, OFF, ON (ON = 1, OFF = 0). Write it as a binary number and give its decimal value.','1001₂ = 9',
+ ['Translate each lamp: ON,OFF,OFF,ON → 1, 0, 0, 1.','As binary: 1001₂. Place values 8 and 1 are on.','8 + 1 = 9. So <b>1001₂ = 9</b>.']);
+q('med','Convert the decimal number 52 to binary.','110100₂',
+ ['Divide by 2: 52→26 r0, 26→13 r0, 13→6 r1, 6→3 r0, 3→1 r1, 1→0 r1.','Bottom-to-top: 1 1 0 1 0 0.','Check: 32 + 16 + 4 = 52 ✓. So 52 = <b>110100₂</b>.']);
+q('med','Subtract: 110₂ − 1₂.','101₂',
+ ['2⁰ column: 0 − 1 is impossible, so borrow from the 2¹ column (worth 2).','Now 2 − 1 = 1 in the 2⁰ column, and the 2¹ column becomes 0.','2² stays 1. Answer <b>101₂</b> (check: 101₂ + 1₂ = 110₂ ✓).']);
+q('med','Convert 100111₂ to a decimal number.','39',
+ ['Place values: 32, 16, 8, 4, 2, 1.','1·32 + 0·16 + 0·8 + 1·4 + 1·2 + 1·1 = 32 + 4 + 2 + 1.','So 100111₂ = <b>39</b>.']);
+
+/* HARD */
+q('hard','Add: 11101₂ + 1101₂.','101010₂',
+ ['Line up: 11101 and 01101.','2⁰:1+1=10 (c1). 2¹:0+0+1=1. 2²:1+1=10 (c1). 2³:1+1+1=11 (write1,c1). 2⁴:1+0+1=10 (write0,c1). Leading carry 1.','Answer <b>101010₂</b> (check: 29 + 13 = 42 = 101010₂ ✓).']);
+q('hard','Add: 1110₂ + 111₂.','10101₂',
+ ['Line up: 1110 and 0111.','2⁰:0+1=1. 2¹:1+1=10 (write0,c1). 2²:1+1+1=11 (write1,c1). 2³:1+0+1=10 (write0,c1). Leading carry 1.','Answer <b>10101₂</b> (check: 14 + 7 = 21 = 10101₂ ✓).']);
+q('hard','Subtract: 1101₂ − 111₂.','110₂',
+ ['1101₂ = 13, 111₂ = 7. Work columns right-to-left with borrowing.','2⁰:1−1=0. 2¹:0−1 → borrow, 2−1=1. 2²:(0 after borrow)−1 → borrow, 2−1=1. 2³:1−0, minus the borrow used = 0.','Answer <b>110₂</b> (check: 110₂ + 111₂ = 1101₂, i.e. 6 + 7 = 13 ✓).']);
+q('hard','Subtract: 10001₂ − 111₂.','1010₂',
+ ['10001₂ = 17, 111₂ = 7, so the answer should be 10 = 1010₂.','Subtracting with borrows across the zeros gives 1 0 1 0.','Answer <b>1010₂</b> (check: 1010₂ + 111₂ = 10001₂, i.e. 10 + 7 = 17 ✓).']);
+q('hard','Convert the decimal number 168 to binary.','10101000₂',
+ ['Divide by 2: 168→84 r0, 84→42 r0, 42→21 r0, 21→10 r1, 10→5 r0, 5→2 r1, 2→1 r0, 1→0 r1.','Bottom-to-top: 1 0 1 0 1 0 0 0.','Check: 128 + 32 + 8 = 168 ✓. So 168 = <b>10101000₂</b>.']);
+q('hard','Convert the decimal number 97 to binary.','1100001₂',
+ ['Divide by 2: 97→48 r1, 48→24 r0, 24→12 r0, 12→6 r0, 6→3 r0, 3→1 r1, 1→0 r1.','Bottom-to-top: 1 1 0 0 0 0 1.','Check: 64 + 32 + 1 = 97 ✓. So 97 = <b>1100001₂</b>.']);
+q('hard','Simplify: 1101₂ + 111₂ − 1011₂.','1001₂ (= 9)',
+ ['Convert to decimal to plan: 13 + 7 − 11 = 9.','First 1101₂ + 111₂ = 10100₂ (20). Then 10100₂ − 1011₂ = 1001₂.','Answer <b>1001₂</b> = 9 ✓.']);
+q('hard','Simplify: 11111₂ − (101₂ + 11₂).','10111₂ (= 23)',
+ ['Do the bracket first: 101₂ + 11₂ = 1000₂ (5 + 3 = 8).','Then 11111₂ − 1000₂ = 10111₂ (31 − 8 = 23).','Answer <b>10111₂</b> = 23 ✓.']);
+q('hard','Represent 4² as a binary number.','10000₂',
+ ['4² = 16 in decimal.','16 is exactly the place value 2⁴, so put a 1 in the 2⁴ spot and 0s after.','16 = <b>10000₂</b>.']);
+q('hard','Simplify 49 − 32 in decimal, then write the answer as a binary number.','17 = 10001₂',
+ ['49 − 32 = 17.','Convert 17: 16 + 1 = 2⁴ + 2⁰ → 1 0 0 0 1.','So the answer is <b>10001₂</b>. (Same result if you convert 49 = 110001₂ and 32 = 100000₂ first, then subtract.)']);
+
+/* render */
+const flipIcon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>';
+function render(lvl){
+  const host=document.getElementById('cards'); host.innerHTML='';
+  Q[lvl].forEach((item,i)=>{
+    const steps=item.steps.map(s=>`<div class="step">${s}</div>`).join('');
+    const div=document.createElement('div'); div.className='flip';
+    div.innerHTML=`<div class="flip-in">
+      <div class="face front">
+        <div class="qhead"><span class="qno">Q${i+1}</span><span class="lvl ${lvl}">${lvl==='med'?'medium':lvl}</span></div>
+        <div class="qtext">${item.text}</div>
+        <div class="flip-cue">${flipIcon} tap to reveal answer</div>
+      </div>
+      <div class="face back">
+        <div class="qhead"><span class="qno">Q${i+1} · answer</span><span class="lvl ${lvl}">${lvl==='med'?'medium':lvl}</span></div>
+        <div class="ans">✓ ${item.ans}</div>
+        <div class="exp">${steps}</div>
+        <div class="flip-cue">${flipIcon} tap to hide</div>
+      </div></div>`;
+    div.onclick=()=>div.classList.toggle('flipped');
+    host.appendChild(div);
+  });
+}
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  t.classList.add('active'); render(t.dataset.lvl);
+});
+render('easy');
+</script>
+</body>
+</html>

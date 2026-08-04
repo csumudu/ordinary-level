@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Microbes Mastery · Grade 9 Science · Chapter 1</title>
+<style>
+/* ============ DESIGN SYSTEM ============ */
+:root{
+  --bg:#0d1117; --bg2:#131a24; --panel:#161f2b; --panel2:#1c2733;
+  --ink:#e8eef4; --ink-soft:#a7b6c6; --ink-dim:#6f8298;
+  --line:#25313f;
+  --teal:#2dd4bf; --teal-d:#0f766e; --teal-soft:#134e4a;
+  --grn:#4ade80; --grn-d:#166534;
+  --amber:#fbbf24; --amber-d:#92400e;
+  --red:#f87171; --red-d:#991b1b;
+  --blue:#60a5fa; --blue-d:#1e40af;
+  --violet:#c084fc; --violet-d:#6b21a8;
+  --pink:#f472b6;
+  --radius:16px; --radius-s:10px;
+  --shadow:0 10px 30px rgba(0,0,0,.35);
+  --maxw:920px;
+  --font:'Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:
+    radial-gradient(1200px 600px at 12% -5%, #12303055 0%, transparent 60%),
+    radial-gradient(1000px 500px at 90% 3%, #1e293b55 0%, transparent 55%),
+    var(--bg);
+  color:var(--ink); font-family:var(--font); line-height:1.65;
+  -webkit-font-smoothing:antialiased; overflow-x:hidden;
+}
+h1,h2,h3,h4{line-height:1.25;margin:0 0 .5em}
+p{margin:0 0 1em}
+a{color:var(--teal)}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+
+/* ============ TOP BAR + PROGRESS ============ */
+#topbar{
+  position:sticky;top:0;z-index:60;
+  background:rgba(13,17,23,.82);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+}
+#topbar .wrap{display:flex;align-items:center;gap:14px;height:58px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.2px;white-space:nowrap}
+.brand .dot{width:26px;height:26px;border-radius:50%;
+  background:radial-gradient(circle at 32% 30%,var(--teal),var(--teal-d));
+  box-shadow:0 0 0 4px #2dd4bf22, 0 0 18px #2dd4bf55; position:relative;flex:0 0 auto}
+.brand .dot::after{content:"";position:absolute;inset:6px;border-radius:50%;
+  border:2px dashed #0d1117aa}
+.brand small{display:block;font-weight:500;color:var(--ink-dim);font-size:11px;letter-spacing:.5px}
+#navlinks{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap}
+#navlinks a{font-size:12.5px;color:var(--ink-soft);text-decoration:none;padding:6px 10px;border-radius:8px}
+#navlinks a:hover{background:var(--panel2);color:var(--ink)}
+#scorechip{display:flex;align-items:center;gap:7px;background:var(--panel2);
+  border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:12.5px;font-weight:700;
+  cursor:pointer;white-space:nowrap}
+#scorechip .star{color:var(--amber)}
+#readbar{height:3px;background:linear-gradient(90deg,var(--teal),var(--grn));width:0%;
+  position:fixed;top:58px;left:0;z-index:59;transition:width .1s linear;box-shadow:0 0 10px #2dd4bf88}
+
+/* mobile nav collapse */
+@media(max-width:760px){
+  #navlinks{display:none}
+  .brand small{display:none}
+}
+
+/* ============ HERO ============ */
+.hero{padding:64px 0 40px;text-align:center;position:relative}
+.hero .kicker{display:inline-block;font-size:12px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--teal);border:1px solid var(--teal-soft);background:#0f2e2a;
+  padding:5px 14px;border-radius:999px;margin-bottom:20px;font-weight:700}
+.hero h1{font-size:clamp(30px,6vw,52px);margin-bottom:14px;
+  background:linear-gradient(120deg,#fff 20%,var(--teal) 60%,var(--grn));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .sub{font-size:clamp(16px,2.4vw,20px);color:var(--ink-soft);max-width:640px;margin:0 auto 28px}
+.hero-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn{border:none;cursor:pointer;font-family:inherit;font-weight:700;font-size:14.5px;
+  padding:13px 22px;border-radius:12px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;
+  transition:transform .12s ease, box-shadow .12s ease}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:linear-gradient(120deg,var(--teal),var(--teal-d));color:#04231f;
+  box-shadow:0 8px 24px #2dd4bf40}
+.btn-ghost{background:var(--panel2);color:var(--ink);border:1px solid var(--line)}
+
+/* floating microbes in hero */
+.floaters{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:-1}
+.floaters span{position:absolute;opacity:.16;font-size:34px;animation:drift linear infinite}
+@keyframes drift{
+  0%{transform:translateY(20px) rotate(0deg)}
+  50%{transform:translateY(-24px) rotate(180deg)}
+  100%{transform:translateY(20px) rotate(360deg)}
+}
+
+/* ============ SECTIONS ============ */
+section.lesson{padding:30px 0;scroll-margin-top:80px}
+.eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.eyebrow .num{font-size:12px;font-weight:800;color:#04231f;background:var(--teal);
+  width:26px;height:26px;border-radius:8px;display:grid;place-items:center;flex:0 0 auto}
+.eyebrow span{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal);font-weight:700}
+.lesson h2{font-size:clamp(23px,4vw,33px);margin-bottom:14px}
+.lead{font-size:17.5px;color:var(--ink-soft)}
+
+.card{background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--line);
+  border-radius:var(--radius);padding:22px 22px;box-shadow:var(--shadow);margin:16px 0}
+.card h3{font-size:19px}
+.grid{display:grid;gap:14px}
+@media(min-width:680px){.grid.two{grid-template-columns:1fr 1fr}.grid.three{grid-template-columns:1fr 1fr 1fr}}
+
+/* analogy / insight callouts */
+.insight{border-left:4px solid var(--amber);background:#241d0e88;padding:14px 18px;border-radius:0 12px 12px 0;margin:16px 0}
+.insight b{color:var(--amber)}
+.insight .lbl{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--amber);font-weight:800;display:block;margin-bottom:4px}
+.keyidea{border-left:4px solid var(--teal);background:#0f2e2a88;padding:14px 18px;border-radius:0 12px 12px 0;margin:16px 0}
+.keyidea .lbl{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal);font-weight:800;display:block;margin-bottom:4px}
+.warn{border-left:4px solid var(--red);background:#2a141488;padding:14px 18px;border-radius:0 12px 12px 0;margin:16px 0}
+.warn .lbl{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--red);font-weight:800;display:block;margin-bottom:4px}
+
+.pill{display:inline-block;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;margin:2px 3px}
+.pill.b{background:#12324d;color:#8ec5ff;border:1px solid #1e40af66}
+.pill.f{background:#3a2a12;color:#f7c66b;border:1px solid #92400e66}
+.pill.p{background:#2a1240;color:#d6a6ff;border:1px solid #6b21a866}
+.pill.a{background:#0f3324;color:#7ee0a8;border:1px solid #166534aa}
+.pill.v{background:#3a1220;color:#f79ac0;border:1px solid #9d174d66}
+.pill.g{background:#132a1a;color:#9df0b8;border:1px solid #16653466}
+
+em.sci{font-style:italic;color:#ffd9a0}
+
+/* tables */
+.tbl{width:100%;border-collapse:collapse;font-size:14px;margin:10px 0;overflow:hidden;border-radius:12px}
+.tbl th,.tbl td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top}
+.tbl th{background:var(--panel2);color:var(--teal);font-size:12.5px;letter-spacing:.4px;text-transform:uppercase}
+.tbl tr:nth-child(even) td{background:#121a24}
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+/* ============ FAMILY EXPLORER ============ */
+.fam-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 16px}
+.fam-tab{border:1px solid var(--line);background:var(--panel2);color:var(--ink-soft);
+  padding:9px 16px;border-radius:999px;cursor:pointer;font-weight:700;font-size:13.5px;font-family:inherit;
+  display:flex;align-items:center;gap:8px;transition:all .15s}
+.fam-tab:hover{color:var(--ink)}
+.fam-tab.active{color:#04231f;border-color:transparent}
+.fam-tab .ic{font-size:16px}
+.fam-panel{display:none;animation:fade .3s}
+.fam-panel.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.fam-head{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:6px}
+.fam-badge{width:64px;height:64px;border-radius:16px;display:grid;place-items:center;font-size:34px;flex:0 0 auto}
+
+/* ============ DIAGRAM STAGES ============ */
+.stage{background:radial-gradient(120% 120% at 50% 0%,#0f1b28,#0a1017);
+  border:1px solid var(--line);border-radius:16px;padding:20px;margin:16px 0;position:relative;overflow:hidden}
+.stage h4{text-align:center;color:var(--ink-soft);font-size:13px;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px}
+.stage-cta{display:block;margin:14px auto 0;background:var(--panel2);border:1px solid var(--line);
+  color:var(--teal);font-weight:700;padding:9px 18px;border-radius:10px;cursor:pointer;font-family:inherit;font-size:13.5px}
+.stage-cta:hover{background:#1a2836}
+
+/* binary fission */
+.cellwrap{height:140px;display:flex;align-items:center;justify-content:center;gap:0;position:relative}
+.cell{width:74px;height:74px;border-radius:50%;
+  background:radial-gradient(circle at 34% 30%,#7ee0a8,#2dd4bf 45%,#0f766e);
+  box-shadow:0 0 26px #2dd4bf66, inset -6px -8px 14px #0006;position:relative;transition:all .9s cubic-bezier(.7,0,.3,1)}
+.cell::before{content:"";position:absolute;width:22px;height:22px;border-radius:50%;
+  background:#0b3b34;top:26px;left:20px;opacity:.8}
+.cell.split{animation:fission 2.2s ease forwards}
+@keyframes fission{
+  0%{transform:scaleX(1)}
+  40%{transform:scaleX(1.5) scaleY(.86);border-radius:46%}
+  60%{transform:scaleX(1.7) scaleY(.8)}
+  100%{transform:scaleX(1)}
+}
+.tick{font-size:12px;color:var(--ink-dim);text-align:center}
+
+/* generic fade-in on scroll */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+
+/* nitrogen cycle nodes */
+.flowrow{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap}
+.node{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:10px 14px;
+  font-size:13px;font-weight:600;text-align:center;min-width:90px;max-width:150px}
+.node b{display:block;color:var(--teal);font-size:13.5px}
+.arrow{color:var(--teal);font-size:22px;animation:pulseArrow 1.6s infinite}
+@keyframes pulseArrow{0%,100%{opacity:.4}50%{opacity:1}}
+
+/* chain of infection */
+.chain{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;justify-content:center}
+.chain .link{flex:1;min-width:120px;background:var(--panel2);border:1px solid var(--line);
+  border-radius:12px;padding:14px;text-align:center;margin:6px;position:relative;cursor:pointer;transition:.2s}
+.chain .link:hover{border-color:var(--teal);transform:translateY(-3px)}
+.chain .link .em{font-size:30px}
+.chain .link b{display:block;color:var(--teal);margin-top:4px}
+.chain .link small{color:var(--ink-dim);font-size:11.5px}
+
+/* toggle switch (virus) */
+.toggle-wrap{display:flex;justify-content:center;margin:10px 0 4px}
+.tg{position:relative;width:220px;height:44px;background:var(--panel2);border:1px solid var(--line);
+  border-radius:999px;display:flex;cursor:pointer;font-weight:700;font-size:13px;overflow:hidden}
+.tg span{flex:1;display:grid;place-items:center;z-index:2;color:var(--ink-soft)}
+.tg .knob{position:absolute;top:3px;left:3px;width:calc(50% - 3px);height:38px;border-radius:999px;
+  background:linear-gradient(120deg,var(--teal),var(--teal-d));transition:left .3s;z-index:1}
+.tg.on .knob{left:calc(50%)}
+
+/* ============ QUICK REFERENCE ============ */
+#cheat .card{background:linear-gradient(180deg,#12242a,#0d1117);border-color:var(--teal-soft)}
+.cheat-grid{display:grid;gap:12px}
+@media(min-width:680px){.cheat-grid{grid-template-columns:1fr 1fr}}
+.cheat-box{background:#0f1a22;border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.cheat-box h4{color:var(--teal);font-size:14px;margin-bottom:8px;display:flex;align-items:center;gap:7px}
+.cheat-box ul{margin:0;padding-left:18px}
+.cheat-box li{margin-bottom:5px;font-size:13.7px;color:var(--ink-soft)}
+.cheat-box li b{color:var(--ink)}
+.mnem{background:#241d0e;border:1px dashed var(--amber);border-radius:10px;padding:10px 14px;margin-top:10px;font-size:13.5px}
+.mnem b{color:var(--amber)}
+
+/* ============ QUIZ ============ */
+#quiz{padding-top:20px}
+.quiz-head{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:8px}
+.quiz-meta{display:flex;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--ink-soft)}
+.quiz-meta b{color:var(--teal)}
+.qfilter{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 18px}
+.qfilter button{background:var(--panel2);border:1px solid var(--line);color:var(--ink-soft);
+  font-family:inherit;font-size:12.5px;font-weight:700;padding:7px 13px;border-radius:999px;cursor:pointer}
+.qfilter button.active{background:var(--teal);color:#04231f;border-color:transparent}
+
+.flip{perspective:1600px;margin:0 auto}
+.flip-inner{position:relative;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.4,.2,.2,1);min-height:340px}
+.flip.flipped .flip-inner{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  border-radius:18px;padding:26px;display:flex;flex-direction:column;
+  border:1px solid var(--line);box-shadow:var(--shadow)}
+.face-front{background:linear-gradient(160deg,#17222f,#0f1620)}
+.face-back{background:linear-gradient(160deg,#10231f,#0c1714);transform:rotateY(180deg);border-color:var(--teal-soft)}
+.q-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.q-cat{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:4px 11px;border-radius:999px}
+.q-idx{font-size:12.5px;color:var(--ink-dim);font-weight:700}
+.q-text{font-size:19px;font-weight:600;flex:1;display:flex;align-items:center}
+.opts{display:grid;gap:9px;margin-top:8px}
+.opt{text-align:left;background:var(--panel2);border:1px solid var(--line);color:var(--ink);
+  font-family:inherit;font-size:14.5px;padding:12px 14px;border-radius:11px;cursor:pointer;transition:.15s;
+  display:flex;gap:10px;align-items:center}
+.opt:hover{border-color:var(--teal);background:#1a2a37}
+.opt .k{width:24px;height:24px;border-radius:7px;background:var(--bg);border:1px solid var(--line);
+  display:grid;place-items:center;font-weight:800;font-size:12.5px;flex:0 0 auto;color:var(--ink-soft)}
+.opt.correct{border-color:var(--grn);background:#12331f}
+.opt.correct .k{background:var(--grn);color:#04210f}
+.opt.wrong{border-color:var(--red);background:#331414}
+.opt.wrong .k{background:var(--red);color:#2a0808}
+.opt:disabled{cursor:default}
+.q-hint{text-align:center;color:var(--ink-dim);font-size:12.5px;margin-top:14px}
+
+.a-verdict{font-size:20px;font-weight:800;margin-bottom:8px}
+.a-verdict.ok{color:var(--grn)} .a-verdict.no{color:var(--red)}
+.a-answer{font-size:15px;margin-bottom:10px}
+.a-answer b{color:var(--teal)}
+.a-expl{font-size:14.5px;color:var(--ink-soft);flex:1;overflow:auto}
+.a-actions{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+.a-ref{background:var(--panel2);border:1px solid var(--line);color:var(--teal);text-decoration:none;
+  font-weight:700;font-size:13px;padding:9px 15px;border-radius:10px;display:inline-flex;align-items:center;gap:7px}
+.a-ref:hover{background:#1a2836}
+.q-nav{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:18px}
+.q-nav button{background:var(--panel2);border:1px solid var(--line);color:var(--ink);font-family:inherit;
+  font-weight:700;font-size:14px;padding:11px 20px;border-radius:11px;cursor:pointer}
+.q-nav button:hover:not(:disabled){border-color:var(--teal)}
+.q-nav button:disabled{opacity:.35;cursor:default}
+.dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;max-width:420px}
+.dots i{width:9px;height:9px;border-radius:50%;background:var(--line);cursor:pointer;transition:.2s}
+.dots i.done{background:var(--grn)} .dots i.miss{background:var(--red)} .dots i.cur{outline:2px solid var(--teal);outline-offset:2px}
+
+/* progress dashboard */
+.dash-grid{display:grid;gap:12px;margin:14px 0}
+@media(min-width:560px){.dash-grid{grid-template-columns:repeat(4,1fr)}}
+.stat{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:16px;text-align:center}
+.stat .v{font-size:30px;font-weight:800;color:var(--teal);line-height:1}
+.stat .l{font-size:11.5px;color:var(--ink-dim);text-transform:uppercase;letter-spacing:1px;margin-top:6px}
+.mastery{margin:8px 0}
+.mastery .row{display:flex;align-items:center;gap:10px;margin-bottom:9px;font-size:13px}
+.mastery .row .nm{width:150px;flex:0 0 auto;color:var(--ink-soft)}
+.bar{flex:1;height:9px;background:var(--bg);border-radius:999px;overflow:hidden;border:1px solid var(--line)}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),var(--grn));width:0;transition:width .8s}
+.mastery .row .pc{width:42px;text-align:right;font-weight:700;color:var(--ink)}
+.history{font-size:12.5px;color:var(--ink-dim);margin-top:6px}
+.history span{display:inline-block;background:var(--panel2);border:1px solid var(--line);border-radius:8px;
+  padding:3px 9px;margin:3px 3px 0 0}
+
+/* result banner */
+#result{display:none;text-align:center;padding:26px}
+#result.show{display:block;animation:fade .4s}
+#result .big{font-size:56px;font-weight:800;line-height:1;
+  background:linear-gradient(120deg,var(--teal),var(--grn));-webkit-background-clip:text;background-clip:text;color:transparent}
+#result .msg{font-size:18px;margin:10px 0}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:100;overflow:hidden}
+
+footer{border-top:1px solid var(--line);margin-top:50px;padding:26px 0 60px;text-align:center;color:var(--ink-dim);font-size:13px}
+.reset-link{color:var(--ink-dim);text-decoration:underline;cursor:pointer;font-size:12px}
+
+/* toast */
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);
+  background:var(--panel2);border:1px solid var(--teal-soft);color:var(--ink);padding:12px 20px;border-radius:12px;
+  font-size:13.5px;font-weight:600;box-shadow:var(--shadow);z-index:120;opacity:0;transition:.35s}
+#toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+</style>
+</head>
+<body>
+
+<div id="topbar"><div class="wrap">
+  <div class="brand"><span class="dot"></span><div>Microbes Mastery<small>Grade 9 Science · Ch.1</small></div></div>
+  <nav id="navlinks">
+    <a href="#s-intro">Start</a>
+    <a href="#s-families">Families</a>
+    <a href="#s-benefit">Beneficial</a>
+    <a href="#s-harm">Harmful</a>
+    <a href="#cheat">Cheat Sheet</a>
+    <a href="#quiz">Quiz</a>
+  </nav>
+  <div id="scorechip" onclick="document.getElementById('dashboard').scrollIntoView()">
+    <span class="star">★</span><span id="scorechip-txt">Best 0%</span>
+  </div>
+</div></div>
+<div id="readbar"></div>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="floaters" id="floaters"></div>
+  <div class="wrap">
+    <span class="kicker">The only guide you'll need · Ch.1</span>
+    <h1>The Invisible World<br>That Runs the Planet</h1>
+    <p class="sub">Microbes are too small to see &mdash; yet they make your yoghurt, heal your infections, feed your crops, and (sometimes) make you sick. Let's understand <em>why</em>, not just memorise the facts.</p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#s-intro">▶ Start learning</a>
+      <a class="btn btn-ghost" href="#quiz">Test myself first</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap" id="content">
+
+<!-- ========== 1. INTRO ========== -->
+<section class="lesson reveal" id="s-intro">
+  <div class="eyebrow"><span class="num">1</span><span>The big picture</span></div>
+  <h2>What even <em>is</em> a microbe?</h2>
+  <p class="lead">A micro-organism is simply <b>a living thing too small to see with your naked eye</b> &mdash; you need a microscope. That's the whole definition. Everything else follows from being tiny and simple.</p>
+
+  <div class="card">
+    <h3>Think of them as nature's "starter kit" life-forms</h3>
+    <p>Because their bodies are so simple, microbes get three superpowers that shape this entire chapter. If you remember these three, most facts will make sense on their own:</p>
+    <div class="grid three">
+      <div class="keyidea" style="margin:0"><span class="lbl">1 · Fast</span>They grow and reproduce <b>extremely quickly</b> &mdash; one bacterium can become millions overnight.</div>
+      <div class="keyidea" style="margin:0"><span class="lbl">2 · Tough</span>They <b>adapt to almost anywhere</b> &mdash; hot springs, salt marshes, even petrol and diesel.</div>
+      <div class="keyidea" style="margin:0"><span class="lbl">3 · Simple</span>Simple genes make them <b>easy to harness</b> &mdash; which is exactly why industry loves them.</div>
+    </div>
+    <div class="insight"><span class="lbl">Why this matters</span>Every "application" later in the chapter &mdash; making yoghurt, fixing nitrogen, producing antibiotics &mdash; works <b>because</b> microbes are fast, tough, and simple. You're not memorising a random list; you're seeing the same three traits used in different jobs.</div>
+  </div>
+
+  <p>Most microbes are actually <b>helpful</b> to humans and the environment. Only some are harmful. Scientists sort them into <b>five groups</b> &mdash; let's meet the family.</p>
+</section>
+
+<!-- ========== 2. THE FIVE FAMILIES ========== -->
+<section class="lesson reveal" id="s-families">
+  <div class="eyebrow"><span class="num">2</span><span>Meet the five families</span></div>
+  <h2>The 5 groups of micro-organisms</h2>
+  <p class="lead">Four are clearly alive: <b>Bacteria, Fungi, Protozoa, Algae</b>. The fifth &mdash; <b>Viruses</b> &mdash; sits on the fence between living and non-living. Tap each one to explore.</p>
+
+  <div class="fam-tabs" id="famtabs">
+    <button class="fam-tab active" data-fam="bacteria" style="--c:var(--blue)"><span class="ic">🦠</span>Bacteria</button>
+    <button class="fam-tab" data-fam="fungi"><span class="ic">🍄</span>Fungi</button>
+    <button class="fam-tab" data-fam="protozoa"><span class="ic">🐛</span>Protozoa</button>
+    <button class="fam-tab" data-fam="algae"><span class="ic">🌿</span>Algae</button>
+    <button class="fam-tab" data-fam="virus"><span class="ic">👾</span>Virus</button>
+  </div>
+
+  <!-- BACTERIA -->
+  <div class="fam-panel active card" data-fam="bacteria">
+    <div class="fam-head">
+      <div class="fam-badge" style="background:#12324d">🦠</div>
+      <div><h3 style="margin:0">Bacteria <span class="pill b">the workhorses</span></h3>
+      <p style="margin:0;color:var(--ink-soft)">Single-celled, microscopic, in <em>every</em> environment on Earth.</p></div>
+    </div>
+    <p><b>Intuition:</b> Bacteria are the busy factory workers of the microbe world. They're everywhere, they come in different shapes (rods, spheres, spirals), and humans have quietly hired them for thousands of jobs &mdash; from curdling milk to mining metal.</p>
+    <table class="tbl"><tr><th>Job / trait</th><th>Bacterium (example)</th></tr>
+      <tr><td>Milk &amp; dairy products</td><td><em class="sci">Lactobacillus bulgaricus</em></td></tr>
+      <tr><td>Vinegar production</td><td><em class="sci">Acetobacter aceti</em></td></tr>
+      <tr><td>Anthrax disease (harmful)</td><td><em class="sci">Bacillus anthracis</em></td></tr>
+      <tr><td>Cholera disease (harmful)</td><td><em class="sci">Vibrio cholerae</em></td></tr>
+    </table>
+
+    <div class="stage">
+      <h4>Animation · How bacteria multiply (binary fission)</h4>
+      <div class="cellwrap" id="fissionStage"><div class="cell" id="theCell"></div></div>
+      <div class="tick" id="fissionTick">1 cell</div>
+      <button class="stage-cta" onclick="doFission()">▶ Watch it split &amp; double</button>
+      <div class="insight" style="margin-top:14px"><span class="lbl">The "fast" superpower, visualised</span>One cell splits into two, two into four, four into eight… This is <b>why</b> a tiny amount of yoghurt culture can turn a whole pot of milk overnight, and why an untreated infection spreads so quickly.</div>
+    </div>
+  </div>
+
+  <!-- FUNGI -->
+  <div class="fam-panel card" data-fam="fungi">
+    <div class="fam-head">
+      <div class="fam-badge" style="background:#3a2a12">🍄</div>
+      <div><h3 style="margin:0">Fungi <span class="pill f">the decomposers</span></h3>
+      <p style="margin:0;color:var(--ink-soft)">Unicellular <em>or</em> multicellular. Love moist surfaces (substrates).</p></div>
+    </div>
+    <p><b>Intuition:</b> Fungi are the mould on old bread and the yeast in your dough. Unlike the others, some fungi grow big enough to <b>see with the naked eye</b> &mdash; a mushroom is a fungus's reproductive organ poking out. They thrive on moist surfaces because that's where they feed.</p>
+    <table class="tbl"><tr><th>Where you meet it</th><th>Fungus (example)</th></tr>
+      <tr><td>Mould on bread</td><td><em class="sci">Mucor</em></td></tr>
+      <tr><td>Yeast (bread, alcohol)</td><td><em class="sci">Saccharomyces</em></td></tr>
+    </table>
+    <div class="keyidea"><span class="lbl">Easy to confuse</span>Both bacteria and fungi are used to make <b>antibiotics</b>, and both can spoil food. The key difference: fungi can be <b>multicellular</b> and sometimes visible (mushrooms); bacteria are always single-celled and microscopic.</div>
+  </div>
+
+  <!-- PROTOZOA -->
+  <div class="fam-panel card" data-fam="protozoa">
+    <div class="fam-head">
+      <div class="fam-badge" style="background:#2a1240">🐛</div>
+      <div><h3 style="margin:0">Protozoa <span class="pill p">the tiny hunters</span></h3>
+      <p style="margin:0;color:var(--ink-soft)">Unicellular, microscopic, and they <em>move</em>.</p></div>
+    </div>
+    <p><b>Intuition:</b> Protozoa are like microscopic animals. Their signature trait is <b>movement</b> &mdash; they swim and crawl using special structures. Match the tool to the creature and they're easy to remember:</p>
+    <div class="grid three">
+      <div class="cheat-box"><h4>🌾 Cilia</h4><em class="sci">Paramecium</em> &mdash; tiny hairs that beat like oars.</div>
+      <div class="cheat-box"><h4>🦶 Pseudopodia</h4><em class="sci">Amoeba</em> &mdash; "false feet", oozes along.</div>
+      <div class="cheat-box"><h4>🏊 Flagella</h4><em class="sci">Euglena</em> &mdash; a whip-like tail.</div>
+    </div>
+    <div class="warn"><span class="lbl">The dangerous one</span><em class="sci">Plasmodium</em> is a protozoan that causes <b>malaria</b>. It lives in aquatic environments and inside other organisms &mdash; keep it in mind for the "diseases" section.</div>
+  </div>
+
+  <!-- ALGAE -->
+  <div class="fam-panel card" data-fam="algae">
+    <div class="fam-head">
+      <div class="fam-badge" style="background:#0f3324">🌿</div>
+      <div><h3 style="margin:0">Algae <span class="pill a">the sun-eaters</span></h3>
+      <p style="margin:0;color:var(--ink-soft)">Unicellular or multicellular. They contain chlorophyll.</p></div>
+    </div>
+    <p><b>Intuition:</b> Algae are the "plants" of the microbe world. The one thing that sets them apart from the other four families: they have <b>chlorophyll and can photosynthesise</b> &mdash; they make their own food from sunlight. Microscopic algae floating on water are called <b>phytoplankton</b>.</p>
+    <table class="tbl"><tr><th>Form</th><th>Alga (example)</th></tr>
+      <tr><td>Unicellular</td><td><em class="sci">Chlamydomonas</em></td></tr>
+      <tr><td>Filamentous (threads)</td><td><em class="sci">Spirogyra</em></td></tr>
+      <tr><td>Glassy shells</td><td><em class="sci">Diatoms</em></td></tr>
+    </table>
+    <div class="keyidea"><span class="lbl">Exam trap</span>"Which group is <b>autotrophic</b> (makes its own food)?" &rarr; <b>Algae</b>. That's the chlorophyll giveaway.</div>
+  </div>
+
+  <!-- VIRUS -->
+  <div class="fam-panel card" data-fam="virus">
+    <div class="fam-head">
+      <div class="fam-badge" style="background:#3a1220">👾</div>
+      <div><h3 style="margin:0">Viruses <span class="pill v">the in-betweeners</span></h3>
+      <p style="margin:0;color:var(--ink-soft)">Alive? Not alive? Both. Only seen with an electron microscope.</p></div>
+    </div>
+    <p><b>Intuition:</b> A virus is like a <b>USB stick of genetic code</b>. On its own it's inert &mdash; no cells, no respiration, no growth. But plug it into a living cell and it hijacks the machinery to copy itself. That's why it straddles the line between living and non-living.</p>
+
+    <div class="stage">
+      <h4>Interactive · The virus's split personality</h4>
+      <div class="toggle-wrap"><div class="tg" id="virusTg" onclick="toggleVirus()">
+        <span>🧊 On its own</span><span>🧬 Inside a cell</span><div class="knob"></div>
+      </div></div>
+      <p id="virusMsg" style="text-align:center;margin:14px 0 0;font-size:14.5px;color:var(--ink-soft)">
+        <b style="color:var(--red)">Non-living mode:</b> No cellular organisation. Doesn't respire, doesn't grow. Basically a chemical particle.</p>
+    </div>
+    <table class="tbl"><tr><th>Disease caused</th><th>Virus</th></tr>
+      <tr><td>Common cold / flu</td><td>Influenza virus</td></tr>
+      <tr><td>AIDS</td><td>HIV</td></tr>
+      <tr><td>Dengue</td><td>Dengue virus</td></tr>
+    </table>
+    <div class="warn"><span class="lbl">Remember for the exam</span>Viruses <b>multiply only inside living cells</b>, have <b>no cellular organisation</b>, and antibiotics <b>do not work</b> against them. All three facts come from the same idea: a virus isn't a full living cell.</div>
+  </div>
+
+  <!-- comparison table -->
+  <div class="card">
+    <h3>One table to rule them all</h3>
+    <div class="tbl-scroll"><table class="tbl">
+      <tr><th>Group</th><th>Cells</th><th>Signature trait</th><th>Star examples</th></tr>
+      <tr><td><span class="pill b">Bacteria</span></td><td>Unicellular, micro</td><td>Everywhere; many shapes</td><td>Lactobacillus, Bacillus</td></tr>
+      <tr><td><span class="pill f">Fungi</span></td><td>Uni- or multicellular</td><td>Moist surfaces; some visible</td><td>Mucor, Saccharomyces</td></tr>
+      <tr><td><span class="pill p">Protozoa</span></td><td>Unicellular, micro</td><td>Move (cilia/pseudopodia/flagella)</td><td>Amoeba, Paramecium, Plasmodium</td></tr>
+      <tr><td><span class="pill a">Algae</span></td><td>Uni- or multicellular</td><td>Chlorophyll → photosynthesis</td><td>Chlamydomonas, Spirogyra, Diatoms</td></tr>
+      <tr><td><span class="pill v">Virus</span></td><td>No cells</td><td>Living + non-living; needs a host</td><td>Influenza, HIV, Dengue</td></tr>
+    </table></div>
+    <p style="font-size:13px;color:var(--ink-dim);margin:6px 0 0">💡 You don't need to memorise every scientific name &mdash; the textbook says so. Focus on the <b>signature trait</b> column; that's what exams test.</p>
+  </div>
+</section>
+
+<!-- ========== 3. WHERE THEY LIVE ========== -->
+<section class="lesson reveal" id="s-where">
+  <div class="eyebrow"><span class="num">3</span><span>Habitats &amp; substrates</span></div>
+  <h2>They live absolutely everywhere</h2>
+  <p class="lead">If there's an ecosystem on Earth, microbes are in it &mdash; soil, water, and up to <b>6&nbsp;km high</b> in the atmosphere. They live on and inside plants and animals too.</p>
+  <div class="grid two">
+    <div class="card" style="margin:0">
+      <h3>🏠 Substrates (their food &amp; home)</h3>
+      <p>A <b>substrate</b> is the surface a microbe grows on and feeds from. On your body and food, favourites include:</p>
+      <p>Meat · fish · fruits · vegetables · human skin · mouth · alimentary canal · urinary tract.</p>
+    </div>
+    <div class="card" style="margin:0">
+      <h3>🔥 Extreme survivors</h3>
+      <p>Some microbes shrug off conditions that would kill almost anything else:</p>
+      <p>Hot water springs · salt marshes · even liquids like <b>petrol and diesel</b>.</p>
+      <div class="keyidea" style="margin:8px 0 0"><span class="lbl">Callback</span>This is superpower #2 &mdash; <b>tough</b>. Adaptability is why microbes are the most widespread living things on the planet.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 4. FRIEND OR FOE ========== -->
+<section class="lesson reveal" id="s-friendfoe">
+  <div class="eyebrow"><span class="num">4</span><span>The central question</span></div>
+  <h2>Friend or foe? Mostly friend.</h2>
+  <p class="lead">Here's the mental map for the rest of the chapter. Every microbe fact fits into one of these two buckets. Keep this picture in your head:</p>
+  <div class="grid two">
+    <div class="card" style="margin:0;border-color:var(--grn-d)">
+      <h3 style="color:var(--grn)">✅ Beneficial effects</h3>
+      <p style="color:var(--ink-soft)">Humans <em>use</em> microbes on purpose in four fields:</p>
+      <p><span class="pill g">Agriculture</span><span class="pill g">Medicine</span><span class="pill g">Industry</span><span class="pill g">Environment</span></p>
+      <p style="font-size:13.5px;color:var(--ink-dim);margin:0">Mnemonic: <b>"A MIE"</b> &mdash; <b>A</b>griculture, <b>M</b>edicine, <b>I</b>ndustry, <b>E</b>nvironment.</p>
+    </div>
+    <div class="card" style="margin:0;border-color:var(--red-d)">
+      <h3 style="color:var(--red)">⚠️ Adverse effects</h3>
+      <p style="color:var(--ink-soft)">Microbes also cause harm in four ways:</p>
+      <p><span class="pill v">Disease</span><span class="pill v">Plant disease</span><span class="pill v">Food spoilage</span><span class="pill v">Bio-weapons</span></p>
+      <p style="font-size:13.5px;color:var(--ink-dim);margin:0">Same organisms, different outcome &mdash; a pathogen is just a microbe doing harm.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 5. BENEFICIAL ========== -->
+<section class="lesson reveal" id="s-benefit">
+  <div class="eyebrow"><span class="num">5</span><span>Beneficial effects · A M I E</span></div>
+  <h2>How we put microbes to work</h2>
+  <p class="lead">Four fields, one idea each. Understand the <em>why</em> behind each and the examples stick by themselves.</p>
+
+  <!-- AGRICULTURE -->
+  <div class="card" id="s-agri">
+    <h3>🌾 Agriculture &mdash; growing more, better food</h3>
+    <p>Microbes help farms in four distinct ways. Notice each one solves a specific farming problem:</p>
+
+    <h4 style="color:var(--teal);margin-top:14px">① Gene technology &mdash; upgrading the crop itself</h4>
+    <p>Scientists borrow a helpful <b>gene</b> from a microbe and put it into a crop to give it a new ability.</p>
+    <table class="tbl"><tr><th>Result</th><th>Gene comes from</th><th>What it does</th></tr>
+      <tr><td><b>Golden Rice</b> (extra vitamin A)</td><td><em class="sci">Erwinia uredovora</em></td><td>Rice enriched with vitamin A</td></tr>
+      <tr><td><b>Bt Maize</b> (pest-proof)</td><td><em class="sci">Bacillus thuringiensis</em> → into <em class="sci">Zea maize</em></td><td>Plant makes its own toxin against crop pests</td></tr>
+    </table>
+
+    <h4 style="color:var(--teal);margin-top:16px">② Nitrogen fixation &mdash; free fertiliser from thin air</h4>
+    <p>Here's the puzzle: <b>78% of the air is nitrogen</b>, a nutrient plants desperately need &mdash; yet plants <b>can't absorb it directly</b> from the air. Certain bacteria solve this by "fixing" airborne nitrogen into a form roots can use.</p>
+    <div class="stage">
+      <h4>Animation · Nitrogen fixation</h4>
+      <div class="flowrow">
+        <div class="node"><b>N₂ gas</b>78% of the air (plants can't use it)</div>
+        <div class="arrow">➜</div>
+        <div class="node" style="border-color:var(--teal)"><b>Rhizobium</b>bacteria in root nodules of legumes (beans, peas)</div>
+        <div class="arrow">➜</div>
+        <div class="node"><b>Usable nitrogen</b>absorbed by the plant → bigger yield</div>
+      </div>
+      <button class="stage-cta" onclick="runNitrogen(this)">▶ Fix the nitrogen</button>
+    </div>
+    <div class="grid two">
+      <div class="keyidea" style="margin:0"><span class="lbl">Two ways it happens</span><b>Rhizobium</b> lives <em>in the root nodules</em> of legumes. <b>Azotobacter</b> is <em>free-living</em> &mdash; added straight to soil.</div>
+      <div class="insight" style="margin:0"><span class="lbl">Key term</span><b>Bio-fertilizers</b> = substances that enrich soil with nutrients using micro-organisms (like commercially produced Rhizobium).</div>
+    </div>
+
+    <h4 style="color:var(--teal);margin-top:16px">③ Compost &mdash; recycling dead matter into soil food</h4>
+    <p><b>Bacteria and fungi</b> rapidly decompose organic matter into compost, which adds minerals to soil and creates good growing conditions.</p>
+
+    <h4 style="color:var(--teal);margin-top:16px">④ Bio-pesticides &mdash; microbes as natural pest control</h4>
+    <p>Some microbes control pests instead of chemicals. Example: the fungus <em class="sci">Alternaria</em> is used to combat the aquatic weed <b>salvinia</b>.</p>
+  </div>
+
+  <!-- MEDICINE -->
+  <div class="card" id="s-medicine">
+    <h3>💊 Medicine &mdash; fighting microbes with microbes</h3>
+    <p>The clever twist: we use micro-organisms to treat diseases caused by <em>other</em> micro-organisms. Three tools:</p>
+
+    <div class="grid three">
+      <div class="cheat-box"><h4>🧪 Antibiotics</h4>Chemicals a microbe makes to <b>destroy another microbe</b>. Made by fungi &amp; bacteria.</div>
+      <div class="cheat-box"><h4>💉 Vaccines</h4>A weakened/killed microbe (or its toxin) that <b>trains your body</b> to defend itself.</div>
+      <div class="cheat-box"><h4>🛡️ Anti-toxins</h4>Vaccines made by <b>removing the toxic part</b> of a pathogen's toxin.</div>
+    </div>
+
+    <div class="warn"><span class="lbl">The #1 exam fact about antibiotics</span>Antibiotics kill <b>bacteria and fungi</b> &mdash; but <b>NOT viruses</b>. So they're useless against a cold or dengue. And you shouldn't take them without medical advice, because misuse causes side effects.</div>
+
+    <table class="tbl"><tr><th>Antibiotic</th><th>Fights</th></tr>
+      <tr><td>Penicillin, Amoxicillin, Tetracycline, Erythromycin</td><td>Bacterial infections</td></tr>
+      <tr><td>Griseofulvin</td><td>Fungal infections</td></tr>
+    </table>
+    <p style="font-size:13.5px;color:var(--ink-dim)">🎓 Extra: Penicillin was discovered by <b>Alexander Fleming</b> (Scotland), produced from the fungus <em class="sci">Penicillium notatum</em>.</p>
+
+    <h4 style="color:var(--teal);margin-top:12px">Vaccines &mdash; four ways to make one</h4>
+    <p>All vaccines contain something that <em>resembles</em> a disease-causing microbe so your body learns to fight it. They differ in how that "something" is prepared:</p>
+    <div class="tbl-scroll"><table class="tbl">
+      <tr><th>Made from…</th><th>Examples</th></tr>
+      <tr><td>Weakened microbes</td><td>Polio, Tuberculosis, Measles</td></tr>
+      <tr><td>Killed microbes</td><td>Cholera, Influenza, Typhoid</td></tr>
+      <tr><td>Toxins of microbes</td><td>Tetanus, Diphtheria</td></tr>
+      <tr><td>Body parts (genetic engineering)</td><td>Hepatitis B</td></tr>
+    </table></div>
+  </div>
+
+  <!-- INDUSTRY -->
+  <div class="card" id="s-industry">
+    <h3>🏭 Industry &mdash; "Industrial Microbiology"</h3>
+    <p>Using microbes for economic benefit in industry is called <b>Industrial Microbiology</b>. Why do industries love microbes? Because of our three superpowers: fast processes, cheap/free to obtain, need little energy, and cause minimal pollution.</p>
+    <div class="tbl-scroll"><table class="tbl">
+      <tr><th>Industry</th><th>Micro-organism</th><th>Quick note</th></tr>
+      <tr><td>Alcohol &amp; Bakery</td><td><em class="sci">Saccharomyces cerevisiae</em> (yeast)</td><td>Same yeast, two industries</td></tr>
+      <tr><td>Vinegar</td><td><em class="sci">Acetobacter aceti</em></td><td></td></tr>
+      <tr><td>Dairy (yoghurt, curd, cheese, butter)</td><td><em class="sci">Lactobacillus bulgaricus</em>, <em class="sci">Streptococcus thermophilus</em></td><td>Turn lactose → lactic acid</td></tr>
+      <tr><td>Biogas</td><td><em class="sci">Methanococcus</em>, <em class="sci">Methanobacterium</em></td><td>Anaerobic → methane</td></tr>
+      <tr><td>Plant fibres</td><td><em class="sci">Bacillus corchorus</em>, <em class="sci">Bacillus comesii</em></td><td>Pectinase digests pectate</td></tr>
+      <tr><td>Metal extraction</td><td><em class="sci">Acidithiobacillus / Thiobacillus ferrooxidans</em></td><td>Bio-leaching</td></tr>
+    </table></div>
+
+    <div class="grid two">
+      <div class="cheat-box"><h4>⚡ Biogas</h4>Straw, cow dung &amp; water + <b>anaerobic bacteria</b> (Methanococcus) → <b>methane</b> gas → clean energy source.</div>
+      <div class="cheat-box"><h4>⛏️ Metal extraction (bio-leaching)</h4>Using microbes to extract metal from <b>low-grade ores</b>. Extracts <b>Uranium</b> and <b>Copper</b>.</div>
+      <div class="cheat-box"><h4>🧵 Plant fibres</h4>Fibres (coconut, hemp) are glued together by <b>pectate</b>. The enzyme <b>pectinase</b> from bacteria digests it to free the fibres.</div>
+      <div class="cheat-box"><h4>🥛 Dairy</h4><b>Lactobacillus &amp; Streptococcus</b> turn lactose into <b>lactic acid</b> → acidic medium stops other microbes → natural preservation.</div>
+    </div>
+
+    <div class="stage">
+      <h4>Step-through · How yoghurt is made (Activity 1.1)</h4>
+      <div id="yogStage" style="text-align:center">
+        <div id="yogEmoji" style="font-size:56px;line-height:1;margin:6px 0">🥛</div>
+        <div id="yogTitle" style="font-weight:800;color:var(--teal);font-size:16px">Step 1 · Heat the milk</div>
+        <div id="yogDesc" style="color:var(--ink-soft);font-size:14px;margin-top:4px;min-height:44px">Heat cow's milk for 15&ndash;30 min at 88&ndash;95&nbsp;°C to kill unwanted bacteria.</div>
+      </div>
+      <div style="display:flex;gap:10px;justify-content:center;margin-top:10px">
+        <button class="stage-cta" style="margin:0" onclick="yogStep(-1)">‹ Back</button>
+        <button class="stage-cta" style="margin:0" onclick="yogStep(1)">Next step ›</button>
+      </div>
+      <div class="insight" style="margin-top:14px"><span class="lbl">Why each temperature?</span>Boiling <b>kills the bad bacteria</b> first. Then you cool to 60&nbsp;°C before adding culture &mdash; too hot would kill the <em>good</em> Lactobacillus you're adding. Finally, refrigeration slows everything down to preserve it.</div>
+    </div>
+  </div>
+
+  <!-- ENVIRONMENT -->
+  <div class="card" id="s-environ">
+    <h3>🌍 Environment &mdash; microbes as clean-up crew</h3>
+    <p>Removing pollutants using micro-organisms is called <b>bio-remediation</b>. Think of these microbes as a natural clean-up team that <em>eats</em> the pollution.</p>
+    <table class="tbl"><tr><th>Clean-up job</th><th>How microbes help</th></tr>
+      <tr><td>Polluted water</td><td>Microbes decompose organic waste matter</td></tr>
+      <tr><td>Ocean oil spills</td><td><em class="sci">Pseudomonas</em> releases an enzyme that decomposes hydrocarbons in oil</td></tr>
+      <tr><td>Heavy metals (Cr, Pb, Hg)</td><td>Polluted water passed through a tower of bacteria that remove the toxic metals</td></tr>
+      <tr><td>Plastic waste</td><td>Microbes produce <b>bio-degradable plastics</b> (decomposed by bacteria)</td></tr>
+    </table>
+    <div class="keyidea"><span class="lbl">Don't mix these up</span><b>Bio-remediation</b> = cleaning pollution. <b>Bio-leaching</b> = extracting metal from ore. <b>Bio-fertilizer</b> = enriching soil. Same "bio-" prefix, very different jobs.</div>
+  </div>
+</section>
+
+<!-- ========== 6. HARMFUL ========== -->
+<section class="lesson reveal" id="s-harm">
+  <div class="eyebrow"><span class="num">6</span><span>Adverse effects</span></div>
+  <h2>The dark side: when microbes harm us</h2>
+  <p class="lead">Four kinds of harm: <b>human disease</b>, <b>plant disease</b>, <b>food spoilage</b>, and <b>biological weapons</b>.</p>
+
+  <!-- DISEASE -->
+  <div class="card" id="s-disease">
+    <h3>🤒 Causing disease &mdash; the chain of infection</h3>
+    <p>To understand any disease, learn these three roles. It's always the same story:</p>
+    <div class="chain" id="chain">
+      <div class="link"><div class="em">🦠</div><b>Pathogen</b><small>The microbe that <em>causes</em> the disease</small></div>
+      <div class="arrow" style="align-self:center">➜</div>
+      <div class="link"><div class="em">🦟</div><b>Vector</b><small>The carrier (mosquito, fly) that <em>transports</em> it</small></div>
+      <div class="arrow" style="align-self:center">➜</div>
+      <div class="link"><div class="em">🧍</div><b>Host</b><small>The organism it lives in &amp; harms &mdash; <em>you</em></small></div>
+    </div>
+    <div class="insight"><span class="lbl">Worked example · Dengue</span><b>Pathogen</b> = dengue virus. <b>Vector</b> = mosquito (it carries the virus). <b>Host</b> = the human, where symptoms appear. Note: not every disease needs a vector &mdash; airborne ones like the cold skip straight to the host.</div>
+
+    <h4 style="color:var(--teal);margin-top:8px">Diseases you must know (Table 1.2)</h4>
+    <div class="tbl-scroll"><table class="tbl">
+      <tr><th>Pathogen type</th><th>Disease</th><th>How it spreads</th><th>Enters body via</th></tr>
+      <tr><td rowspan="3"><span class="pill v">Virus</span></td><td>Cold</td><td>Air</td><td>Respiratory system</td></tr>
+      <tr><td>Dengue</td><td>Mosquito vector</td><td>Skin (mosquito bite)</td></tr>
+      <tr><td>AIDS</td><td>Blood &amp; body fluids</td><td>Sexual contact / transfusion</td></tr>
+      <tr><td rowspan="2"><span class="pill b">Bacteria</span></td><td>Tuberculosis</td><td>Air</td><td>Respiratory system</td></tr>
+      <tr><td>Typhoid</td><td>Polluted food, housefly</td><td>Digestive system</td></tr>
+      <tr><td rowspan="3"><span class="pill p">Protozoa</span></td><td>Malaria</td><td>Mosquito vector</td><td>Skin (mosquito bite)</td></tr>
+      <tr><td>Amoebic dysentery</td><td>Polluted water &amp; food</td><td>Digestive system</td></tr>
+      <tr><td>Leishmaniasis</td><td>Sand-fly vector</td><td>Open skin wounds</td></tr>
+      <tr><td rowspan="2"><span class="pill f">Fungi</span></td><td>Pityriasis</td><td rowspan="2">Contact / infected clothes</td><td rowspan="2">Skin</td></tr>
+      <tr><td>Rashes</td></tr>
+    </table></div>
+    <div class="keyidea"><span class="lbl">Spot the pattern</span>How it enters tells you how to prevent it: <b>air → respiratory</b>, <b>food/water → digestive</b>, <b>bite → through skin</b>. That's also the answer to "good health habits to avoid infection": clean water, covered food, mosquito control, personal hygiene.</div>
+    <p style="font-size:13.5px;color:var(--ink-dim)">🎓 Nice twist: the bacterium <em class="sci">Bacillus thuringiensis</em> (the same one used in Bt maize) is used as <b>biological control</b> to destroy dengue mosquito larvae &mdash; a microbe fighting a microbe's vector.</p>
+  </div>
+
+  <!-- PLANT DISEASE -->
+  <div class="card" id="s-plant">
+    <h3>🌱 Diseases in plants</h3>
+    <div class="grid three">
+      <div class="cheat-box"><h4>Powdery mildew</h4>Caused by a <b>fungus</b>. White/grey powder on leaves, stems, flowers, fruit. Damages the whole plant.</div>
+      <div class="cheat-box"><h4>Late blight</h4>Caused by a <b>fungus</b>. Common in <b>potato</b>. Brown spots on leaves turn black, then spread.</div>
+      <div class="cheat-box"><h4>Wilting</h4>Caused by <b>fungi or bacteria</b>. Damages the <b>xylem</b> → poor water transport → plant withers.</div>
+    </div>
+  </div>
+
+  <!-- FOOD SPOILAGE -->
+  <div class="card" id="s-spoil">
+    <h3>🍞 Food spoilage</h3>
+    <p>Food gives microbes everything they need to multiply. As they feed, they change the food's physical and chemical nature until it's unfit to eat &mdash; that's <b>food spoilage</b>.</p>
+    <div class="grid two">
+      <div class="cheat-box"><h4>What changes?</h4>
+        <p style="margin:0;font-size:13.5px"><b>Physical:</b> softer, colour, taste, odour change.<br>
+        <b>Chemical:</b> fermentation of carbohydrates, putrefaction of proteins, rancidification of lipids.</p></div>
+      <div class="cheat-box"><h4>What speeds it up?</h4>
+        <p style="margin:0;font-size:13.5px"><b>Internal:</b> nutrients, moisture, food's structure.<br>
+        <b>External:</b> temperature, humidity, gases in the air.</p></div>
+    </div>
+    <div class="keyidea"><span class="lbl">Connect it back</span>This is why the yoghurt method uses <b>refrigeration</b> &mdash; cold is an external factor that slows microbial growth. Preservation is just food spoilage in reverse.</div>
+  </div>
+
+  <!-- BIOWEAPONS -->
+  <div class="card" id="s-bioweapon">
+    <h3>☠️ Biological weapons</h3>
+    <p>Toxins from pathogenic bacteria or viruses used for <b>military purposes</b> are called <b>biological weapons</b>. The most dangerous one today: <em class="sci">Bacillus anthracis</em>, the cause of <b>anthrax</b> &mdash; harmful to humans, animals and plants.</p>
+  </div>
+</section>
+
+<!-- ========== 7. CHEAT SHEET ========== -->
+<section class="lesson reveal" id="cheat">
+  <div class="eyebrow"><span class="num">7</span><span>Last-minute revision</span></div>
+  <h2>⚡ The night-before cheat sheet</h2>
+  <p class="lead">Everything essential, condensed. Skim this the hour before your exam &mdash; if a point feels unfamiliar, tap back to the section that explains it.</p>
+
+  <div class="card">
+    <div class="cheat-grid">
+      <div class="cheat-box"><h4>🔑 Definition &amp; 3 traits</h4><ul>
+        <li>Microbe = living thing <b>too small for the naked eye</b>.</li>
+        <li>Traits: <b>fast</b> reproduction, <b>tough</b> (adaptable), <b>simple</b> genes.</li>
+        <li>5 groups: Bacteria, Fungi, Protozoa, Algae, Virus.</li>
+      </ul></div>
+
+      <div class="cheat-box"><h4>🧬 The 5 groups (signature trait)</h4><ul>
+        <li><b>Bacteria:</b> unicellular, everywhere, many shapes.</li>
+        <li><b>Fungi:</b> uni/multi, moist surfaces, some visible.</li>
+        <li><b>Protozoa:</b> move via cilia/pseudopodia/flagella.</li>
+        <li><b>Algae:</b> chlorophyll → photosynthesis (autotroph).</li>
+        <li><b>Virus:</b> no cells, living+non-living, needs a host.</li>
+      </ul></div>
+
+      <div class="cheat-box"><h4>🌾 Agriculture</h4><ul>
+        <li><b>Golden Rice</b> ← <em class="sci">Erwinia uredovora</em> (vitamin A).</li>
+        <li><b>Bt maize</b> ← <em class="sci">Bacillus thuringiensis</em> (pest toxin).</li>
+        <li><b>Rhizobium</b> = N-fixing in legume root nodules.</li>
+        <li><b>Azotobacter</b> = free-living N-fixer (bio-fertilizer).</li>
+        <li><b>Alternaria</b> = bio-pesticide vs salvinia weed.</li>
+      </ul></div>
+
+      <div class="cheat-box"><h4>💊 Medicine</h4><ul>
+        <li>Antibiotics kill <b>bacteria &amp; fungi, NOT viruses</b>.</li>
+        <li>Bacterial: Penicillin, Amoxicillin, Tetracycline, Erythromycin.</li>
+        <li>Fungal: <b>Griseofulvin</b>.</li>
+        <li>Vaccines: weakened / killed / toxin / genetic.</li>
+        <li>Penicillin → Fleming, from <em class="sci">Penicillium notatum</em>.</li>
+      </ul></div>
+
+      <div class="cheat-box"><h4>🏭 Industry (Industrial Microbiology)</h4><ul>
+        <li>Alcohol &amp; bakery = <em class="sci">Saccharomyces</em> (yeast).</li>
+        <li>Vinegar = <em class="sci">Acetobacter aceti</em>.</li>
+        <li>Dairy = Lactobacillus + Streptococcus (lactose→lactic acid).</li>
+        <li>Biogas = Methanococcus → <b>methane</b>.</li>
+        <li><b>Bio-leaching</b> = metal from ore (Uranium, Copper).</li>
+      </ul></div>
+
+      <div class="cheat-box"><h4>🌍 Environment</h4><ul>
+        <li><b>Bio-remediation</b> = removing pollution with microbes.</li>
+        <li><em class="sci">Pseudomonas</em> → decomposes ocean oil spills.</li>
+        <li>Bacteria towers remove heavy metals (Cr, Pb, Hg).</li>
+        <li>Microbes make <b>bio-degradable plastics</b>.</li>
+      </ul></div>
+
+      <div class="cheat-box"><h4>🤒 Disease chain &amp; key cases</h4><ul>
+        <li><b>Pathogen</b> causes → <b>Vector</b> carries → <b>Host</b> suffers.</li>
+        <li>Virus: Cold, Dengue, AIDS. Bacteria: TB, Typhoid.</li>
+        <li>Protozoa: Malaria, Amoebic dysentery, Leishmaniasis.</li>
+        <li>Air→respiratory, food/water→digestive, bite→skin.</li>
+      </ul></div>
+
+      <div class="cheat-box"><h4>⚠️ Other harms</h4><ul>
+        <li>Plant: powdery mildew, late blight, wilting (xylem).</li>
+        <li>Spoilage: physical (colour/taste/odour) + chemical (ferment/putrefy/rancid).</li>
+        <li>Bio-weapon: <em class="sci">Bacillus anthracis</em> = anthrax.</li>
+      </ul></div>
+    </div>
+
+    <div class="mnem"><b>Memory hooks:</b> &nbsp;• Beneficial fields = <b>"A MIE"</b> (Agriculture, Medicine, Industry, Environment). &nbsp;• Antibiotics = <b>"Bacteria &amp; Fungi, never Viruses."</b> &nbsp;• The three "bio-" jobs: <b>remediation</b> cleans, <b>leaching</b> mines, <b>fertilizer</b> feeds. &nbsp;• Disease = <b>P&rarr;V&rarr;H</b> (Pathogen, Vector, Host).</div>
+  </div>
+</section>
+
+<!-- ========== 8. PROGRESS DASHBOARD ========== -->
+<section class="lesson reveal" id="dashboard">
+  <div class="eyebrow"><span class="num">8</span><span>Your progress</span></div>
+  <h2>📈 Track your mastery</h2>
+  <p class="lead">Saved on this device &mdash; come back anytime and watch your scores climb.</p>
+  <div class="card">
+    <div class="dash-grid">
+      <div class="stat"><div class="v" id="st-best">0%</div><div class="l">Best score</div></div>
+      <div class="stat"><div class="v" id="st-last">&ndash;</div><div class="l">Last score</div></div>
+      <div class="stat"><div class="v" id="st-attempts">0</div><div class="l">Attempts</div></div>
+      <div class="stat"><div class="v" id="st-streak">0</div><div class="l">Day streak</div></div>
+    </div>
+    <h4 style="color:var(--teal);margin:18px 0 10px">Mastery by topic</h4>
+    <div class="mastery" id="masteryList"></div>
+    <div class="history" id="historyList"></div>
+    <p id="improveNote" style="margin:14px 0 0;font-size:14px;color:var(--grn);font-weight:600"></p>
+  </div>
+</section>
+
+<!-- ========== 9. QUIZ ========== -->
+<section class="lesson reveal" id="quiz">
+  <div class="eyebrow"><span class="num">9</span><span>Test yourself · flip cards</span></div>
+  <h2>🎯 The 28-question challenge</h2>
+  <p class="lead">Pick an answer, then the card <b>flips</b> to reveal whether you were right, a full explanation, and a link straight back to the lesson. Filter by topic to drill your weak spots.</p>
+
+  <div class="qfilter" id="qfilter">
+    <button class="active" data-cat="all">All 28</button>
+    <button data-cat="Basics">Basics</button>
+    <button data-cat="Families">Families</button>
+    <button data-cat="Agriculture">Agriculture</button>
+    <button data-cat="Medicine">Medicine</button>
+    <button data-cat="Industry">Industry</button>
+    <button data-cat="Environment">Environment</button>
+    <button data-cat="Disease">Disease</button>
+  </div>
+
+  <div class="quiz-head">
+    <div class="quiz-meta">
+      <span>Answered <b id="qm-done">0</b>/<b id="qm-total">28</b></span>
+      <span>Correct <b id="qm-correct">0</b></span>
+      <span>Score <b id="qm-score">0%</b></span>
+    </div>
+    <button class="btn btn-ghost" style="padding:8px 16px;font-size:13px" onclick="restartQuiz()">↻ Restart</button>
+  </div>
+
+  <div class="flip" id="flipcard">
+    <div class="flip-inner">
+      <div class="face face-front" id="cardFront"></div>
+      <div class="face face-back" id="cardBack"></div>
+    </div>
+  </div>
+
+  <div class="q-nav">
+    <button id="prevBtn" onclick="goCard(-1)">‹ Prev</button>
+    <div class="dots" id="dots"></div>
+    <button id="nextBtn" onclick="goCard(1)">Next ›</button>
+  </div>
+
+  <div id="result" class="card">
+    <div class="big" id="resBig">0%</div>
+    <div class="msg" id="resMsg"></div>
+    <div class="hero-cta">
+      <button class="btn btn-primary" onclick="restartQuiz()">Try again</button>
+      <a class="btn btn-ghost" href="#cheat">Review cheat sheet</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<div id="toast"></div>
+<footer class="wrap">
+  <p>Built from the Grade 9 Science textbook (Ministry of Education, Sri Lanka) · Chapter 1: Applications of Micro-organisms.<br>
+  Your progress is saved on this device. <span class="reset-link" onclick="resetAll()">Reset all progress</span></p>
+</footer>
+
+<script>
+/* ============ AMBIENT / UX ============ */
+(function floaters(){
+  const box=document.getElementById('floaters');
+  const ems=['🦠','🍄','🧫','🌿','👾','🧬'];
+  for(let i=0;i<14;i++){
+    const s=document.createElement('span');
+    s.textContent=ems[i%ems.length];
+    s.style.left=(Math.random()*100)+'%';
+    s.style.top=(Math.random()*100)+'%';
+    s.style.fontSize=(20+Math.random()*34)+'px';
+    s.style.animationDuration=(9+Math.random()*11)+'s';
+    s.style.animationDelay=(-Math.random()*10)+'s';
+    box.appendChild(s);
+  }
+})();
+// read progress bar
+const readbar=document.getElementById('readbar');
+addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  const p=h.scrollTop/(h.scrollHeight-h.clientHeight)*100;
+  readbar.style.width=Math.min(100,p)+'%';
+},{passive:true});
+// reveal on scroll
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2200);}
+
+/* ============ FAMILY TABS ============ */
+document.querySelectorAll('.fam-tab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    const fam=tab.dataset.fam;
+    document.querySelectorAll('.fam-tab').forEach(t=>{t.classList.remove('active');t.style.background='';});
+    tab.classList.add('active');
+    const colors={bacteria:'var(--blue)',fungi:'var(--amber)',protozoa:'var(--violet)',algae:'var(--grn)',virus:'var(--pink)'};
+    tab.style.background=colors[fam];
+    document.querySelectorAll('.fam-panel').forEach(p=>p.classList.toggle('active',p.dataset.fam===fam));
+  });
+});
+document.querySelector('.fam-tab.active').style.background='var(--blue)';
+
+/* ============ BINARY FISSION ============ */
+let fissionGen=0;
+function doFission(){
+  const stage=document.getElementById('fissionStage');
+  const tick=document.getElementById('fissionTick');
+  fissionGen=(fissionGen+1);
+  let count=Math.pow(2,fissionGen);
+  // rebuild cells up to a cap, animate splitting
+  stage.innerHTML='';
+  const n=Math.min(count,16);
+  for(let i=0;i<n;i++){
+    const c=document.createElement('div');c.className='cell';
+    c.style.width=c.style.height=Math.max(26,74-fissionGen*8)+'px';
+    c.style.margin='3px';c.classList.add('split');
+    stage.appendChild(c);
+  }
+  stage.style.flexWrap='wrap';
+  tick.textContent = count>=16 ? '…and counting (exponential!)' : count+' cells';
+  if(fissionGen>=4){ setTimeout(()=>{fissionGen=0;},2400); }
+}
+
+/* ============ VIRUS TOGGLE ============ */
+function toggleVirus(){
+  const tg=document.getElementById('virusTg');
+  tg.classList.toggle('on');
+  const msg=document.getElementById('virusMsg');
+  if(tg.classList.contains('on')){
+    msg.innerHTML='<b style="color:var(--grn)">Living mode:</b> Hijacks the host cell\'s machinery to <b>multiply</b>. Now it shows a living characteristic &mdash; but only because it borrowed a living cell.';
+  }else{
+    msg.innerHTML='<b style="color:var(--red)">Non-living mode:</b> No cellular organisation. Doesn\'t respire, doesn\'t grow. Basically a chemical particle.';
+  }
+}
+
+/* ============ NITROGEN ============ */
+function runNitrogen(btn){
+  const arrows=btn.parentElement.querySelectorAll('.arrow');
+  arrows.forEach((a,i)=>{a.style.animation='none';setTimeout(()=>{a.style.transform='scale(1.6)';a.style.color='var(--grn)';setTimeout(()=>{a.style.transform='';a.style.color='';a.style.animation='';},500);},i*450);});
+  btn.textContent='✓ Nitrogen fixed! Plant fed.';
+  setTimeout(()=>btn.textContent='▶ Fix the nitrogen again',1800);
+}
+
+/* ============ YOGHURT STEPPER ============ */
+const yog=[
+  {e:'🥛',t:'Step 1 · Heat the milk',d:'Heat cow\'s milk for 15–30 min at 88–95 °C to kill unwanted bacteria.'},
+  {e:'♨️',t:'Step 2 · Remove cream',d:'Skim off the cream from the heated milk.'},
+  {e:'🍬',t:'Step 3 · Add sugar & gelatin',d:'Add sugar and gelatin as required for taste and texture.'},
+  {e:'🌡️',t:'Step 4 · Cool to 60 °C',d:'Let it cool — too hot would kill the good bacteria you\'re about to add.'},
+  {e:'🦠',t:'Step 5 · Add yoghurt culture',d:'Add a small amount of culture (Lactobacillus + Streptococcus) at 60 °C and mix well.'},
+  {e:'⏳',t:'Step 6 · Incubate 6–7 hrs',d:'Keep at 40–45 °C. Bacteria turn lactose → lactic acid → milk sets into yoghurt.'},
+  {e:'❄️',t:'Step 7 · Refrigerate (<4 °C)',d:'Cover and chill. Cold slows the bacteria and preserves your yoghurt.'}
+];
+let yogI=0;
+function yogStep(dir){
+  yogI=(yogI+dir+yog.length)%yog.length;
+  document.getElementById('yogEmoji').textContent=yog[yogI].e;
+  document.getElementById('yogTitle').textContent=yog[yogI].t;
+  document.getElementById('yogDesc').textContent=yog[yogI].d;
+}
+
+/* ============ QUIZ DATA (28) ============ */
+const CAT_COLORS={Basics:'#12324d;color:#8ec5ff',Families:'#0f3324;color:#7ee0a8',Agriculture:'#2a2410;color:#f7c66b',Medicine:'#2a1240;color:#d6a6ff',Industry:'#122a33;color:#8fd8e6',Environment:'#12331f;color:#9df0b8',Disease:'#3a1220;color:#f79ac0'};
+const Q=[
+ {c:'Basics',q:'A micro-organism is best defined as a living thing that…',o:['is always harmful to humans','cannot be seen clearly with the naked eye','always lives only in water','has no genetic material'],a:1,e:'By definition, microbes are simply too small to see without a microscope — that single fact drives everything else in the chapter.',r:'s-intro',rl:'§1 What is a microbe'},
+ {c:'Basics',q:'Which statement about micro-organisms is TRUE?',o:['Most are harmful to living beings','They grow slowly and rarely reproduce','They reproduce fast and adapt to many environments','They can only survive in mild conditions'],a:2,e:'Microbes are fast (rapid reproduction) and tough (adapt to hot springs, salt marshes, even petrol). Most are actually favourable to us.',r:'s-intro',rl:'§1 Three traits'},
+ {c:'Basics',q:'Which is NOT one of the five main groups of micro-organisms?',o:['Bacteria','Fungi','Insects','Algae'],a:2,e:'The five groups are Bacteria, Fungi, Protozoa, Algae and Viruses. Insects are not micro-organisms.',r:'s-families',rl:'§2 The five families'},
+ {c:'Families',q:'Which group of micro-organisms is autotrophic (makes its own food)?',o:['Virus','Fungi','Algae','Protozoa'],a:2,e:'Algae contain chlorophyll and can photosynthesise — that is the autotroph giveaway. The others cannot make their own food.',r:'s-families',rl:'§2 Algae'},
+ {c:'Families',q:'Some characteristics of viruses: (a) no cellular organisation (b) multiply only in living cells (c) do not respire or grow. Which are correct?',o:['a and b only','a and c only','b and c only','a, b and c'],a:3,e:'All three are correct. They all stem from one idea: a virus is not a full living cell, so it needs a host to reproduce.',r:'s-families',rl:'§2 Virus'},
+ {c:'Families',q:'Amoeba moves from place to place using…',o:['cilia','flagella','pseudopodia','pectinase'],a:2,e:'Amoeba uses pseudopodia ("false feet"). Paramecium uses cilia; Euglena uses flagella.',r:'s-families',rl:'§2 Protozoa'},
+ {c:'Families',q:'Which group can be MULTICELLULAR and is sometimes visible to the naked eye (e.g. a mushroom)?',o:['Bacteria','Fungi','Protozoa','Virus'],a:1,e:'Fungi can be unicellular or multicellular; the mushroom is a fungus\'s reproductive organ, big enough to see. Bacteria are always unicellular and microscopic.',r:'s-families',rl:'§2 Fungi'},
+ {c:'Families',q:'Paramecium moves using…',o:['pseudopodia','cilia','a single flagellum','chlorophyll'],a:1,e:'Paramecium is covered in tiny cilia that beat like oars. Match the tool to the creature: Amoeba–pseudopodia, Paramecium–cilia, Euglena–flagella.',r:'s-families',rl:'§2 Protozoa'},
+ {c:'Families',q:'Which micro-organism is used in producing milk-based products like yoghurt?',o:['Plasmodium','Lactobacillus','Alternaria','Pseudomonas'],a:1,e:'Lactobacillus (with Streptococcus) turns lactose into lactic acid, setting the milk into yoghurt.',r:'s-industry',rl:'§5 Dairy'},
+ {c:'Agriculture',q:'Rhizobium bacteria in the root nodules of legumes are important because they…',o:['produce antibiotics','fix atmospheric nitrogen','cause wilting disease','extract copper from soil'],a:1,e:'Plants cannot absorb nitrogen gas directly. Rhizobium in legume root nodules "fixes" it into a usable form — natural fertiliser.',r:'s-agri',rl:'§5 Nitrogen fixation'},
+ {c:'Agriculture',q:'Golden Rice, enriched with vitamin A, was developed using genes from the bacterium…',o:['Bacillus thuringiensis','Erwinia uredovora','Acetobacter aceti','Rhizobium'],a:1,e:'Golden Rice uses genes from Erwinia uredovora to add vitamin A. (Bacillus thuringiensis is the one used for pest-resistant Bt maize.)',r:'s-agri',rl:'§5 Gene technology'},
+ {c:'Agriculture',q:'Which free-living nitrogen-fixing bacterium is added directly to cultivation land as a bio-fertilizer?',o:['Azotobacter','Vibrio cholerae','Methanococcus','Streptococcus'],a:0,e:'Azotobacter is a FREE-LIVING nitrogen fixer added straight to soil. Rhizobium, by contrast, lives inside legume root nodules.',r:'s-agri',rl:'§5 Nitrogen fixation'},
+ {c:'Agriculture',q:'The fungus Alternaria is used as a bio-pesticide to control which aquatic weed?',o:['water hyacinth','salvinia','duckweed','algae bloom'],a:1,e:'Alternaria is used to combat the aquatic weed salvinia — an example of a microbe used as a natural pesticide.',r:'s-agri',rl:'§5 Bio-pesticides'},
+ {c:'Medicine',q:'Antibiotics can destroy…',o:['only viruses','bacteria and fungi, but not viruses','only algae','all micro-organisms including viruses'],a:1,e:'This is a top exam point: antibiotics work against bacteria and fungi but NOT viruses. That is why they are useless for a cold or dengue.',r:'s-medicine',rl:'§5 Antibiotics'},
+ {c:'Medicine',q:'Which antibiotic is used against FUNGAL infections?',o:['Penicillin','Tetracycline','Griseofulvin','Erythromycin'],a:2,e:'Griseofulvin fights fungal infections. Penicillin, Amoxicillin, Tetracycline and Erythromycin are used against bacterial infections.',r:'s-medicine',rl:'§5 Antibiotics'},
+ {c:'Medicine',q:'The vaccine for tetanus is made from…',o:['weakened microbes','killed microbes','toxins of microbes','microbe body parts by genetic engineering'],a:2,e:'Tetanus and Diphtheria vaccines are made from the microbes\' toxins (with the toxic part removed). Polio/TB/Measles use weakened microbes.',r:'s-medicine',rl:'§5 Vaccines'},
+ {c:'Medicine',q:'"Chemicals produced in the body of a microbe to destroy or sabotage another microbe" are called…',o:['antitoxins','antibiotics','antiseptics','antinutrients'],a:1,e:'That is the definition of antibiotics. Antitoxins neutralise toxins; antiseptics are applied externally to prevent infection.',r:'s-medicine',rl:'§5 Antibiotics'},
+ {c:'Medicine',q:'Penicillin, the first antibiotic, is produced from the fungus…',o:['Saccharomyces','Mucor','Penicillium notatum','Alternaria'],a:2,e:'Penicillin was discovered by Alexander Fleming and is produced from the fungus Penicillium notatum.',r:'s-medicine',rl:'§5 Antibiotics'},
+ {c:'Industry',q:'Bio-leaching (metal extraction using microbes) is used mainly to extract…',o:['Gold and Silver','Iron and Zinc','Uranium and Copper','Sodium and Calcium'],a:2,e:'Bio-leaching uses microbes to extract Uranium and Copper from low-grade ores — simple and effective.',r:'s-industry',rl:'§5 Metal extraction'},
+ {c:'Industry',q:'Biogas produced by anaerobic bacteria (Methanococcus) mainly consists of…',o:['carbon dioxide','methane','oxygen','hydrogen'],a:1,e:'Biogas is mainly methane, which is why it works as an energy source. It comes from straw, cow dung and water.',r:'s-industry',rl:'§5 Biogas'},
+ {c:'Industry',q:'Which enzyme, produced by bacteria, separates plant fibres by digesting the pectate that binds them?',o:['pectinase','amylase','lipase','protease'],a:0,e:'Pectate glues plant fibres together; the enzyme pectinase digests it, freeing fibres from coconut, hemp, etc.',r:'s-industry',rl:'§5 Plant fibres'},
+ {c:'Industry',q:'The same yeast is used in BOTH the bakery and alcohol industries. It is…',o:['Acetobacter aceti','Saccharomyces cerevisiae','Lactobacillus bulgaricus','Bacillus corchorus'],a:1,e:'Saccharomyces cerevisiae (yeast) is used for both bakery and alcohol production.',r:'s-industry',rl:'§5 Industry table'},
+ {c:'Environment',q:'The technology of removing environmental pollutants by using micro-organisms is called…',o:['bio-leaching','bio-remediation','nitrogen fixation','food spoilage'],a:1,e:'Bio-remediation = cleaning pollution with microbes. Don\'t confuse it with bio-leaching (mining metal) or bio-fertilizer (feeding soil).',r:'s-environ',rl:'§5 Environment'},
+ {c:'Environment',q:'Pseudomonas bacteria are released onto ocean water to…',o:['fix nitrogen','decompose the oil layer (hydrocarbons)','produce biogas','make yoghurt'],a:1,e:'Pseudomonas releases an enzyme that decomposes the hydrocarbons in an oil spill — a classic bio-remediation example.',r:'s-environ',rl:'§5 Environment'},
+ {c:'Disease',q:'Which of the following diseases is caused by BACTERIA?',o:['Malaria','Tuberculosis','Ebola','Dengue'],a:1,e:'Tuberculosis is bacterial (spread by air). Malaria is protozoan; Ebola and Dengue are viral.',r:'s-disease',rl:'§6 Disease table'},
+ {c:'Disease',q:'Malaria is caused by which type of micro-organism?',o:['a virus','a bacterium','a protozoan (Plasmodium)','a fungus'],a:2,e:'Malaria is caused by the protozoan Plasmodium, carried by mosquitoes (the vector) that bite through the skin.',r:'s-disease',rl:'§6 Disease chain'},
+ {c:'Disease',q:'An organism such as a mosquito or housefly that CARRIES a pathogen to a host is called a…',o:['host','vector','substrate','pathogen'],a:1,e:'Pathogen = the microbe that causes disease; Vector = the carrier; Host = the organism it lives in and harms.',r:'s-disease',rl:'§6 Chain of infection'},
+ {c:'Disease',q:'Which bacterium is considered the most harmful biological weapon, causing anthrax?',o:['Vibrio cholerae','Bacillus anthracis','Lactobacillus','Pseudomonas'],a:1,e:'Bacillus anthracis causes anthrax and is considered the most dangerous biological weapon today.',r:'s-bioweapon',rl:'§6 Biological weapons'}
+];
+document.getElementById('qm-total').textContent=Q.length;
+
+/* ============ QUIZ ENGINE ============ */
+const LSKEY='microbes_ol_v1';
+function loadLS(){try{return JSON.parse(localStorage.getItem(LSKEY))||{}}catch(e){return{}}}
+function saveLS(d){try{localStorage.setItem(LSKEY,JSON.stringify(d))}catch(e){}}
+let store=loadLS();
+if(!store.correctSet)store.correctSet=[];
+if(!store.history)store.history=[];
+
+let activeCat='all';
+let deck=[];           // indices into Q for current filter
+let pos=0;             // position in deck
+let ansMap={};         // qIndex -> {chosen, ok}
+function buildDeck(){
+  deck=Q.map((q,i)=>i).filter(i=>activeCat==='all'||Q[i].c===activeCat);
+  pos=0;
+}
+function renderDots(){
+  const d=document.getElementById('dots');d.innerHTML='';
+  deck.forEach((qi,k)=>{
+    const i=document.createElement('i');
+    if(ansMap[qi])i.classList.add(ansMap[qi].ok?'done':'miss');
+    if(k===pos)i.classList.add('cur');
+    i.onclick=()=>{pos=k;renderCard();};
+    d.appendChild(i);
+  });
+}
+function updateMeta(){
+  const answered=deck.filter(qi=>ansMap[qi]).length;
+  const correct=deck.filter(qi=>ansMap[qi]&&ansMap[qi].ok).length;
+  document.getElementById('qm-done').textContent=answered;
+  document.getElementById('qm-correct').textContent=correct;
+  document.getElementById('qm-total').textContent=deck.length;
+  document.getElementById('qm-score').textContent=(answered?Math.round(correct/answered*100):0)+'%';
+}
+function renderCard(){
+  const card=document.getElementById('flipcard');
+  card.classList.remove('flipped');
+  const qi=deck[pos];const item=Q[qi];
+  const front=document.getElementById('cardFront');
+  const catStyle=CAT_COLORS[item.c];
+  const already=ansMap[qi];
+  front.innerHTML=`
+    <div class="q-top">
+      <span class="q-cat" style="background:${catStyle.split(';')[0]};color:${catStyle.split('color:')[1]}">${item.c}</span>
+      <span class="q-idx">${pos+1} / ${deck.length}</span>
+    </div>
+    <div class="q-text">${item.q}</div>
+    <div class="opts">${item.o.map((op,j)=>`<button class="opt" onclick="answer(${qi},${j})" ${already?'disabled':''}>
+      <span class="k">${'ABCD'[j]}</span><span>${op}</span></button>`).join('')}</div>
+    <div class="q-hint">${already?'Already answered — flip to review.':'Tap an answer to check yourself'}</div>`;
+  // if already answered, colour options
+  if(already){
+    const opts=front.querySelectorAll('.opt');
+    opts[item.a].classList.add('correct');
+    if(!already.ok)opts[already.chosen].classList.add('wrong');
+    setTimeout(()=>{buildBack(qi);card.classList.add('flipped');},60);
+  }
+  document.getElementById('prevBtn').disabled=(pos===0);
+  document.getElementById('nextBtn').disabled=(pos===deck.length-1);
+  renderDots();updateMeta();
+}
+function buildBack(qi){
+  const item=Q[qi];const ok=ansMap[qi]&&ansMap[qi].ok;
+  const back=document.getElementById('cardBack');
+  back.innerHTML=`
+    <div class="a-verdict ${ok?'ok':'no'}">${ok?'✓ Correct!':'✗ Not quite'}</div>
+    <div class="a-answer">Answer: <b>${'ABCD'[item.a]}. ${item.o[item.a]}</b></div>
+    <div class="a-expl">${item.e}</div>
+    <div class="a-actions">
+      <a class="a-ref" href="#${item.r}">📖 Review: ${item.rl}</a>
+      <button class="a-ref" style="cursor:pointer" onclick="flipToFront()">↺ See question</button>
+    </div>`;
+}
+function flipToFront(){document.getElementById('flipcard').classList.remove('flipped');}
+function answer(qi,j){
+  if(ansMap[qi])return;
+  const ok=(j===Q[qi].a);
+  ansMap[qi]={chosen:j,ok};
+  // persist mastery
+  if(ok&&!store.correctSet.includes(qi)){store.correctSet.push(qi);saveLS(store);}
+  const front=document.getElementById('cardFront');
+  const opts=front.querySelectorAll('.opt');
+  opts.forEach(o=>o.disabled=true);
+  opts[Q[qi].a].classList.add('correct');
+  if(!ok)opts[j].classList.add('wrong');
+  buildBack(qi);
+  setTimeout(()=>document.getElementById('flipcard').classList.add('flipped'),450);
+  renderDots();updateMeta();renderDashboard();
+  // completion check
+  if(deck.every(x=>ansMap[x]))setTimeout(showResult,700);
+}
+function goCard(dir){
+  const np=pos+dir;if(np<0||np>=deck.length)return;pos=np;renderCard();
+}
+function restartQuiz(){
+  ansMap={};document.getElementById('result').classList.remove('show');
+  buildDeck();renderCard();
+  document.getElementById('quiz').scrollIntoView({behavior:'smooth'});
+}
+document.querySelectorAll('#qfilter button').forEach(b=>{
+  b.onclick=()=>{
+    document.querySelectorAll('#qfilter button').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');activeCat=b.dataset.cat;ansMap={};
+    document.getElementById('result').classList.remove('show');
+    buildDeck();renderCard();
+  };
+});
+/* ============ RESULT + SCORE SAVE ============ */
+function showResult(){
+  const correct=deck.filter(qi=>ansMap[qi].ok).length;
+  const score=Math.round(correct/deck.length*100);
+  const res=document.getElementById('result');
+  document.getElementById('resBig').textContent=score+'%';
+  let msg;
+  if(score>=90)msg=`Outstanding — ${correct}/${deck.length}. You've mastered this chapter! 🎉`;
+  else if(score>=70)msg=`Great work — ${correct}/${deck.length}. Nearly there; review the ones you missed.`;
+  else if(score>=50)msg=`Good start — ${correct}/${deck.length}. Revisit the cheat sheet and try again.`;
+  else msg=`${correct}/${deck.length}. Don't worry — re-read the lessons and come back. You'll improve fast.`;
+  document.getElementById('resMsg').textContent=msg;
+  res.classList.add('show');res.scrollIntoView({behavior:'smooth'});
+  // Only record a full-deck (all categories) attempt for the dashboard best/streak
+  if(activeCat==='all'){
+    const today=new Date().toISOString().slice(0,10);
+    store.attempts=(store.attempts||0)+1;
+    store.last=score;
+    const prevBest=store.best||0;
+    store.best=Math.max(prevBest,score);
+    // streak
+    if(store.lastDay){
+      const diff=(new Date(today)-new Date(store.lastDay))/86400000;
+      if(diff===1)store.streak=(store.streak||1)+1;
+      else if(diff>1)store.streak=1;
+    }else store.streak=1;
+    store.lastDay=today;
+    store.history.push({date:today,score});
+    if(store.history.length>8)store.history=store.history.slice(-8);
+    store._improved = score>prevBest;
+    saveLS(store);
+    if(score>=80)confetti();
+    if(score>prevBest&&store.attempts>1)toast('🎉 New personal best: '+score+'%!');
+  }else{
+    if(score>=80)confetti();
+  }
+  renderDashboard();
+}
+/* ============ DASHBOARD ============ */
+function renderDashboard(){
+  document.getElementById('st-best').textContent=(store.best||0)+'%';
+  document.getElementById('st-last').textContent=(store.last!=null?store.last+'%':'–');
+  document.getElementById('st-attempts').textContent=store.attempts||0;
+  document.getElementById('st-streak').textContent=store.streak||0;
+  document.getElementById('scorechip-txt').textContent='Best '+(store.best||0)+'%';
+  // mastery per category from correctSet
+  const cats=['Basics','Families','Agriculture','Medicine','Industry','Environment','Disease'];
+  const ml=document.getElementById('masteryList');ml.innerHTML='';
+  cats.forEach(cat=>{
+    const total=Q.filter(q=>q.c===cat).length;
+    const got=Q.filter((q,i)=>q.c===cat&&store.correctSet.includes(i)).length;
+    const pc=Math.round(got/total*100);
+    const row=document.createElement('div');row.className='row';
+    row.innerHTML=`<span class="nm">${cat}</span><span class="bar"><i style="width:${pc}%"></i></span><span class="pc">${pc}%</span>`;
+    ml.appendChild(row);
+  });
+  // history
+  const hl=document.getElementById('historyList');
+  if(store.history&&store.history.length){
+    hl.innerHTML='Recent attempts: '+store.history.map(h=>`<span>${h.date.slice(5)} · ${h.score}%</span>`).join('');
+  }else hl.innerHTML='';
+  const note=document.getElementById('improveNote');
+  if(store.history&&store.history.length>=2){
+    const d=store.history[store.history.length-1].score-store.history[store.history.length-2].score;
+    if(d>0)note.textContent=`⬆ Up ${d}% since your last full attempt — keep going!`;
+    else if(d<0)note.textContent=`You dipped ${Math.abs(d)}% — review the weak topics above and bounce back.`;
+    else note.textContent='Holding steady. Aim to push your best higher!';
+  }else note.textContent='';
+}
+/* ============ CONFETTI ============ */
+function confetti(){
+  const box=document.createElement('div');box.className='confetti';document.body.appendChild(box);
+  const cols=['#2dd4bf','#4ade80','#fbbf24','#60a5fa','#f472b6'];
+  for(let i=0;i<80;i++){
+    const p=document.createElement('div');
+    const sz=6+Math.random()*8;
+    p.style.cssText=`position:absolute;top:-20px;left:${Math.random()*100}%;width:${sz}px;height:${sz}px;
+      background:${cols[i%cols.length]};border-radius:${Math.random()>.5?'50%':'2px'};
+      opacity:.9;transform:rotate(${Math.random()*360}deg)`;
+    box.appendChild(p);
+    const dur=1800+Math.random()*1600;
+    p.animate([{transform:`translateY(0) rotate(0)`,opacity:1},{transform:`translateY(${window.innerHeight+60}px) rotate(${Math.random()*720}deg)`,opacity:.7}],{duration:dur,easing:'cubic-bezier(.3,.6,.5,1)'});
+    setTimeout(()=>p.remove(),dur);
+  }
+  setTimeout(()=>box.remove(),3600);
+}
+/* ============ RESET ============ */
+function resetAll(){
+  if(confirm('Reset all quiz scores and progress on this device?')){
+    localStorage.removeItem(LSKEY);store=loadLS();store.correctSet=[];store.history=[];
+    ansMap={};buildDeck();renderCard();renderDashboard();toast('Progress reset.');
+  }
+}
+/* ============ INIT ============ */
+buildDeck();renderCard();renderDashboard();
+</script>
+</body>
+</html>

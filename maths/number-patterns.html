@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Number Patterns — Master It | Grade 9 Maths</title>
+<style>
+  :root{
+    --bg:#0f1626; --bg2:#141d33; --card:#1b2740; --card2:#212f4d;
+    --ink:#eaf1ff; --muted:#9db0d0; --line:#2c3d61;
+    --cyan:#2ec5e6; --cyan2:#39e0c4; --teal:#17b3a3;
+    --easy:#3ecf8e; --med:#f6b93b; --hard:#ff6b6b;
+    --accent:#7c8cff; --gold:#ffd166;
+    --shadow:0 18px 45px rgba(0,0,0,.45);
+    --r:18px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+    background:radial-gradient(1200px 700px at 80% -10%,#1c2a49 0%,var(--bg) 55%) fixed;
+    color:var(--ink); line-height:1.65; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+  h1,h2,h3{line-height:1.2;font-weight:800;letter-spacing:.2px}
+  .mono{font-family:'SFMono-Regular',ui-monospace,'Cascadia Code',Consolas,monospace}
+  .eq{font-family:'Cambria Math','Times New Roman',Georgia,serif;font-style:italic;font-size:1.08em;white-space:nowrap}
+
+  /* HERO */
+  header.hero{
+    padding:64px 0 40px;text-align:center;position:relative;overflow:hidden;
+  }
+  .badge{display:inline-block;padding:6px 16px;border:1px solid var(--line);border-radius:999px;
+    color:var(--cyan);font-size:.8rem;letter-spacing:2px;text-transform:uppercase;background:rgba(46,197,230,.08)}
+  header.hero h1{font-size:clamp(2.1rem,6vw,3.6rem);margin:18px 0 8px;
+    background:linear-gradient(100deg,#fff 10%,var(--cyan) 55%,var(--cyan2) 90%);
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  header.hero p.sub{color:var(--muted);max-width:620px;margin:0 auto;font-size:1.05rem}
+  .floaters{position:absolute;inset:0;pointer-events:none;z-index:-1;opacity:.5}
+  .floaters span{position:absolute;color:var(--cyan);font-weight:800;font-size:1.4rem;
+    animation:float 7s ease-in-out infinite}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-22px)}}
+
+  /* NAV */
+  nav.toc{position:sticky;top:0;z-index:40;background:rgba(15,22,38,.82);backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);padding:10px 0}
+  nav.toc .wrap{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+  nav.toc .wrap::-webkit-scrollbar{display:none}
+  nav.toc a{white-space:nowrap;color:var(--muted);text-decoration:none;font-size:.88rem;
+    padding:7px 14px;border-radius:999px;transition:.2s}
+  nav.toc a:hover{color:#fff;background:var(--card)}
+
+  section{padding:46px 0}
+  .sec-tag{color:var(--cyan);font-weight:700;letter-spacing:2px;text-transform:uppercase;font-size:.78rem}
+  section h2{font-size:clamp(1.5rem,4vw,2.1rem);margin:6px 0 14px}
+  section h2 .n{color:var(--cyan);opacity:.6;margin-right:10px}
+  p.lead{color:#cdd9f2;font-size:1.05rem}
+  .muted{color:var(--muted)}
+
+  .card{background:linear-gradient(180deg,var(--card),var(--bg2));border:1px solid var(--line);
+    border-radius:var(--r);padding:24px;box-shadow:var(--shadow);margin:18px 0}
+  .card.tight{padding:18px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:720px){.grid2{grid-template-columns:1fr}}
+
+  .keybox{border-left:4px solid var(--cyan);background:rgba(46,197,230,.08);padding:14px 18px;border-radius:10px;margin:14px 0}
+  .keybox b{color:var(--cyan2)}
+  .analogy{border-left:4px solid var(--gold);background:rgba(255,209,102,.08);padding:14px 18px;border-radius:10px;margin:14px 0}
+  .analogy b{color:var(--gold)}
+  .warn{border-left:4px solid var(--hard);background:rgba(255,107,107,.08);padding:14px 18px;border-radius:10px;margin:14px 0}
+
+  .formula{display:inline-block;background:rgba(124,140,255,.12);border:1px solid #38477a;
+    padding:8px 16px;border-radius:12px;font-size:1.15rem;color:#fff;margin:6px 0}
+
+  /* animated sequence with jump arcs */
+  .seqline{display:flex;align-items:flex-end;justify-content:center;flex-wrap:wrap;gap:0;margin:10px 0 6px}
+  .term{position:relative;min-width:56px;height:56px;display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:1.25rem;background:var(--card2);border:1px solid var(--line);border-radius:12px;margin:0 22px;
+    animation:pop .5s both}
+  .term.first{border-color:var(--cyan);box-shadow:0 0 0 2px rgba(46,197,230,.3)}
+  @keyframes pop{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
+  .arc{position:absolute;top:-30px;left:50%;width:calc(100% + 44px);height:34px;transform:translateX(-2px)}
+  .arc svg{overflow:visible}
+  .arc .lab{fill:var(--cyan2);font-weight:800;font-size:13px}
+
+  /* term machine */
+  .machine{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin:8px 0}
+  .chip{padding:12px 18px;border-radius:12px;font-weight:800;font-size:1.1rem}
+  .chip.in{background:rgba(62,207,142,.15);border:1px solid var(--easy);color:#bff3d8}
+  .chip.out{background:rgba(46,197,230,.15);border:1px solid var(--cyan);color:#c4eefb}
+  .box3d{padding:16px 22px;border-radius:14px;
+    background:linear-gradient(180deg,#2b3c63,#1a263f);border:1px solid #3a4d78;font-weight:800;position:relative}
+  .arrow{font-size:1.6rem;color:var(--muted)}
+  .gears{animation:spin 4s linear infinite;display:inline-block}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* explorer */
+  .explorer .rowc{display:flex;gap:26px;flex-wrap:wrap;margin-bottom:6px}
+  .ctrl{flex:1;min-width:220px}
+  .ctrl label{display:flex;justify-content:space-between;font-weight:700;margin-bottom:6px}
+  .ctrl label span.v{color:var(--cyan2)}
+  input[type=range]{width:100%;-webkit-appearance:none;height:8px;border-radius:6px;
+    background:linear-gradient(90deg,var(--cyan),var(--accent));outline:none}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;
+    background:#fff;border:3px solid var(--cyan);cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.4)}
+  .explorer .out{font-size:1.05rem;margin-top:12px}
+  .pill{display:inline-block;padding:6px 12px;margin:4px;border-radius:10px;background:var(--card2);border:1px solid var(--line);font-weight:800}
+  .pill b{color:var(--cyan2)}
+  .bigformula{font-size:1.5rem;text-align:center;margin:14px 0 4px;color:#fff}
+  .bigformula .d{color:var(--gold)} .bigformula .s{color:var(--cyan2)}
+
+  /* practice */
+  .tabs{display:flex;gap:10px;justify-content:center;margin:8px 0 22px;flex-wrap:wrap}
+  .tab{cursor:pointer;padding:10px 22px;border-radius:999px;font-weight:800;border:1px solid var(--line);
+    background:var(--card);color:var(--muted);transition:.2s}
+  .tab .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px;vertical-align:middle}
+  .tab.easy .dot{background:var(--easy)} .tab.med .dot{background:var(--med)} .tab.hard .dot{background:var(--hard)}
+  .tab.active{color:#fff;transform:translateY(-2px)}
+  .tab.active.easy{border-color:var(--easy);box-shadow:0 6px 18px rgba(62,207,142,.25)}
+  .tab.active.med{border-color:var(--med);box-shadow:0 6px 18px rgba(246,185,59,.25)}
+  .tab.active.hard{border-color:var(--hard);box-shadow:0 6px 18px rgba(255,107,107,.25)}
+  .hint{text-align:center;color:var(--muted);font-size:.9rem;margin-bottom:16px}
+
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:720px){.cards{grid-template-columns:1fr}}
+  .flip{perspective:1600px;min-height:255px;cursor:pointer}
+  .flip-in{position:relative;width:100%;height:100%;min-height:255px;transition:transform .65s cubic-bezier(.4,.2,.2,1);
+    transform-style:preserve-3d}
+  .flip.flipped .flip-in{transform:rotateY(180deg)}
+  .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--r);padding:20px;
+    border:1px solid var(--line);display:flex;flex-direction:column;overflow:auto}
+  .front{background:linear-gradient(180deg,var(--card),var(--bg2))}
+  .back{background:linear-gradient(180deg,#16233f,#101a30);transform:rotateY(180deg)}
+  .qhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+  .qno{font-weight:800;color:var(--muted);font-size:.85rem;letter-spacing:1px}
+  .lvl{font-size:.72rem;font-weight:800;padding:3px 10px;border-radius:999px;text-transform:uppercase}
+  .lvl.easy{background:rgba(62,207,142,.18);color:var(--easy)}
+  .lvl.med{background:rgba(246,185,59,.18);color:var(--med)}
+  .lvl.hard{background:rgba(255,107,107,.18);color:var(--hard)}
+  .qtext{font-size:1.02rem;font-weight:600}
+  .flip-cue{margin-top:auto;color:var(--cyan);font-size:.82rem;font-weight:700;display:flex;align-items:center;gap:6px}
+  .flip-cue svg{width:16px;height:16px}
+  .ans{color:var(--gold);font-weight:800;font-size:1.05rem;margin:2px 0 10px}
+  .exp{font-size:.92rem;color:#d5e0f5}
+  .exp b{color:#fff}
+  .step{background:rgba(124,140,255,.08);border-left:3px solid var(--accent);padding:6px 12px;border-radius:8px;margin:6px 0;font-size:.9rem}
+  .back .qno{color:#7f92b8}
+
+  .cheat{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:720px){.cheat{grid-template-columns:1fr}}
+  .cheat .c{background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:16px}
+  .cheat .c h4{color:var(--cyan2);margin-bottom:6px;font-size:1rem}
+
+  footer{padding:40px 0 60px;text-align:center;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line);margin-top:30px}
+  .prog{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--cyan),var(--cyan2));z-index:60;width:0}
+  ::selection{background:var(--cyan);color:#04121a}
+</style>
+</head>
+<body>
+<div class="prog" id="prog"></div>
+
+<header class="hero">
+  <div class="floaters">
+    <span style="left:8%;top:20%">3</span><span style="left:20%;top:60%;animation-delay:1s">+d</span>
+    <span style="left:82%;top:25%;animation-delay:.6s">Tₙ</span><span style="left:70%;top:70%;animation-delay:1.6s">7</span>
+    <span style="left:45%;top:12%;animation-delay:2s">11</span><span style="left:90%;top:55%;animation-delay:2.4s">n</span>
+  </div>
+  <div class="wrap">
+    <span class="badge">Grade 9 · O/L Maths · Chapter 1</span>
+    <h1>Number Patterns</h1>
+    <p class="sub">One page to truly <em>get</em> sequences — not memorise them. Play with the ideas, watch them move, then test yourself with 30 flip-to-reveal questions.</p>
+  </div>
+</header>
+
+<nav class="toc">
+  <div class="wrap">
+    <a href="#c1">① What is a pattern</a>
+    <a href="#c2">② Common difference</a>
+    <a href="#c3">③ Build a sequence</a>
+    <a href="#c4">④ General term Tₙ</a>
+    <a href="#c5">⑤ Find the formula</a>
+    <a href="#c6">⑥ Is it a term?</a>
+    <a href="#c7">⑦ Real life</a>
+    <a href="#play">🎮 Explorer</a>
+    <a href="#practice">📝 Practice ×30</a>
+    <a href="#cheat">⭐ Cheat sheet</a>
+  </div>
+</nav>
+
+<!-- ============ CONCEPT 1 ============ -->
+<section id="c1"><div class="wrap">
+  <span class="sec-tag">The big idea</span>
+  <h2><span class="n">①</span>What is a number pattern?</h2>
+  <p class="lead">A <b>number pattern</b> (maths word: <b>sequence</b>) is just a list of numbers written in a set order, following some rule. Each number in the list is called a <b>term</b>.</p>
+
+  <div class="card">
+    <div class="seqline">
+      <div class="term first">5</div><div class="term">8</div><div class="term">11</div><div class="term">14</div>
+      <div class="term" style="background:transparent;border-style:dashed;color:var(--muted)">…</div>
+    </div>
+    <p class="muted" style="text-align:center;margin-top:8px">The <b style="color:var(--cyan)">first term</b> starts it off. The three dots (…) mean <b>"keep going forever"</b>.</p>
+  </div>
+
+  <div class="analogy"><b>Think of it like a staircase.</b> Each step is a term. You start on one step, and there's a rule for how big each step up (or down) is. If you know where you start and the size of each step, you can find <em>any</em> step — even the 100th — without climbing them all.</div>
+
+  <div class="keybox"><b>Order matters.</b> The lists 1, 2, 2, 3, 3, 3, … and 1, 2, 1, 2, 3, 4, … use similar numbers but are <b>different sequences</b>. Swapping the order gives a new pattern.</div>
+
+  <p class="muted">⚠️ A quick trap: you can't be <em>sure</em> of a rule from just a few terms. 1, 2, 3, 4, 5, … <em>looks</em> like "add 1", but it could secretly repeat 1,2,3,4,5,1,2,3,4,5,… That's why maths prefers an exact <b>rule</b> over guessing. We'll build that rule next.</p>
+</div></section>
+
+<!-- ============ CONCEPT 2 ============ -->
+<section id="c2"><div class="wrap">
+  <span class="sec-tag">The step size</span>
+  <h2><span class="n">②</span>The common difference</h2>
+  <p class="lead">In many patterns you get the next term by <b>adding the same fixed number every time</b>. That fixed jump is the <b>common difference</b>, written <span class="eq">d</span>.</p>
+
+  <div class="card" id="animArcs">
+    <div class="seqline" id="arcSeq"></div>
+    <p style="text-align:center;margin-top:26px" class="muted">Every jump here is the same size. That single repeated jump <b style="color:var(--cyan2)">is</b> the common difference.</p>
+  </div>
+
+  <div class="keybox">The rule to <b>find</b> it — subtract any term from the one after it:<br>
+    <span class="formula eq" style="margin-top:8px">d = (any term) − (the term just before it)</span></div>
+
+  <div class="grid2">
+    <div class="card tight">
+      <h3 style="color:var(--easy);font-size:1.05rem">d can be positive → going up</h3>
+      <p class="mono">2, 4, 6, 8, 10 …  → d = +2</p>
+      <p class="muted" style="font-size:.9rem">4−2 = 6−4 = 8−6 = 2 ✓</p>
+    </div>
+    <div class="card tight">
+      <h3 style="color:var(--hard);font-size:1.05rem">d can be negative → going down</h3>
+      <p class="mono">17, 12, 7, 2, −3 …  → d = −5</p>
+      <p class="muted" style="font-size:.9rem">12−17 = 7−12 = −5 ✓</p>
+    </div>
+    <div class="card tight">
+      <h3 style="color:var(--med);font-size:1.05rem">d can be zero → standing still</h3>
+      <p class="mono">3, 3, 3, 3, 3 …  → d = 0</p>
+      <p class="muted" style="font-size:.9rem">Same number repeats. The jump is 0.</p>
+    </div>
+    <div class="card tight">
+      <h3 style="color:var(--cyan);font-size:1.05rem">The test</h3>
+      <p class="muted" style="font-size:.95rem">Check <b>two or three</b> gaps. If they're all identical, the sequence has a common difference. If the gaps change, it doesn't (and this chapter's shortcuts won't apply).</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- ============ CONCEPT 3 ============ -->
+<section id="c3"><div class="wrap">
+  <span class="sec-tag">Forwards</span>
+  <h2><span class="n">③</span>Build a sequence from a start + a step</h2>
+  <p class="lead">If someone tells you the <b>first term</b> and the <b>common difference</b>, you can write the sequence instantly — just keep adding <span class="eq">d</span>.</p>
+
+  <div class="card">
+    <p style="margin-bottom:8px"><b>Example:</b> first term = 4, common difference = 3.</p>
+    <div class="seqline">
+      <div class="term first">4</div><div class="term">7</div><div class="term">10</div><div class="term">13</div>
+    </div>
+    <p class="muted" style="text-align:center;margin-top:26px">4 → (+3) → 7 → (+3) → 10 → (+3) → 13 …</p>
+  </div>
+  <div class="analogy"><b>Careful with a negative step.</b> First term 7, d = −4 gives 7, 3, −1, −5, −9 … The numbers shrink and go past zero. Adding −4 is the same as subtracting 4.</div>
+</div></section>
+
+<!-- ============ CONCEPT 4 ============ -->
+<section id="c4"><div class="wrap">
+  <span class="sec-tag">The power tool</span>
+  <h2><span class="n">④</span>The general term <span class="eq">Tₙ</span> — a jump-to-any-term machine</h2>
+  <p class="lead">Adding <span class="eq">d</span> over and over is slow. What's the 80th term? The <b>general term</b> <span class="eq">Tₙ</span> is a formula: feed it a position <span class="eq">n</span>, and it hands back that term directly.</p>
+
+  <div class="card">
+    <div class="machine">
+      <div class="chip in"><span class="eq">n</span> = 20<br><span style="font-weight:400;font-size:.8rem" class="muted">"which position?"</span></div>
+      <div class="arrow">→</div>
+      <div class="box3d"><span class="gears">⚙️</span> Tₙ = 2n + 3 <span class="gears">⚙️</span></div>
+      <div class="arrow">→</div>
+      <div class="chip out">T₂₀ = 43<br><span style="font-weight:400;font-size:.8rem" class="muted">"the answer!"</span></div>
+    </div>
+    <p class="muted" style="text-align:center;margin-top:10px">Put <span class="eq">n</span> = 20 into 2n + 3: (2×20) + 3 = 43. No counting up 20 times.</p>
+  </div>
+
+  <div class="keybox"><b>Notation:</b> <span class="eq">T₁</span> = 1st term, <span class="eq">T₂</span> = 2nd term, … <span class="eq">Tₙ</span> = the term at <b>any</b> position <span class="eq">n</span>. Here <span class="eq">n</span> must be a counting number (1, 2, 3, …) — there's no "2½-th" term.</div>
+
+  <p class="muted"><b>To list the first few terms</b> from a formula, just substitute n = 1, 2, 3 … For <span class="eq">Tₙ = 2n + 3</span>: T₁ = 5, T₂ = 7, T₃ = 9.</p>
+</div></section>
+
+<!-- ============ CONCEPT 5 ============ -->
+<section id="c5"><div class="wrap">
+  <span class="sec-tag">Backwards — the key skill</span>
+  <h2><span class="n">⑤</span>Finding the formula from the numbers</h2>
+  <p class="lead">Given a sequence, how do we discover its <span class="eq">Tₙ</span>? Here's the intuitive trick the textbook uses — <b>line it up against the multiples of d</b>.</p>
+
+  <div class="card">
+    <p><b>Sequence:</b> 5, 11, 17, 23, … Here the common difference is <b style="color:var(--gold)">d = 6</b>.</p>
+    <p style="margin-top:10px">Write the multiples of 6 right underneath:</p>
+    <div style="font-family:monospace;font-size:1.05rem;margin:12px 0;text-align:center;line-height:2">
+      <div>5,&nbsp; 11, 17, 23, 29 …&nbsp; <span class="muted">← our sequence</span></div>
+      <div style="color:var(--gold)">6,&nbsp; 12, 18, 24, 30 …&nbsp; <span class="muted">← multiples of 6 (= 6n)</span></div>
+    </div>
+    <p style="text-align:center">Each of our terms is exactly <b style="color:var(--hard)">1 less</b> than the multiple above it. So:</p>
+    <p class="bigformula"><span class="eq">Tₙ = <span class="d">6</span>n <span class="s">− 1</span></span></p>
+  </div>
+
+  <div class="keybox">This always works. The shortcut formula:<br>
+    <span class="formula eq" style="margin-top:8px">Tₙ = d × n + (T₁ − d)</span><br>
+    <span class="muted" style="font-size:.92rem">In words: "<b>step size × position</b>, then <b>shift</b> so the first term comes out right." The shift is just <em>first term minus one step</em>.</span></div>
+
+  <div class="analogy"><b>Why "− d"?</b> The multiples of d start at d (when n=1), but your sequence starts at T₁. The gap between them, <span class="eq">T₁ − d</span>, is the constant shift you add to every multiple. That's the whole secret. ✨</div>
+
+  <p class="muted"><b>Once you have Tₙ, everything is easy.</b> The 80th term of 5, 11, 17, … is just T₈₀ = 6×80 − 1 = <b>479</b> — found in one line.</p>
+</div></section>
+
+<!-- ============ CONCEPT 6 ============ -->
+<section id="c6"><div class="wrap">
+  <span class="sec-tag">Working in reverse</span>
+  <h2><span class="n">⑥</span>"Which term is it?" &amp; "Is this number even in the pattern?"</h2>
+  <p class="lead">Instead of position → value, sometimes you're given the value and must find the position. Set <span class="eq">Tₙ</span> equal to the number and solve for <span class="eq">n</span>.</p>
+
+  <div class="grid2">
+    <div class="card">
+      <h3 style="font-size:1.05rem;color:var(--cyan2)">Which term equals 123?</h3>
+      <p class="muted">Sequence has Tₙ = 2n + 3.</p>
+      <div class="step">2n + 3 = 123</div>
+      <div class="step">2n = 120</div>
+      <div class="step">n = 60 ✓ a whole number</div>
+      <p>So <b>123 is the 60th term.</b></p>
+    </div>
+    <div class="card">
+      <h3 style="font-size:1.05rem;color:var(--hard)">Is 18 a term? (Tₙ = 56 − 4n)</h3>
+      <div class="step">56 − 4n = 18</div>
+      <div class="step">38 = 4n</div>
+      <div class="step">n = 9½ ✗ NOT a whole number</div>
+      <p>Position can't be a fraction → <b>18 is NOT a term.</b></p>
+    </div>
+  </div>
+
+  <div class="warn"><b>The golden test:</b> solve for <span class="eq">n</span>. If <span class="eq">n</span> comes out as a <b>positive whole number</b>, the value belongs to the sequence (and n is its position). If <span class="eq">n</span> is a fraction or negative, it does <b>not</b>.</div>
+</div></section>
+
+<!-- ============ CONCEPT 7 ============ -->
+<section id="c7"><div class="wrap">
+  <span class="sec-tag">Where it shows up</span>
+  <h2><span class="n">⑦</span>Number patterns in real life</h2>
+  <p class="lead">The same tool solves everyday problems. Spot the <b>starting amount</b> and the <b>repeated change</b> — that's your T₁ and your d.</p>
+  <div class="grid2">
+    <div class="card tight">🏃 <b>A runner</b> does 500 m on day 1, then 100 m more each day. Distance on day <span class="eq">n</span> is <span class="eq">Tₙ = 100n + 400</span>.</div>
+    <div class="card tight">🏟️ <b>Stadium rows</b> of 9, 12, 15 … seats. Row <span class="eq">n</span> has <span class="eq">Tₙ = 3n + 6</span> seats.</div>
+    <div class="card tight">💰 <b>Saving</b> Rs 100 to start, then Rs 10 a week, grows as an arithmetic pattern.</div>
+    <div class="card tight">🪵 <b>Matchstick figures</b> 4, 9, 14 … use <span class="eq">Tₙ = 5n − 1</span> sticks for figure <span class="eq">n</span>.</div>
+  </div>
+  <div class="keybox"><b>The recipe for word problems:</b> ① write the first 2–3 values, ② find d, ③ build Tₙ = dn + (T₁ − d), ④ answer whatever's asked (a far-off term → substitute n; "which one?" → solve for n).</div>
+</div></section>
+
+<!-- ============ EXPLORER ============ -->
+<section id="play"><div class="wrap">
+  <span class="sec-tag">Learn by playing</span>
+  <h2>🎮 Pattern Explorer</h2>
+  <p class="lead">Drag the sliders. Watch the sequence, the jumps, and the formula build themselves. This is the whole chapter in one toy.</p>
+  <div class="card explorer">
+    <div class="rowc">
+      <div class="ctrl">
+        <label>First term <span class="eq">T₁</span> <span class="v" id="t1v">4</span></label>
+        <input type="range" id="t1" min="-10" max="20" value="4" step="1">
+      </div>
+      <div class="ctrl">
+        <label>Common difference <span class="eq">d</span> <span class="v" id="dv">3</span></label>
+        <input type="range" id="d" min="-8" max="8" value="3" step="1">
+      </div>
+    </div>
+    <div class="seqline" id="expSeq" style="margin-top:34px"></div>
+    <div class="out" style="text-align:center;margin-top:26px">
+      <div class="bigformula" id="expFormula"></div>
+      <div style="margin-top:10px" id="expPills"></div>
+      <p class="muted" id="expNote" style="margin-top:10px;font-size:.92rem"></p>
+    </div>
+  </div>
+</div></section>
+
+<!-- ============ PRACTICE ============ -->
+<section id="practice"><div class="wrap">
+  <span class="sec-tag">Test yourself</span>
+  <h2>📝 Practice — 30 questions</h2>
+  <p class="lead">Read the question, work it out on paper, then <b>tap the card to flip</b> and check the full worked answer. Ten questions at each level.</p>
+  <div class="tabs">
+    <div class="tab easy active" data-lvl="easy"><span class="dot"></span>Easy · 10</div>
+    <div class="tab med" data-lvl="med"><span class="dot"></span>Medium · 10</div>
+    <div class="tab hard" data-lvl="hard"><span class="dot"></span>Hard · 10</div>
+  </div>
+  <p class="hint">👆 Tap any card to reveal the answer &amp; step-by-step explanation. Tap again to hide.</p>
+  <div class="cards" id="cards"></div>
+</div></section>
+
+<!-- ============ CHEAT SHEET ============ -->
+<section id="cheat"><div class="wrap">
+  <span class="sec-tag">Keep this in your head</span>
+  <h2>⭐ One-glance cheat sheet</h2>
+  <div class="card">
+    <div class="cheat">
+      <div class="c"><h4>Common difference</h4><span class="eq">d = Tₙ − Tₙ₋₁</span><br><span class="muted">any term minus the one before it. Can be +, −, or 0.</span></div>
+      <div class="c"><h4>Build the formula</h4><span class="eq">Tₙ = d·n + (T₁ − d)</span><br><span class="muted">step × position, then shift by (first term − one step).</span></div>
+      <div class="c"><h4>Find a far term</h4><span class="muted">Substitute the position for <span class="eq">n</span>. e.g. T₅₀ = plug in 50.</span></div>
+      <div class="c"><h4>"Which term = k?"</h4><span class="muted">Set <span class="eq">Tₙ = k</span>, solve for <span class="eq">n</span>. Answer is the position.</span></div>
+      <div class="c"><h4>"Is k a term?"</h4><span class="muted">Solve <span class="eq">Tₙ = k</span>. Whole-number <span class="eq">n</span> → yes. Fraction/negative → no.</span></div>
+      <div class="c"><h4>Word problems</h4><span class="muted">start = <span class="eq">T₁</span>, repeated change = <span class="eq">d</span>. Then use the box above.</span></div>
+    </div>
+  </div>
+</div></section>
+
+<footer>
+  <div class="wrap">
+    <p><b>Number Patterns</b> · Grade 9 O/L Mathematics · Chapter 1</p>
+    <p class="muted" style="margin-top:6px">Your one-stop page to master the lesson — understand it, play with it, then prove it with 30 questions.</p>
+  </div>
+</footer>
+
+<script>
+/* ---------- scroll progress ---------- */
+const prog=document.getElementById('prog');
+addEventListener('scroll',()=>{const h=document.documentElement;
+  prog.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';});
+
+/* ---------- animated arc sequence (concept 2) ---------- */
+function arcSVG(label){
+  return `<div class="arc"><svg width="100%" height="34" viewBox="0 0 100 34" preserveAspectRatio="none">
+    <path d="M4,32 Q50,-6 96,32" fill="none" stroke="#39e0c4" stroke-width="2.5"
+      stroke-dasharray="140" stroke-dashoffset="140">
+      <animate attributeName="stroke-dashoffset" from="140" to="0" dur="0.6s" begin="0.2s" fill="freeze"/>
+    </path>
+    <polygon points="96,32 90,28 91,34" fill="#39e0c4" opacity="0">
+      <animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="0.75s" fill="freeze"/>
+    </polygon>
+    </svg><div style="position:absolute;top:-12px;width:100%;text-align:center" class="lab-wrap">
+    <span style="color:#39e0c4;font-weight:800;font-size:.85rem">${label}</span></div></div>`;
+}
+function buildArcSeq(){
+  const seq=[2,4,6,8,10], host=document.getElementById('arcSeq'); host.innerHTML='';
+  seq.forEach((t,i)=>{
+    const el=document.createElement('div');
+    el.className='term'+(i===0?' first':''); el.style.animationDelay=(i*0.12)+'s';
+    el.textContent=t;
+    if(i<seq.length-1) el.innerHTML+=arcSVG('+2');
+    host.appendChild(el);
+  });
+}
+/* re-run arcs when scrolled into view */
+const arcObs=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){buildArcSeq();}})},{threshold:.3});
+arcObs.observe(document.getElementById('animArcs'));
+
+/* ---------- Pattern Explorer ---------- */
+const t1El=document.getElementById('t1'), dEl=document.getElementById('d');
+function renderExp(){
+  const t1=+t1El.value, d=+dEl.value;
+  document.getElementById('t1v').textContent=t1;
+  document.getElementById('dv').textContent=(d>0?'+':'')+d;
+  const seq=[0,1,2,3,4].map(i=>t1+d*i);
+  const host=document.getElementById('expSeq'); host.innerHTML='';
+  seq.forEach((t,i)=>{
+    const el=document.createElement('div');
+    el.className='term'+(i===0?' first':''); el.style.animationDelay=(i*0.05)+'s';
+    el.textContent=t;
+    if(i<seq.length-1) el.innerHTML+=arcSVG((d>=0?'+':'')+d);
+    host.appendChild(el);
+  });
+  const shift=t1-d;
+  const sTxt=(shift===0?'':(shift>0?' + '+shift:' − '+Math.abs(shift)));
+  document.getElementById('expFormula').innerHTML=
+    `<span class="eq">Tₙ = <span class="d">${d}</span>n<span class="s">${sTxt.replace(/ /g,'&nbsp;')}</span></span>`;
+  const t10=t1+d*9;
+  document.getElementById('expPills').innerHTML=
+    `<span class="pill">T₁ = <b>${seq[0]}</b></span>
+     <span class="pill">T₅ = <b>${seq[4]}</b></span>
+     <span class="pill">T₁₀ = <b>${t10}</b></span>`;
+  let note;
+  if(d>0) note='Positive step → the terms climb.';
+  else if(d<0) note='Negative step → the terms fall (adding a negative = subtracting).';
+  else note='Step is 0 → every term is the same number.';
+  note+=`  Check: T₁₀ = ${d}×10 ${shift>=0?'+ '+shift:'− '+Math.abs(shift)} = ${t10}.`;
+  document.getElementById('expNote').textContent=note;
+}
+t1El.oninput=renderExp; dEl.oninput=renderExp; renderExp();
+
+/* ---------- Practice questions ---------- */
+const Q={easy:[],med:[],hard:[]};
+function q(lvl,text,ans,steps){Q[lvl].push({text,ans,steps});}
+
+/* EASY */
+q('easy','Find the common difference of the pattern:  4, 9, 14, 19, …','d = 5',
+ ['Subtract a term from the one after it.','9 − 4 = 5, and 14 − 9 = 5, and 19 − 14 = 5.','All jumps are the same, so the common difference is <b>5</b>.']);
+q('easy','Write the next two terms:  7, 10, 13, …','16 and 19',
+ ['The common difference is 10 − 7 = 3.','Keep adding 3: 13 + 3 = 16, then 16 + 3 = 19.','Next two terms: <b>16, 19</b>.']);
+q('easy','A pattern has first term 6 and common difference 4. Write the first three terms.','6, 10, 14',
+ ['Start at the first term: 6.','Add d = 4 each time: 6 + 4 = 10, then 10 + 4 = 14.','First three terms: <b>6, 10, 14</b>.']);
+q('easy','The general term is  Tₙ = 2n + 1. Write the first three terms.','3, 5, 7',
+ ['Substitute n = 1, 2, 3 into 2n + 1.','T₁ = 2(1)+1 = 3;  T₂ = 2(2)+1 = 5;  T₃ = 2(3)+1 = 7.','First three terms: <b>3, 5, 7</b>.']);
+q('easy','If  Tₙ = 5n − 2, find the 4th term.','T₄ = 18',
+ ['The 4th term means n = 4.','T₄ = 5(4) − 2 = 20 − 2 = 18.','So <b>T₄ = 18</b>.']);
+q('easy','Find the common difference of:  20, 17, 14, 11, …','d = −3',
+ ['Subtract a term from the next: 17 − 20 = −3.','Check: 14 − 17 = −3 and 11 − 14 = −3. ✓','The terms go <b>down</b>, so d = <b>−3</b>.']);
+q('easy','If  Tₙ = 3n, find the 10th term.','T₁₀ = 30',
+ ['Put n = 10 into 3n.','T₁₀ = 3 × 10 = 30.','So <b>T₁₀ = 30</b>.']);
+q('easy','A pattern has first term 5 and common difference 0. Write the first three terms.','5, 5, 5',
+ ['Adding 0 changes nothing.','5, 5+0 = 5, 5+0 = 5.','First three terms: <b>5, 5, 5</b> — a valid pattern with d = 0.']);
+q('easy','Find the common difference of:  3, 3, 3, 3, …','d = 0',
+ ['Subtract: 3 − 3 = 0 for every pair.','The number never changes.','So the common difference is <b>0</b>.']);
+q('easy','The general term is  Tₙ = 4n − 3. Write the first three terms.','1, 5, 9',
+ ['Substitute n = 1, 2, 3.','T₁ = 4(1)−3 = 1;  T₂ = 4(2)−3 = 5;  T₃ = 4(3)−3 = 9.','First three terms: <b>1, 5, 9</b>.']);
+
+/* MEDIUM */
+q('med','Find the general term Tₙ of:  5, 8, 11, 14, …','Tₙ = 3n + 2',
+ ['Common difference d = 8 − 5 = 3. First term T₁ = 5.','Use Tₙ = d·n + (T₁ − d) = 3n + (5 − 3).','So <b>Tₙ = 3n + 2</b>. Check: n=1 → 5 ✓.']);
+q('med','Find Tₙ for  7, 11, 15, 19, …  and then find the 20th term.','Tₙ = 4n + 3,  T₂₀ = 83',
+ ['d = 11 − 7 = 4, T₁ = 7. Tₙ = 4n + (7 − 4) = 4n + 3.','For the 20th term put n = 20: T₂₀ = 4(20) + 3 = 80 + 3.','<b>Tₙ = 4n + 3</b> and <b>T₂₀ = 83</b>.']);
+q('med','For  Tₙ = 2n + 3, which term is equal to 45?','the 21st term (n = 21)',
+ ['Set the formula equal to 45: 2n + 3 = 45.','2n = 42, so n = 21.','n is a whole number → <b>45 is the 21st term</b>.']);
+q('med','Find the general term Tₙ of:  20, 17, 14, 11, …','Tₙ = 23 − 3n  (i.e. −3n + 23)',
+ ['d = 17 − 20 = −3, T₁ = 20.','Tₙ = d·n + (T₁ − d) = −3n + (20 − (−3)) = −3n + 23.','So <b>Tₙ = 23 − 3n</b>. Check: n=1 → 20 ✓.']);
+q('med','If  Tₙ = 6n − 1, find the 50th term.','T₅₀ = 299',
+ ['Put n = 50 into 6n − 1.','T₅₀ = 6(50) − 1 = 300 − 1.','So <b>T₅₀ = 299</b>.']);
+q('med','Find Tₙ for  15, 19, 23, 27, …  then find the 100th term.','Tₙ = 4n + 11,  T₁₀₀ = 411',
+ ['d = 4, T₁ = 15. Tₙ = 4n + (15 − 4) = 4n + 11.','T₁₀₀ = 4(100) + 11 = 400 + 11.','<b>Tₙ = 4n + 11</b> and <b>T₁₀₀ = 411</b>.']);
+q('med','Find the general term Tₙ of:  10, 7, 4, 1, …','Tₙ = 13 − 3n  (i.e. −3n + 13)',
+ ['d = 7 − 10 = −3, T₁ = 10.','Tₙ = −3n + (10 − (−3)) = −3n + 13.','So <b>Tₙ = 13 − 3n</b>. Check: n=1 → 10 ✓.']);
+q('med','For  Tₙ = 5n − 2, which term equals 63?','the 13th term (n = 13)',
+ ['Set 5n − 2 = 63.','5n = 65, so n = 13.','Whole number → <b>63 is the 13th term</b>.']);
+q('med','A pattern has  Tₙ = 7n + 1. Write the (n + 1)th term in terms of n.','T₍ₙ₊₁₎ = 7n + 8',
+ ['Replace every n with (n + 1): 7(n + 1) + 1.','= 7n + 7 + 1 = 7n + 8.','So the (n+1)th term is <b>7n + 8</b>.']);
+q('med','Find the general term Tₙ of:  1, 7, 13, 19, …','Tₙ = 6n − 5',
+ ['d = 7 − 1 = 6, T₁ = 1.','Tₙ = 6n + (1 − 6) = 6n − 5.','So <b>Tₙ = 6n − 5</b>. Check: n=1 → 1 ✓.']);
+
+/* HARD */
+q('hard','For the pattern  Tₙ = 56 − 4n, show that 18 is NOT a term.','n = 9½ → not a whole number, so 18 is not a term',
+ ['Assume 18 is a term: 56 − 4n = 18.','Rearrange: 56 − 18 = 4n → 38 = 4n → n = 9½.','A position must be a whole number. Since n = 9½, <b>18 is NOT a term</b>.']);
+q('hard','For  Tₙ = 50 − 7n, show that every term after the 7th is negative.','T₇ = 1 (still positive), T₈ = −6 and all later terms are negative',
+ ['T₇ = 50 − 7(7) = 50 − 49 = 1.','T₈ = 50 − 7(8) = 50 − 56 = −6.','After the 7th term each step subtracts another 7, so the values stay below 0 → <b>all terms after the 7th are negative</b>.']);
+q('hard','A runner does 500 m on day 1 and 100 m more each day. (a) Find Tₙ for day n. (b) Distance on day 20? (c) On which day is it 3 km?','(a) Tₙ = 100n + 400  (b) 2400 m = 2.4 km  (c) day 26',
+ ['Days: 500, 600, 700 … d = 100, T₁ = 500. Tₙ = 100n + (500 − 100) = <b>100n + 400</b>.','(b) T₂₀ = 100(20) + 400 = 2400 m = <b>2.4 km</b>.','(c) 3 km = 3000 m: 100n + 400 = 3000 → 100n = 2600 → n = <b>26</b>. So on day 26.']);
+q('hard','Stadium rows have 9, 12, 15 … seats. (a) Find Tₙ. (b) Seats in row 15? (c) Show row 10 has 4× row 1. (d) Which row has 51 seats?','(a) Tₙ = 3n + 6  (b) 51  (c) T₁₀ = 36 = 4×9 ✓  (d) row 15',
+ ['(a) d = 3, T₁ = 9 → Tₙ = 3n + (9 − 3) = <b>3n + 6</b>.','(b) T₁₅ = 3(15) + 6 = <b>51</b> seats.  (c) T₁₀ = 3(10)+6 = 36, and 4 × 9 = 36 ✓.','(d) 3n + 6 = 51 → 3n = 45 → n = 15 → <b>row 15</b> (same value as T₁₅ above).']);
+q('hard','Matchstick figures use 4, 9, 14 … sticks (figure 2 uses 9). (a) Find Tₙ. (b) Sticks for the 20th figure? (c) 219 sticks make which figure? (d) From 75 sticks, what is the largest figure, and how many are left over?','(a) Tₙ = 5n − 1  (b) 99  (c) figure 44  (d) figure 15 (uses 74), 1 stick left',
+ ['(a) d = 9 − 4 = 5, T₁ = 4 → Tₙ = 5n + (4 − 5) = <b>5n − 1</b>.','(b) T₂₀ = 5(20) − 1 = <b>99</b>.  (c) 5n − 1 = 219 → 5n = 220 → n = <b>44</b>.','(d) Largest n with 5n − 1 ≤ 75: n = 15 uses 74 sticks; 75 − 74 = <b>1 stick left over</b>.']);
+q('hard','Rods are cut from a 5 m bar: shortest 15 cm, each next 10 cm longer. (a) Find Tₙ. (b) Length of the 20th piece? (c) Show a 5 m bar can’t supply the 50th piece.','(a) Tₙ = 10n + 5 cm  (b) 205 cm  (c) 50th = 505 cm > 500 cm',
+ ['(a) 15, 25, 35 … d = 10, T₁ = 15 → Tₙ = 10n + (15 − 10) = <b>10n + 5</b> cm.','(b) T₂₀ = 10(20) + 5 = <b>205 cm</b>.','(c) T₅₀ = 10(50) + 5 = 505 cm. A 5 m bar = 500 cm, and 505 > 500, so <b>it is not long enough</b>.']);
+q('hard','Find the general term Tₙ of:  2½, 4, 5½, 7, …','Tₙ = 1½ n + 1  (i.e. 1.5n + 1)',
+ ['d = 4 − 2½ = 1½ (= 1.5), T₁ = 2½.','Tₙ = 1.5n + (2.5 − 1.5) = 1.5n + 1.','So <b>Tₙ = 1½ n + 1</b>. Check: n=1 → 2½ ✓.']);
+q('hard','Show that the general term of  42, 36, 30, 24, …  is  6(8 − n).','True: Tₙ = −6n + 48 = 6(8 − n)',
+ ['d = 36 − 42 = −6, T₁ = 42 → Tₙ = −6n + (42 − (−6)) = −6n + 48.','Factor out 6: −6n + 48 = 6(−n + 8) = <b>6(8 − n)</b>.','Check n = 1: 6(8 − 1) = 6 × 7 = 42 ✓.']);
+q('hard','Udita earns Rs 25 000/month in year 1, then Rs 2400/month more each following year. (a) 2nd-year salary? (b) Formula for year n? (c) 5th-year salary?','(a) Rs 27 400  (b) Tₙ = 2400n + 22 600  (c) Rs 34 600',
+ ['(a) Year 2 = 25 000 + 2400 = <b>Rs 27 400</b>.','(b) d = 2400, T₁ = 25 000 → Tₙ = 2400n + (25 000 − 2400) = <b>2400n + 22 600</b>.','(c) T₅ = 2400(5) + 22 600 = 12 000 + 22 600 = <b>Rs 34 600</b>.']);
+q('hard','Yesmi and Indunil each start with Rs 100, then Yesmi adds Rs 10/week and Indunil Rs 5/week. After 50 weeks, how much more has Yesmi saved?','Rs 250 more',
+ ['Yesmi: 100 + 10 × 50 = Rs 600.','Indunil: 100 + 5 × 50 = Rs 350.','Difference = 600 − 350 = <b>Rs 250</b>. (Shortcut: the Rs 5/week gap × 50 weeks = Rs 250.)']);
+
+/* render cards */
+const flipIcon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>';
+let counters={easy:0,med:0,hard:0};
+function render(lvl){
+  const host=document.getElementById('cards'); host.innerHTML='';
+  Q[lvl].forEach((item,i)=>{
+    const stepsHtml=item.steps.map(s=>`<div class="step">${s}</div>`).join('');
+    const div=document.createElement('div');
+    div.className='flip';
+    div.innerHTML=`<div class="flip-in">
+      <div class="face front">
+        <div class="qhead"><span class="qno">Q${i+1}</span><span class="lvl ${lvl}">${lvl==='med'?'medium':lvl}</span></div>
+        <div class="qtext">${item.text}</div>
+        <div class="flip-cue">${flipIcon} tap to reveal answer</div>
+      </div>
+      <div class="face back">
+        <div class="qhead"><span class="qno">Q${i+1} · answer</span><span class="lvl ${lvl}">${lvl==='med'?'medium':lvl}</span></div>
+        <div class="ans">✓ ${item.ans}</div>
+        <div class="exp">${stepsHtml}</div>
+        <div class="flip-cue">${flipIcon} tap to hide</div>
+      </div></div>`;
+    div.onclick=()=>div.classList.toggle('flipped');
+    host.appendChild(div);
+  });
+}
+document.querySelectorAll('.tab').forEach(t=>{
+  t.onclick=()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active'); render(t.dataset.lvl);
+  };
+});
+render('easy');
+</script>
+</body>
+</html>
