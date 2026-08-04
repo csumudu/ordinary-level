@@ -34,6 +34,11 @@
   .streak{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);
     padding:8px 14px;border-radius:999px;font-weight:700;font-size:14px}
   .streak b{color:var(--warn)}
+  .topright{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .homebtn{display:inline-flex;align-items:center;gap:7px;text-decoration:none;background:var(--card);
+    border:1px solid var(--line);color:var(--muted);padding:8px 14px;border-radius:999px;
+    font-weight:700;font-size:14px;white-space:nowrap;transition:.15s}
+  .homebtn:hover{color:var(--ink);border-color:var(--brand)}
 
   nav.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 18px}
   nav.tabs button{
@@ -157,7 +162,10 @@
         <p>Learn, play &amp; master 2× to 12×</p>
       </div>
     </div>
-    <div class="streak">🔥 Streak <b id="streak">0</b></div>
+    <div class="topright">
+      <a class="homebtn" href="../index.html" title="Back to all lessons"><span class="ic">←</span><span class="lbl">Home</span></a>
+      <div class="streak">🔥 Streak <b id="streak">0</b></div>
+    </div>
   </header>
 
   <nav class="tabs">

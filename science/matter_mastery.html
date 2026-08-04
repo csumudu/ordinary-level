@@ -42,6 +42,12 @@ a{color:var(--cyan)}
 #navlinks a:hover{background:var(--panel2);color:var(--ink)}
 #scorechip{display:flex;align-items:center;gap:7px;background:var(--panel2);border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:12.5px;font-weight:700;cursor:pointer;white-space:nowrap}
 #scorechip .star{color:var(--amber)}
+.homebtn{display:inline-flex;align-items:center;gap:7px;flex:0 0 auto;text-decoration:none;
+  padding:7px 13px;border-radius:999px;border:1px solid var(--line);background:var(--panel2);
+  color:var(--ink-soft);font-size:12.5px;font-weight:700;white-space:nowrap;transition:.2s}
+.homebtn:hover{color:var(--ink);border-color:var(--violet);background:var(--panel)}
+.homebtn .ic{font-size:14px;line-height:1}
+@media(max-width:560px){.homebtn .lbl{display:none}.homebtn{padding:7px 10px}}
 #readbar{height:3px;background:linear-gradient(90deg,var(--violet),var(--cyan));width:0%;position:fixed;top:58px;left:0;z-index:59;box-shadow:0 0 10px #a78bfa88}
 @media(max-width:860px){#navlinks{display:none}.brand small{display:none}}
 
@@ -268,6 +274,7 @@ footer{border-top:1px solid var(--line);margin-top:50px;padding:26px 0 60px;text
 <body>
 
 <div id="topbar"><div class="wrap">
+  <a class="homebtn" href="../index.html" title="Back to all lessons"><span class="ic">←</span><span class="lbl">Home</span></a>
   <div class="brand"><span class="dot"></span><div>Matter Mastery<small>Grade 9 Science · Ch.3</small></div></div>
   <nav id="navlinks">
     <a href="#s-intro">Start</a>
@@ -675,6 +682,7 @@ footer{border-top:1px solid var(--line);margin-top:50px;padding:26px 0 60px;text
   </div>
 </section>
 
+</main>
 
 
 <div id="toast"></div>

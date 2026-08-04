@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Force Mastery · Grade 9 Science · Chapter 4</title>
+<style>
+:root{
+  --bg:#0d0b09; --bg2:#17130e; --panel:#1d1811; --panel2:#261f16;
+  --ink:#f2ede6; --ink-soft:#c3b6a4; --ink-dim:#8b7c66;
+  --line:#33291c;
+  --orange:#fb923c; --orange-d:#c2410c; --orange-soft:#7c2d12;
+  --blue:#38bdf8; --blue-d:#0369a1;
+  --grn:#4ade80; --grn-d:#166534;
+  --amber:#fbbf24; --amber-d:#92400e;
+  --red:#f87171; --red-d:#991b1b;
+  --violet:#a78bfa; --pink:#f472b6;
+  --radius:16px; --shadow:0 10px 30px rgba(0,0,0,.5); --maxw:940px;
+  --font:'Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:
+  radial-gradient(1200px 600px at 12% -5%, #7c2d1233 0%, transparent 60%),
+  radial-gradient(1000px 500px at 90% 3%, #0369a133 0%, transparent 55%),
+  var(--bg);
+  color:var(--ink);font-family:var(--font);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,h4{line-height:1.25;margin:0 0 .5em}
+p{margin:0 0 1em}
+a{color:var(--orange)}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+
+#topbar{position:sticky;top:0;z-index:60;background:rgba(13,11,9,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+#topbar .wrap{display:flex;align-items:center;gap:14px;height:58px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;white-space:nowrap}
+.brand .dot{width:26px;height:26px;border-radius:50%;background:radial-gradient(circle at 34% 30%,#fed7aa,var(--orange) 42%,var(--orange-d));
+  box-shadow:0 0 0 4px #fb923c22,0 0 18px #fb923c55;position:relative;flex:0 0 auto}
+.brand .dot::after{content:"→";position:absolute;inset:0;display:grid;place-items:center;font-size:14px;color:#1a0f06;font-weight:900}
+.brand small{display:block;font-weight:500;color:var(--ink-dim);font-size:11px;letter-spacing:.5px}
+#navlinks{margin-left:auto;display:flex;gap:2px;flex-wrap:wrap}
+#navlinks a{font-size:12.5px;color:var(--ink-soft);text-decoration:none;padding:6px 9px;border-radius:8px}
+#navlinks a:hover{background:var(--panel2);color:var(--ink)}
+#scorechip{display:flex;align-items:center;gap:7px;background:var(--panel2);border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:12.5px;font-weight:700;cursor:pointer;white-space:nowrap}
+#scorechip .star{color:var(--amber)}
+.homebtn{display:inline-flex;align-items:center;gap:7px;flex:0 0 auto;text-decoration:none;
+  padding:7px 13px;border-radius:999px;border:1px solid var(--line);background:var(--panel2);
+  color:var(--ink-soft);font-size:12.5px;font-weight:700;white-space:nowrap;transition:.2s}
+.homebtn:hover{color:var(--ink);border-color:var(--orange);background:var(--panel)}
+.homebtn .ic{font-size:14px;line-height:1}
+@media(max-width:560px){.homebtn .lbl{display:none}.homebtn{padding:7px 10px}}
+#readbar{height:3px;background:linear-gradient(90deg,var(--orange),var(--blue));width:0%;position:fixed;top:58px;left:0;z-index:59;box-shadow:0 0 10px #fb923c88}
+@media(max-width:860px){#navlinks{display:none}.brand small{display:none}}
+
+.hero{padding:60px 0 34px;text-align:center;position:relative}
+.hero .kicker{display:inline-block;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--orange);border:1px solid var(--orange-soft);background:#2a1206;padding:5px 14px;border-radius:999px;margin-bottom:20px;font-weight:700}
+.hero h1{font-size:clamp(30px,6vw,52px);margin-bottom:14px;background:linear-gradient(120deg,#fff 20%,var(--orange) 55%,var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .sub{font-size:clamp(16px,2.4vw,20px);color:var(--ink-soft);max-width:660px;margin:0 auto 28px}
+.hero-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn{border:none;cursor:pointer;font-family:inherit;font-weight:700;font-size:14.5px;padding:13px 22px;border-radius:12px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:transform .12s}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:linear-gradient(120deg,var(--orange),var(--orange-d));color:#1a0f06;box-shadow:0 8px 24px #fb923c40}
+.btn-ghost{background:var(--panel2);color:var(--ink);border:1px solid var(--line)}
+.floaters{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:-1}
+.floaters span{position:absolute;opacity:.12;font-size:32px;animation:drift linear infinite}
+@keyframes drift{0%{transform:translateY(20px) rotate(0)}50%{transform:translateY(-24px) rotate(12deg)}100%{transform:translateY(20px) rotate(0)}}
+
+section.lesson{padding:28px 0;scroll-margin-top:80px}
+.eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.eyebrow .num{font-size:12px;font-weight:800;color:#1a0f06;background:var(--orange);width:26px;height:26px;border-radius:8px;display:grid;place-items:center;flex:0 0 auto}
+.eyebrow span{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--orange);font-weight:700}
+.lesson h2{font-size:clamp(23px,4vw,33px);margin-bottom:14px}
+.lead{font-size:17.5px;color:var(--ink-soft)}
+
+.card{background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);margin:16px 0}
+.card h3{font-size:19px}
+.grid{display:grid;gap:14px}
+@media(min-width:680px){.grid.two{grid-template-columns:1fr 1fr}.grid.three{grid-template-columns:1fr 1fr 1fr}}
+
+.insight{border-left:4px solid var(--amber);background:#241d0e88;padding:14px 18px;border-radius:0 12px 12px 0;margin:16px 0}
+.insight b{color:var(--amber)}
+.insight .lbl,.keyidea .lbl,.warn .lbl{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;font-weight:800;display:block;margin-bottom:4px}
+.insight .lbl{color:var(--amber)}
+.keyidea{border-left:4px solid var(--blue);background:#082c3f88;padding:14px 18px;border-radius:0 12px 12px 0;margin:16px 0}
+.keyidea .lbl{color:var(--blue)}
+.warn{border-left:4px solid var(--red);background:#2a141488;padding:14px 18px;border-radius:0 12px 12px 0;margin:16px 0}
+.warn .lbl{color:var(--red)}
+
+.pill{display:inline-block;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;margin:2px 3px}
+.pill.o{background:#2a1206;color:#fdba74;border:1px solid #7c2d12}
+.pill.b{background:#082c3f;color:#8ed6ff;border:1px solid #0369a1}
+.pill.g{background:#0f3324;color:#9df0b8;border:1px solid #166534}
+
+.tbl{width:100%;border-collapse:collapse;font-size:14px;margin:10px 0;border-radius:12px;overflow:hidden}
+.tbl th,.tbl td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top}
+.tbl th{background:var(--panel2);color:var(--orange);font-size:12.5px;letter-spacing:.4px;text-transform:uppercase}
+.tbl tr:nth-child(even) td{background:#14100a}
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+
+.stage{background:radial-gradient(120% 120% at 50% 0%,#1a140d,#0b0906);border:1px solid var(--line);border-radius:16px;padding:20px;margin:16px 0;position:relative}
+.stage h4{text-align:center;color:var(--ink-soft);font-size:13px;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
+.center{text-align:center}
+canvas{max-width:100%;display:block;margin:0 auto;border-radius:10px}
+
+/* effect buttons */
+.fxbtns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:12px 0}
+.fxbtns button{background:var(--panel2);border:1px solid var(--line);color:var(--ink);font-family:inherit;font-weight:700;font-size:13px;padding:10px 15px;border-radius:10px;cursor:pointer;display:flex;align-items:center;gap:7px;transition:.15s}
+.fxbtns button:hover{border-color:var(--orange);transform:translateY(-2px)}
+.fxbtns button.on{background:var(--orange);color:#1a0f06;border-color:transparent}
+.simnote{text-align:center;font-size:14.5px;color:var(--ink-soft);margin-top:12px;min-height:44px}
+.simnote b{color:var(--orange)}
+
+/* slider control */
+.sliderrow{display:flex;align-items:center;gap:12px;max-width:460px;margin:10px auto}
+.sliderrow label{font-size:13px;font-weight:700;min-width:74px;color:var(--ink-soft)}
+.sliderrow input[type=range]{flex:1;accent-color:var(--orange)}
+.sliderrow .val{min-width:66px;text-align:right;font-weight:800;color:var(--orange);font-size:15px}
+.readout{text-align:center;font-size:15px;color:var(--ink-soft);margin-top:8px}
+.readout b{color:var(--blue)}
+
+/* point of application buttons reuse fxbtns */
+
+.effects-list{display:grid;gap:10px}
+@media(min-width:620px){.effects-list{grid-template-columns:1fr 1fr}}
+.eff{display:flex;gap:12px;align-items:center;background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.eff .ic{font-size:26px;flex:0 0 auto}
+.eff b{color:var(--orange)}
+
+/* cheat sheet */
+#cheat .card{background:linear-gradient(180deg,#1c150d,#0d0b09);border-color:var(--orange-soft)}
+.cheat-grid{display:grid;gap:12px}
+@media(min-width:680px){.cheat-grid{grid-template-columns:1fr 1fr}}
+.cheat-box{background:#14100a;border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.cheat-box h4{color:var(--orange);font-size:14px;margin-bottom:8px;display:flex;align-items:center;gap:7px}
+.cheat-box ul{margin:0;padding-left:18px}
+.cheat-box li{margin-bottom:5px;font-size:13.6px;color:var(--ink-soft)}
+.cheat-box li b{color:var(--ink)}
+.mnem{background:#241d0e;border:1px dashed var(--amber);border-radius:10px;padding:10px 14px;margin-top:10px;font-size:13.5px}
+.mnem b{color:var(--amber)}
+
+/* quiz */
+.quiz-head{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:8px}
+.quiz-meta{display:flex;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--ink-soft)}
+.quiz-meta b{color:var(--orange)}
+.qfilter{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 18px}
+.qfilter button{background:var(--panel2);border:1px solid var(--line);color:var(--ink-soft);font-family:inherit;font-size:12.5px;font-weight:700;padding:7px 13px;border-radius:999px;cursor:pointer}
+.qfilter button.active{background:var(--orange);color:#1a0f06;border-color:transparent}
+.flip{perspective:1600px;margin:0 auto}
+.flip-inner{position:relative;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.4,.2,.2,1);min-height:350px}
+.flip.flipped .flip-inner{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:18px;padding:26px;display:flex;flex-direction:column;border:1px solid var(--line);box-shadow:var(--shadow)}
+.face-front{background:linear-gradient(160deg,#1f1810,#120e08)}
+.face-back{background:linear-gradient(160deg,#201509,#130d06);transform:rotateY(180deg);border-color:var(--orange-soft)}
+.q-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.q-cat{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:4px 11px;border-radius:999px}
+.q-idx{font-size:12.5px;color:var(--ink-dim);font-weight:700}
+.q-text{font-size:18.5px;font-weight:600;flex:1;display:flex;align-items:center}
+.opts{display:grid;gap:9px;margin-top:8px}
+.opt{text-align:left;background:var(--panel2);border:1px solid var(--line);color:var(--ink);font-family:inherit;font-size:14.5px;padding:12px 14px;border-radius:11px;cursor:pointer;transition:.15s;display:flex;gap:10px;align-items:center}
+.opt:hover{border-color:var(--orange);background:#2a2218}
+.opt .k{width:24px;height:24px;border-radius:7px;background:var(--bg);border:1px solid var(--line);display:grid;place-items:center;font-weight:800;font-size:12.5px;flex:0 0 auto;color:var(--ink-soft)}
+.opt.correct{border-color:var(--grn);background:#12331f}.opt.correct .k{background:var(--grn);color:#04210f}
+.opt.wrong{border-color:var(--red);background:#331414}.opt.wrong .k{background:var(--red);color:#2a0808}
+.opt:disabled{cursor:default}
+.q-hint{text-align:center;color:var(--ink-dim);font-size:12.5px;margin-top:14px}
+.a-verdict{font-size:20px;font-weight:800;margin-bottom:8px}
+.a-verdict.ok{color:var(--grn)}.a-verdict.no{color:var(--red)}
+.a-answer{font-size:15px;margin-bottom:10px}.a-answer b{color:var(--orange)}
+.a-expl{font-size:14.5px;color:var(--ink-soft);flex:1;overflow:auto}
+.a-actions{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+.a-ref{background:var(--panel2);border:1px solid var(--line);color:var(--orange);text-decoration:none;font-weight:700;font-size:13px;padding:9px 15px;border-radius:10px;display:inline-flex;align-items:center;gap:7px;cursor:pointer}
+.a-ref:hover{background:#2a2218}
+.q-nav{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:18px}
+.q-nav button{background:var(--panel2);border:1px solid var(--line);color:var(--ink);font-family:inherit;font-weight:700;font-size:14px;padding:11px 20px;border-radius:11px;cursor:pointer}
+.q-nav button:hover:not(:disabled){border-color:var(--orange)}
+.q-nav button:disabled{opacity:.35;cursor:default}
+.dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;max-width:440px}
+.dots i{width:9px;height:9px;border-radius:50%;background:var(--line);cursor:pointer}
+.dots i.done{background:var(--grn)}.dots i.miss{background:var(--red)}.dots i.cur{outline:2px solid var(--orange);outline-offset:2px}
+.dash-grid{display:grid;gap:12px;margin:14px 0}
+@media(min-width:560px){.dash-grid{grid-template-columns:repeat(4,1fr)}}
+.stat{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:16px;text-align:center}
+.stat .v{font-size:30px;font-weight:800;color:var(--orange);line-height:1}
+.stat .l{font-size:11.5px;color:var(--ink-dim);text-transform:uppercase;letter-spacing:1px;margin-top:6px}
+.mastery .row{display:flex;align-items:center;gap:10px;margin-bottom:9px;font-size:13px}
+.mastery .row .nm{width:180px;flex:0 0 auto;color:var(--ink-soft)}
+.bar{flex:1;height:9px;background:var(--bg);border-radius:999px;overflow:hidden;border:1px solid var(--line)}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--orange),var(--blue));width:0;transition:width .8s}
+.mastery .row .pc{width:42px;text-align:right;font-weight:700;color:var(--ink)}
+.history{font-size:12.5px;color:var(--ink-dim);margin-top:6px}
+.history span{display:inline-block;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:3px 9px;margin:3px 3px 0 0}
+#result{display:none;text-align:center;padding:26px}#result.show{display:block}
+#result .big{font-size:56px;font-weight:800;line-height:1;background:linear-gradient(120deg,var(--orange),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent}
+#result .msg{font-size:18px;margin:10px 0}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:100;overflow:hidden}
+footer{border-top:1px solid var(--line);margin-top:50px;padding:26px 0 60px;text-align:center;color:var(--ink-dim);font-size:13px}
+.reset-link{color:var(--ink-dim);text-decoration:underline;cursor:pointer;font-size:12px}
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--panel2);border:1px solid var(--orange-soft);color:var(--ink);padding:12px 20px;border-radius:12px;font-size:13.5px;font-weight:600;box-shadow:var(--shadow);z-index:120;opacity:0;transition:.35s}
+#toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+</style>
+</head>
+<body>
+
+<div id="topbar"><div class="wrap">
+  <a class="homebtn" href="../index.html" title="Back to all lessons"><span class="ic">←</span><span class="lbl">Home</span></a>
+  <div class="brand"><span class="dot"></span><div>Force Mastery<small>Grade 9 Science · Ch.4</small></div></div>
+  <nav id="navlinks">
+    <a href="#s-intro">Start</a>
+    <a href="#s-effects">Effects</a>
+    <a href="#s-magnitude">Magnitude</a>
+    <a href="#s-direction">Direction</a>
+    <a href="#s-vector">Vector</a>
+    <a href="#cheat">Cheat Sheet</a>
+    <a href="#quiz">Quiz</a>
+  </nav>
+  <div id="scorechip" onclick="document.getElementById('dashboard').scrollIntoView()">
+    <span class="star">★</span><span id="scorechip-txt">Best 0%</span>
+  </div>
+</div></div>
+<div id="readbar"></div>
+
+<header class="hero">
+  <div class="floaters" id="floaters"></div>
+  <div class="wrap">
+    <span class="kicker">The only guide you'll need · Ch.4</span>
+    <h1>Every Push &amp; Pull<br>Around You</h1>
+    <p class="sub">Kicking a ball, opening a door, lifting a bag &mdash; they're all the same thing: a <em>force</em>. Master what a force can do, how we measure it, and why direction matters, all by playing with it.</p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#s-intro">▶ Start learning</a>
+      <a class="btn btn-ghost" href="#quiz">Test myself first</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap" id="content">
+
+<!-- ===== 1. WHAT IS A FORCE ===== -->
+<section class="lesson reveal" id="s-intro">
+  <div class="eyebrow"><span class="num">1</span><span>The big idea</span></div>
+  <h2>A force is just a push or a pull</h2>
+  <p class="lead">That's the whole definition. Lifting a box, opening a door, kicking a ball, dragging a cart &mdash; in every case you're either <b>pushing</b> or <b>pulling</b> something. Science calls that a <b>force</b>.</p>
+
+  <div class="card">
+    <h3>But a force doesn't always cause motion</h3>
+    <p>Push a book on a table and it slides. Kick a ball and it flies. But push a <b>wall</b> as hard as you like &mdash; nothing moves. One person can't push a bus either. So a force is applied in both cases; whether the object <em>moves</em> depends on the object.</p>
+    <div class="keyidea"><span class="lbl">Reframe it</span>Don't think "force = movement." Think "force = an attempt (a push or pull)." Sometimes that attempt causes motion, stops motion, or just changes the object's shape. That's exactly what the next section explores.</div>
+  </div>
+</section>
+
+<!-- ===== 2. FIVE EFFECTS (playground) ===== -->
+<section class="lesson reveal" id="s-effects">
+  <div class="eyebrow"><span class="num">2</span><span>What a force can do</span></div>
+  <h2>The 5 things a force can do</h2>
+  <p class="lead">Apply a force and one of five things happens. Instead of memorising the list, <b>make each one happen</b> in the playground below.</p>
+
+  <div class="stage">
+    <h4>Playground · Apply a force, watch the effect</h4>
+    <canvas id="fxCanvas" width="620" height="240"></canvas>
+    <div class="fxbtns">
+      <button onclick="fxDo('move')">▶️ Move it (from rest)</button>
+      <button onclick="fxDo('stop')">✋ Stop it</button>
+      <button onclick="fxDo('speed')">⚡ Change speed</button>
+      <button onclick="fxDo('turn')">↩️ Change direction</button>
+      <button onclick="fxDo('shape')">🫓 Change shape</button>
+    </div>
+    <div class="simnote" id="fxNote">Tap a button to apply a force to the ball and see what a force can do.</div>
+  </div>
+
+  <div class="effects-list">
+    <div class="eff"><span class="ic">▶️</span><div>An object at <b>rest can be moved</b> (kick a still ball).</div></div>
+    <div class="eff"><span class="ic">✋</span><div>An object <b>in motion can be stopped</b> (catch a ball).</div></div>
+    <div class="eff"><span class="ic">⚡</span><div>The <b>speed of motion can be changed</b> (hit harder → faster).</div></div>
+    <div class="eff"><span class="ic">↩️</span><div>The <b>direction of motion can be changed</b> (bat hits a ball).</div></div>
+    <div class="eff"><span class="ic">🫓</span><div>The <b>shape of an object can be changed</b> (tread on a ball).</div></div>
+  </div>
+</section>
+
+<!-- ===== 3. MAGNITUDE ===== -->
+<section class="lesson reveal" id="s-magnitude">
+  <div class="eyebrow"><span class="num">3</span><span>Magnitude of force</span></div>
+  <h2>How <em>big</em> is the force? (magnitude)</h2>
+  <p class="lead">Hit a ball gently and it rolls slowly; hit it hard and it races off. So a force has a <b>size</b> &mdash; its <b>magnitude</b>. We measure it with a <b>spring balance</b>.</p>
+
+  <div class="card">
+    <h3>The spring balance — pull it and see</h3>
+    <p>Inside a spring balance is a spring that <b>stretches more when the force is bigger</b>. The scale is marked (calibrated) by how far the spring stretches. Drag the slider to pull with different forces:</p>
+    <div class="stage">
+      <h4>Simulator · Spring balance</h4>
+      <canvas id="springCanvas" width="360" height="300"></canvas>
+      <div class="sliderrow"><label>Pull force</label><input type="range" min="0" max="10" step="0.5" value="3" id="springSlider" oninput="drawSpring(this.value)"><span class="val" id="springVal">3.0 N</span></div>
+      <div class="readout" id="springNote">Bigger pull → the spring stretches <b>more</b> → higher reading. Stretch is proportional to force.</div>
+    </div>
+    <div class="grid two">
+      <div class="keyidea" style="margin:0"><span class="lbl">The unit of force</span>In the international system (SI), force is measured in <b>Newtons (N)</b>. School spring balances read in Newtons; shop ones often read in grams or kilograms.</div>
+      <div class="insight" style="margin:0"><span class="lbl">Weight is a force too</span>When you hang a stone on a spring balance, the reading is its <b>weight</b> — the gravitational force the Earth pulls it with. So weight is measured in <b>Newtons</b>, not kilograms!</div>
+    </div>
+    <div class="warn"><span class="lbl">Using it correctly</span>To measure the force needed to move a block, pull the spring balance <b>horizontally</b> until the block <b>just starts to move</b>, then read it. Hold it in line with the motion.</div>
+  </div>
+</section>
+
+<!-- ===== 4. DIRECTION & POINT OF APPLICATION ===== -->
+<section class="lesson reveal" id="s-direction">
+  <div class="eyebrow"><span class="num">4</span><span>Direction &amp; point of application</span></div>
+  <h2>Where and which way you push matters</h2>
+  <p class="lead">A force isn't just a size. <b>Which way</b> you push (direction) and <b>where</b> on the object you push (point of application) both change the result.</p>
+
+  <div class="card">
+    <h3>Direction: the object moves the way you push</h3>
+    <p>Open a drawer &mdash; you pull it <b>towards</b> you. Close it &mdash; you push it <b>away</b>. The object moves <b>along the direction of the force</b>. Whichever way the thread is pulled, that's the way the block slides.</p>
+  </div>
+
+  <div class="card">
+    <h3>Point of application: same push, different result</h3>
+    <p><b>The point of an object on which the force is exerted is the point of application.</b> Push a tall bottle near the <b>bottom</b> and it slides; push near the <b>top</b> and it topples. Same force, different point → totally different outcome. Try it:</p>
+    <div class="stage">
+      <h4>Simulator · Push the bottle</h4>
+      <canvas id="bottleCanvas" width="420" height="260"></canvas>
+      <div class="fxbtns">
+        <button onclick="pushBottle('bottom')">👇 Push near the bottom</button>
+        <button onclick="pushBottle('top')">☝️ Push near the top</button>
+        <button onclick="pushBottle('reset')">↺ Reset</button>
+      </div>
+      <div class="simnote" id="bottleNote">Choose where to apply the force and watch what happens to the bottle.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 5. FORCE IS A VECTOR ===== -->
+<section class="lesson reveal" id="s-vector">
+  <div class="eyebrow"><span class="num">5</span><span>Force is a vector</span></div>
+  <h2>Two things define a force: size + direction</h2>
+  <p class="lead">A force always has both a <b>magnitude</b> and a <b>direction</b>. Quantities that need both to be fully described are called <b>vector quantities</b>. So &mdash;</p>
+  <div class="card" style="text-align:center;border-color:var(--blue-d)">
+    <h3 style="color:var(--blue);font-size:24px;margin:0">Force is a vector quantity.</h3>
+    <p style="margin:8px 0 0;color:var(--ink-soft)">magnitude (how strong) &nbsp;+&nbsp; direction (which way)</p>
+  </div>
+  <div class="insight"><span class="lbl">Why it matters</span>Saying "a force of 10 N" is incomplete &mdash; 10 N <em>which way</em>? A push of 10 N to the right and 10 N to the left do opposite things. A vector carries both facts at once.</div>
+</section>
+
+<!-- ===== 6. GRAPHICAL REPRESENTATION ===== -->
+<section class="lesson reveal" id="s-graphical">
+  <div class="eyebrow"><span class="num">6</span><span>Drawing a force</span></div>
+  <h2>Graphical representation of a force</h2>
+  <p class="lead">Because a force has magnitude, direction and a point of application, we can draw it as a single <b>arrow</b> (a straight line segment). Each part of the arrow carries one piece of information:</p>
+
+  <div class="grid three">
+    <div class="cheat-box"><h4>📏 Length = magnitude</h4>A longer arrow means a bigger force. 10 N is drawn <b>twice as long</b> as 5 N.</div>
+    <div class="cheat-box"><h4>➡️ Arrow head = direction</h4>The way the arrow points shows the direction of the force.</div>
+    <div class="cheat-box"><h4>⏺️ Starting dot = point of application</h4>The dot at the arrow's <b>start</b> marks where the force acts on the object.</div>
+  </div>
+
+  <div class="card">
+    <h3>Build your own force arrow</h3>
+    <p>Change the magnitude and direction and watch the arrow update. Notice the length and heading follow your numbers exactly:</p>
+    <div class="stage">
+      <h4>Builder · Draw a force vector</h4>
+      <canvas id="vectorCanvas" width="440" height="300"></canvas>
+      <div class="sliderrow"><label>Magnitude</label><input type="range" min="1" max="10" step="1" value="6" id="magSlider" oninput="drawVector()"><span class="val" id="magVal">6 N</span></div>
+      <div class="sliderrow"><label>Direction</label><input type="range" min="0" max="360" step="15" value="0" id="dirSlider" oninput="drawVector()"><span class="val" id="dirVal">0°</span></div>
+      <div class="readout" id="vecNote"></div>
+    </div>
+    <div class="warn"><span class="lbl">Exam trap</span>The point of application is the <b>dot at the START of the arrow</b> &mdash; NOT the midpoint of the line. (This is a favourite trick question!)</div>
+  </div>
+</section>
+
+<!-- ===== 7. MAKING WORK EASIER ===== -->
+<section class="lesson reveal" id="s-easier">
+  <div class="eyebrow"><span class="num">7</span><span>Everyday physics</span></div>
+  <h2>Using direction &amp; point of application to make work easier</h2>
+  <p class="lead">Once you understand force, you can work <em>smarter</em>. We do this instinctively every day:</p>
+  <div class="grid two">
+    <div class="card" style="margin:0">
+      <h3>🛒 Change the direction</h3>
+      <p>Dragging a loaded cart with a low, horizontal rope forces you to bend awkwardly. Pull the rope at an <b>angle</b> instead and the cart still moves forward &mdash; but your body works far more comfortably.</p>
+    </div>
+    <div class="card" style="margin:0">
+      <h3>🔧 Change the point of application</h3>
+      <p>Pushing a cart low down means bending over. Fit a <b>handle</b> higher up and you change <em>where</em> the force is applied &mdash; now you can push standing upright.</p>
+    </div>
+  </div>
+  <div class="keyidea"><span class="lbl">The takeaway</span>Everyday skill isn't only scientific knowledge — it's practical experience. But knowing that a force has a <b>direction</b> and a <b>point of application</b> helps you choose the easiest way to get a job done.</div>
+</section>
+
+<!-- ===== 8. CHEAT SHEET ===== -->
+<section class="lesson reveal" id="cheat">
+  <div class="eyebrow"><span class="num">8</span><span>Last-minute revision</span></div>
+  <h2>⚡ The night-before cheat sheet</h2>
+  <p class="lead">Everything essential, condensed. Skim it the hour before the exam — tap back to any section you're unsure about.</p>
+  <div class="card">
+    <div class="cheat-grid">
+      <div class="cheat-box"><h4>💪 What is a force?</h4><ul>
+        <li>A force is a <b>push or a pull</b>.</li>
+        <li>A force does not always cause motion (you can't move a wall).</li>
+      </ul></div>
+
+      <div class="cheat-box"><h4>🎯 The 5 effects of a force</h4><ul>
+        <li>Move an object at rest.</li>
+        <li>Stop an object in motion.</li>
+        <li>Change the speed of motion.</li>
+        <li>Change the direction of motion.</li>
+        <li>Change the shape of an object.</li>
+      </ul></div>
+
+      <div class="cheat-box"><h4>📐 Magnitude</h4><ul>
+        <li>Magnitude = the <b>size</b> of the force.</li>
+        <li>Measured with a <b>(Newton) spring balance</b>.</li>
+        <li>SI unit = <b>Newton (N)</b>.</li>
+        <li>Spring stretches more for a bigger force.</li>
+        <li><b>Weight</b> is a force → also measured in Newtons.</li>
+      </ul></div>
+
+      <div class="cheat-box"><h4>🧭 Direction &amp; point of application</h4><ul>
+        <li>An object moves <b>along the direction</b> of the force.</li>
+        <li><b>Point of application</b> = the point where the force acts.</li>
+        <li>Same force, different point → different result (slide vs topple).</li>
+      </ul></div>
+
+      <div class="cheat-box"><h4>➡️ Force is a vector</h4><ul>
+        <li>A vector has <b>magnitude AND direction</b>.</li>
+        <li>Force has both → <b>force is a vector quantity</b>.</li>
+      </ul></div>
+
+      <div class="cheat-box"><h4>✏️ Graphical representation</h4><ul>
+        <li><b>Length</b> of the line = magnitude.</li>
+        <li><b>Arrow head</b> = direction.</li>
+        <li><b>Dot at the start</b> = point of application (NOT the midpoint!).</li>
+        <li>10 N is drawn twice as long as 5 N.</li>
+      </ul></div>
+    </div>
+    <div class="mnem"><b>Memory hooks:</b> &nbsp;• Force = <b>push or pull</b>. &nbsp;• 5 effects: <b>Move, Stop, Speed, Direction, Shape</b>. &nbsp;• Unit = <b>Newton (N)</b>; measured by a <b>spring balance</b>. &nbsp;• Vector = <b>size + direction</b>. &nbsp;• Arrow: <b>Length</b>=size, <b>Head</b>=direction, <b>Start dot</b>=point of application.</div>
+  </div>
+</section>
+
+<!-- ===== 9. DASHBOARD ===== -->
+<section class="lesson reveal" id="dashboard">
+  <div class="eyebrow"><span class="num">9</span><span>Your progress</span></div>
+  <h2>📈 Track your mastery</h2>
+  <p class="lead">Saved on this device — come back anytime and watch your scores climb.</p>
+  <div class="card">
+    <div class="dash-grid">
+      <div class="stat"><div class="v" id="st-best">0%</div><div class="l">Best score</div></div>
+      <div class="stat"><div class="v" id="st-last">&ndash;</div><div class="l">Last score</div></div>
+      <div class="stat"><div class="v" id="st-attempts">0</div><div class="l">Attempts</div></div>
+      <div class="stat"><div class="v" id="st-streak">0</div><div class="l">Day streak</div></div>
+    </div>
+    <h4 style="color:var(--orange);margin:18px 0 10px">Mastery by topic</h4>
+    <div class="mastery" id="masteryList"></div>
+    <div class="history" id="historyList"></div>
+    <p id="improveNote" style="margin:14px 0 0;font-size:14px;color:var(--grn);font-weight:600"></p>
+  </div>
+</section>
+
+<!-- ===== 10. QUIZ ===== -->
+<section class="lesson reveal" id="quiz">
+  <div class="eyebrow"><span class="num">10</span><span>Test yourself · flip cards</span></div>
+  <h2>🎯 The 30-question challenge</h2>
+  <p class="lead">Answer, then the card <b>flips</b> to show if you're right, a full explanation, and a link back to the lesson. Filter by topic to drill weak spots.</p>
+  <div class="qfilter" id="qfilter">
+    <button class="active" data-cat="all">All 30</button>
+    <button data-cat="Basics">Basics</button>
+    <button data-cat="Effects">Effects</button>
+    <button data-cat="Magnitude">Magnitude</button>
+    <button data-cat="Direction">Direction</button>
+    <button data-cat="Vector">Vector &amp; Graph</button>
+  </div>
+  <div class="quiz-head">
+    <div class="quiz-meta">
+      <span>Answered <b id="qm-done">0</b>/<b id="qm-total">30</b></span>
+      <span>Correct <b id="qm-correct">0</b></span>
+      <span>Score <b id="qm-score">0%</b></span>
+    </div>
+    <button class="btn btn-ghost" style="padding:8px 16px;font-size:13px" onclick="restartQuiz()">↻ Restart</button>
+  </div>
+  <div class="flip" id="flipcard"><div class="flip-inner">
+    <div class="face face-front" id="cardFront"></div>
+    <div class="face face-back" id="cardBack"></div>
+  </div></div>
+  <div class="q-nav">
+    <button id="prevBtn" onclick="goCard(-1)">‹ Prev</button>
+    <div class="dots" id="dots"></div>
+    <button id="nextBtn" onclick="goCard(1)">Next ›</button>
+  </div>
+  <div id="result" class="card">
+    <div class="big" id="resBig">0%</div>
+    <div class="msg" id="resMsg"></div>
+    <div class="hero-cta">
+      <button class="btn btn-primary" onclick="restartQuiz()">Try again</button>
+      <a class="btn btn-ghost" href="#cheat">Review cheat sheet</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<div id="toast"></div>
+<footer class="wrap">
+  <p>Built from the Grade 9 Science textbook (Ministry of Education, Sri Lanka) · Chapter 4: Basic Concepts Associated with Force.<br>
+  Your progress is saved on this device. <span class="reset-link" onclick="resetAll()">Reset all progress</span></p>
+</footer>
+
+<script>
+/* ===== AMBIENT ===== */
+(function(){const box=document.getElementById('floaters');const ems=['💪','⚽','➡️','🧲','🎯','⬆️','🛒'];
+  for(let i=0;i<14;i++){const s=document.createElement('span');s.textContent=ems[i%ems.length];
+  s.style.left=(Math.random()*100)+'%';s.style.top=(Math.random()*100)+'%';s.style.fontSize=(20+Math.random()*30)+'px';
+  s.style.animationDuration=(9+Math.random()*11)+'s';s.style.animationDelay=(-Math.random()*10)+'s';box.appendChild(s);}})();
+const readbar=document.getElementById('readbar');
+addEventListener('scroll',()=>{const h=document.documentElement;readbar.style.width=Math.min(100,h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';},{passive:true});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2200);}
+
+/* ===== FORCE EFFECTS PLAYGROUND ===== */
+const fxc=document.getElementById('fxCanvas'),fx=fxc.getContext('2d');
+let ball={x:120,y:150,vx:0,r:26,sq:1,flash:0,color:'#fb923c'};
+const groundY=190;
+function fxDo(a){
+  const n=document.getElementById('fxNote');ball.flash=1;
+  if(a==='move'){if(ball.vx===0)ball.vx=3.2;n.innerHTML='▶️ <b>Object at rest is moved.</b> A push gives the still ball a velocity — it starts rolling.';}
+  else if(a==='stop'){ball.vx=0;n.innerHTML='✋ <b>Object in motion is stopped.</b> A force in the opposite direction brings it to rest (like catching a ball).';}
+  else if(a==='speed'){ball.vx=(ball.vx===0?3.2:ball.vx*1.7);if(Math.abs(ball.vx)>11)ball.vx=11*Math.sign(ball.vx);n.innerHTML='⚡ <b>Speed is changed.</b> A bigger force makes it move faster — hit harder, go quicker.';}
+  else if(a==='turn'){ball.vx=(ball.vx===0?-3.2:-ball.vx);n.innerHTML='↩️ <b>Direction is changed.</b> A force can turn a moving object around (like a bat hitting a ball).';}
+  else if(a==='shape'){ball.sq=0.45;n.innerHTML='🫓 <b>Shape is changed.</b> Pressing the ball squashes it — a force can deform an object.';}
+}
+function drawFx(){
+  fx.clearRect(0,0,fxc.width,fxc.height);
+  // ground
+  fx.strokeStyle='#4a3a26';fx.lineWidth=3;fx.beginPath();fx.moveTo(0,groundY+ball.r);fx.lineTo(fxc.width,groundY+ball.r);fx.stroke();
+  fx.fillStyle='#1a140d';fx.fillRect(0,groundY+ball.r,fxc.width,fxc.height-groundY-ball.r);
+  // move
+  ball.x+=ball.vx;
+  if(ball.x<ball.r){ball.x=ball.r;ball.vx=Math.abs(ball.vx);}
+  if(ball.x>fxc.width-ball.r){ball.x=fxc.width-ball.r;ball.vx=-Math.abs(ball.vx);}
+  // recover shape
+  if(ball.sq<1){ball.sq+=0.02;if(ball.sq>1)ball.sq=1;}
+  // flash arrow
+  if(ball.flash>0){ball.flash-=0.04;fx.globalAlpha=Math.max(0,ball.flash);
+    fx.strokeStyle='#fde047';fx.lineWidth=4;const dir=ball.vx>=0?1:-1;
+    fx.beginPath();fx.moveTo(ball.x-40*dir,ball.y);fx.lineTo(ball.x-8*dir,ball.y);fx.stroke();
+    fx.beginPath();fx.moveTo(ball.x-8*dir,ball.y);fx.lineTo(ball.x-20*dir,ball.y-8);fx.lineTo(ball.x-20*dir,ball.y+8);fx.fill();fx.globalAlpha=1;}
+  // ball (squash: wider when shorter)
+  const ry=ball.r*ball.sq,rx=ball.r*(2-ball.sq);
+  const gy=groundY+ball.r-ry;
+  const g=fx.createRadialGradient(ball.x-8,gy-8,4,ball.x,gy,rx);
+  g.addColorStop(0,'#fed7aa');g.addColorStop(.5,ball.color);g.addColorStop(1,'#9a3412');
+  fx.fillStyle=g;fx.beginPath();fx.ellipse(ball.x,gy,rx,ry,0,0,7);fx.fill();
+  // motion lines
+  if(Math.abs(ball.vx)>0.3){fx.strokeStyle='#fb923c66';fx.lineWidth=2;const d=ball.vx>0?-1:1;
+    for(let i=1;i<=3;i++){fx.beginPath();fx.moveTo(ball.x+d*(rx+i*8),gy-6+i*3);fx.lineTo(ball.x+d*(rx+i*8+10),gy-6+i*3);fx.stroke();}}
+  requestAnimationFrame(drawFx);
+}
+drawFx();
+
+/* ===== SPRING BALANCE ===== */
+const spc=document.getElementById('springCanvas'),sp=spc.getContext('2d');
+function drawSpring(force){
+  force=parseFloat(force);document.getElementById('springVal').textContent=force.toFixed(1)+' N';
+  const w=spc.width,h=spc.height;sp.clearRect(0,0,w,h);
+  const cx=140,top=30,L0=70,stretch=force*13;
+  const bodyTop=top,bodyBot=top+L0+stretch+40;
+  // hook at top
+  sp.strokeStyle='#cbd5e1';sp.lineWidth=3;sp.beginPath();sp.arc(cx,top-8,8,0.6,Math.PI*2+0.2);sp.stroke();
+  // barrel
+  sp.fillStyle='#26201a';sp.strokeStyle='#5a4a34';sp.lineWidth=2;
+  sp.beginPath();sp.roundRect(cx-26,top,52,L0+stretch+40,10);sp.fill();sp.stroke();
+  // scale ticks
+  sp.strokeStyle='#8b7c66';sp.fillStyle='#c3b6a4';sp.font='10px sans-serif';sp.textAlign='left';
+  for(let i=0;i<=10;i++){const y=top+18+i*((L0+stretch+4)/10);sp.beginPath();sp.moveTo(cx+10,y);sp.lineTo(cx+22,y);sp.stroke();sp.fillText(i,cx+26,y+3);}
+  // pointer (position ∝ force)
+  const py=top+18+force*((L0+stretch+4)/10);
+  sp.strokeStyle='#fb923c';sp.lineWidth=3;sp.beginPath();sp.moveTo(cx-24,py);sp.lineTo(cx+10,py);sp.stroke();
+  sp.fillStyle='#fb923c';sp.beginPath();sp.moveTo(cx+10,py);sp.lineTo(cx+2,py-5);sp.lineTo(cx+2,py+5);sp.fill();
+  // spring zigzag hanging below barrel to weight
+  const sTop=bodyBot,coils=6,segH=(L0*0.4+stretch)/coils;
+  sp.strokeStyle='#94a3b8';sp.lineWidth=2.5;sp.beginPath();sp.moveTo(cx,sTop);
+  let y=sTop;for(let i=0;i<coils;i++){sp.lineTo(cx-12,y+segH*0.5);sp.lineTo(cx+12,y+segH);y+=segH;}
+  sp.lineTo(cx,y);sp.stroke();
+  // weight
+  const wy=y+6;sp.fillStyle='#7c2d12';sp.strokeStyle='#fb923c';sp.beginPath();sp.roundRect(cx-24,wy,48,34,8);sp.fill();sp.stroke();
+  sp.fillStyle='#fed7aa';sp.font='bold 13px sans-serif';sp.textAlign='center';sp.fillText(force.toFixed(1)+' N',cx,wy+22);
+  // note
+  const n=document.getElementById('springNote');
+  n.innerHTML=force===0?'No pull → spring at natural length → reads <b>0 N</b>.':`Pulling with <b>${force.toFixed(1)} N</b> stretches the spring. Bigger pull → more stretch → higher reading.`;
+}
+
+/* ===== BOTTLE (point of application) ===== */
+const btc=document.getElementById('bottleCanvas'),bt=btc.getContext('2d');
+let bottle={x:200,rot:0,slide:0,anim:null};
+function drawBottleFrame(){
+  const w=btc.width,h=btc.height,tableY=210;bt.clearRect(0,0,w,h);
+  // table
+  bt.fillStyle='#4a3a26';bt.fillRect(0,tableY,w,6);bt.fillStyle='#2a2016';bt.fillRect(0,tableY+6,w,h-tableY-6);
+  const bx=bottle.x+bottle.slide, bw=44,bh=110;
+  bt.save();bt.translate(bx+bw/2,tableY);bt.rotate(bottle.rot);
+  // bottle body
+  bt.fillStyle='#0e7490';bt.strokeStyle='#22d3ee';bt.lineWidth=2;
+  bt.beginPath();bt.roundRect(-bw/2,-bh,bw,bh,[6,6,4,4]);bt.fill();bt.stroke();
+  // neck + cap
+  bt.fillStyle='#155e75';bt.fillRect(-9,-bh-18,18,18);
+  bt.fillStyle='#f87171';bt.fillRect(-11,-bh-28,22,12);
+  bt.restore();
+  return {bx,bw,bh,tableY};
+}
+function pushBottle(mode){
+  if(bottle.anim)cancelAnimationFrame(bottle.anim);
+  const n=document.getElementById('bottleNote');
+  if(mode==='reset'){bottle={x:200,rot:0,slide:0,anim:null};drawBottleFrame();n.textContent='Choose where to apply the force and watch what happens to the bottle.';return;}
+  bottle.rot=0;bottle.slide=0;let t=0;
+  const g=drawBottleFrame();
+  function step(){
+    t+=0.02;const g=drawBottleFrame();
+    // draw force arrow + point of application dot
+    const bx=bottle.x+bottle.slide,bw=44,tableY=210;
+    const ay=mode==='top'?tableY-95:tableY-18;
+    bt.strokeStyle='#fde047';bt.lineWidth=4;bt.beginPath();bt.moveTo(bx-46,ay);bt.lineTo(bx-6,ay);bt.stroke();
+    bt.beginPath();bt.moveTo(bx-6,ay);bt.lineTo(bx-18,ay-7);bt.lineTo(bx-18,ay+7);bt.fillStyle='#fde047';bt.fill();
+    bt.fillStyle='#f87171';bt.beginPath();bt.arc(bx-6,ay,5,0,7);bt.fill();
+    if(mode==='bottom'){bottle.slide=Math.min(120,t*160);if(t<1)bottle.anim=requestAnimationFrame(step);}
+    else{bottle.rot=Math.min(1.15,t*1.6);if(bottle.rot<1.15)bottle.anim=requestAnimationFrame(step);}
+  }
+  step();
+  if(mode==='bottom')n.innerHTML='👇 Push near the <b>bottom</b> → the bottle <b>slides</b> along the table. Force applied low, close to the base.';
+  else n.innerHTML='☝️ Push near the <b>top</b> → the bottle <b>topples</b> over. Same force, different point of application → very different result!';
+}
+
+/* ===== VECTOR BUILDER ===== */
+const vcc=document.getElementById('vectorCanvas'),vc=vcc.getContext('2d');
+function drawVector(){
+  const mag=+document.getElementById('magSlider').value,dir=+document.getElementById('dirSlider').value;
+  document.getElementById('magVal').textContent=mag+' N';document.getElementById('dirVal').textContent=dir+'°';
+  const w=vcc.width,h=vcc.height,ox=140,oy=160;vc.clearRect(0,0,w,h);
+  // faint grid + axes
+  vc.strokeStyle='#2a2016';vc.lineWidth=1;for(let x=0;x<w;x+=28){vc.beginPath();vc.moveTo(x,0);vc.lineTo(x,h);vc.stroke();}for(let y=0;y<h;y+=28){vc.beginPath();vc.moveTo(0,y);vc.lineTo(w,y);vc.stroke();}
+  vc.strokeStyle='#4a3a26';vc.beginPath();vc.moveTo(0,oy);vc.lineTo(w,oy);vc.moveTo(ox,0);vc.lineTo(ox,h);vc.stroke();
+  // vector: 0°=right, 90°=up
+  const rad=dir*Math.PI/180,len=mag*20;
+  const ex=ox+len*Math.cos(rad),ey=oy-len*Math.sin(rad);
+  vc.strokeStyle='#fb923c';vc.lineWidth=5;vc.lineCap='round';vc.beginPath();vc.moveTo(ox,oy);vc.lineTo(ex,ey);vc.stroke();
+  // arrow head
+  const ah=14;vc.fillStyle='#fb923c';vc.beginPath();
+  vc.moveTo(ex,ey);
+  vc.lineTo(ex-ah*Math.cos(rad-0.4),ey+ah*Math.sin(rad-0.4));
+  vc.lineTo(ex-ah*Math.cos(rad+0.4),ey+ah*Math.sin(rad+0.4));
+  vc.closePath();vc.fill();
+  // point of application dot
+  vc.fillStyle='#f87171';vc.beginPath();vc.arc(ox,oy,6,0,7);vc.fill();
+  vc.fillStyle='#c3b6a4';vc.font='12px sans-serif';vc.textAlign='left';vc.fillText('• point of application',ox+8,oy+18);
+  // magnitude label near mid
+  vc.fillStyle='#fed7aa';vc.font='bold 13px sans-serif';vc.fillText(mag+' N',(ox+ex)/2+6,(oy+ey)/2-6);
+  document.getElementById('vecNote').innerHTML=`A force of <b>${mag} N</b> acting at <b>${dir}°</b>. Longer arrow = bigger force; the head shows the direction; the red dot is the point of application.`;
+}
+
+/* ===== QUIZ DATA (30) ===== */
+const CAT_COLORS={'Basics':'#2a1206;color:#fdba74','Effects':'#0f3324;color:#9df0b8','Magnitude':'#082c3f;color:#8ed6ff','Direction':'#241147;color:#c9b3ff','Vector':'#3a1220;color:#f79ac0'};
+const Q=[
+ {c:'Basics',q:'In science, a force is best described as…',o:['only a pull','only a push','a push or a pull','a type of energy'],a:2,e:'A force is simply a push or a pull. Lifting, kicking, opening a door — all are pushes or pulls.',r:'s-intro',rl:'§1 What is a force'},
+ {c:'Basics',q:'You push a wall as hard as you can but it does not move. This shows that…',o:['a force was not applied','a force does not always cause motion','walls have no mass','pushing is not a force'],a:1,e:'A force is applied, but motion depends on the object. A single person cannot move a wall or a bus, yet a force is still exerted.',r:'s-intro',rl:'§1 Force ≠ motion'},
+ {c:'Basics',q:'Which of these involves applying a force?',o:['Kicking a ball','Opening a door','Lifting a box','All of these'],a:3,e:'Every one is a push or a pull, so all involve a force.',r:'s-intro',rl:'§1 Everyday forces'},
+ {c:'Basics',q:'When you walk, you apply a force on the…',o:['air','floor / ground','sky','sun'],a:1,e:'Walking applies forces on the floor with your feet, which pushes you along.',r:'s-intro',rl:'§1 Everyday forces'},
+ {c:'Basics',q:'Writing with a pen involves a force because you…',o:['create new matter','push the pen to move it on paper','remove gravity','heat the paper'],a:1,e:'You apply a push/pull to move the pen across the paper — a force in action.',r:'s-intro',rl:'§1 Everyday forces'},
+ {c:'Effects',q:'By applying a force, an object at rest can be…',o:['destroyed','moved','frozen','made invisible'],a:1,e:'A force can set a stationary object in motion — one of the five effects of a force.',r:'s-effects',rl:'§2 Effects'},
+ {c:'Effects',q:'When you catch a moving cricket ball, the force you apply…',o:['speeds it up','stops it','makes it bigger','changes its colour'],a:1,e:'A force in the opposite direction stops a moving object — that is how catching works.',r:'s-effects',rl:'§2 Effects'},
+ {c:'Effects',q:'Hitting a ball harder than before mainly changes its…',o:['shape','colour','speed','mass'],a:2,e:'A larger force changes the speed of motion — hit harder, it moves faster.',r:'s-effects',rl:'§2 Effects'},
+ {c:'Effects',q:'A batsman hitting an incoming ball with a bat changes the ball\'s…',o:['direction of motion','mass','temperature','colour'],a:0,e:'The bat applies a force that changes the ball\'s direction (and speed). Direction change is one of the five effects.',r:'s-effects',rl:'§2 Effects'},
+ {c:'Effects',q:'Pressing a ball on the ground and treading on it changes its…',o:['speed','shape','direction','weight'],a:1,e:'Applying a force can change the shape of an object — the ball gets squashed.',r:'s-effects',rl:'§2 Effects'},
+ {c:'Effects',q:'Which of the following is NOT an effect a force can produce?',o:['Move a resting object','Stop a moving object','Create new matter','Change an object\'s shape'],a:2,e:'A force can move, stop, speed up, redirect or reshape an object — but it cannot create matter.',r:'s-effects',rl:'§2 Effects'},
+ {c:'Effects',q:'A moving object can be brought to rest by…',o:['applying a force','removing all colours','adding mass only','waiting for it to disappear'],a:0,e:'A force (e.g. friction or a catch) can stop a moving object.',r:'s-effects',rl:'§2 Effects'},
+ {c:'Magnitude',q:'The "size" or strength of a force is called its…',o:['direction','magnitude','shape','speed'],a:1,e:'Magnitude is how big the force is. A gentle hit is a small magnitude; a hard hit is a large magnitude.',r:'s-magnitude',rl:'§3 Magnitude'},
+ {c:'Magnitude',q:'Which instrument is used to measure the magnitude of a force?',o:['thermometer','spring balance','measuring tape','stopwatch'],a:1,e:'A spring balance measures force. Inside is a spring that stretches according to the applied force.',r:'s-magnitude',rl:'§3 Spring balance'},
+ {c:'Magnitude',q:'The SI unit of force is the…',o:['kilogram','Newton (N)','metre','second'],a:1,e:'Force is measured in Newtons (N) in the international (SI) system.',r:'s-magnitude',rl:'§3 Newton'},
+ {c:'Magnitude',q:'The weight of an object is a force, so its unit is the…',o:['kilogram','gram','Newton (N)','litre'],a:2,e:'Weight is the gravitational force of the Earth on an object, so it is measured in Newtons — not kilograms.',r:'s-magnitude',rl:'§3 Weight'},
+ {c:'Magnitude',q:'What is inside a spring balance that lets it measure force?',o:['a battery','a spring that changes length with the force','a magnet','water'],a:1,e:'A spring stretches in proportion to the force applied; the scale is calibrated to this stretch.',r:'s-magnitude',rl:'§3 Spring balance'},
+ {c:'Magnitude',q:'When a stone is hung on a spring balance, the reading gives the stone\'s…',o:['volume','weight (gravitational force)','temperature','density'],a:1,e:'The reading is the weight — the gravitational force with which the Earth pulls the stone.',r:'s-magnitude',rl:'§3 Weight'},
+ {c:'Magnitude',q:'To measure the force needed to move a block, you should pull the spring balance…',o:['straight upward','horizontally until the block just starts to move','in a circle','very slowly forever'],a:1,e:'Pull horizontally (in line with the motion) until the block just begins to move, then read the balance.',r:'s-magnitude',rl:'§3 Using it correctly'},
+ {c:'Direction',q:'An object generally moves in the…',o:['opposite direction to the force','direction of the applied force','upward direction only','direction of gravity only'],a:1,e:'The object moves along the direction of the force. Pull a block one way and it slides that way.',r:'s-direction',rl:'§4 Direction'},
+ {c:'Direction',q:'The point of an object on which a force is exerted is called the…',o:['centre of mass','point of application','magnitude','vector point'],a:1,e:'That point is the point of application of the force.',r:'s-direction',rl:'§4 Point of application'},
+ {c:'Direction',q:'Pushing a tall bottle near its TOP is likely to make it…',o:['slide smoothly','topple over','get heavier','disappear'],a:1,e:'A force applied high up (far from the base) tends to topple the bottle.',r:'s-direction',rl:'§4 Point of application'},
+ {c:'Direction',q:'Pushing the same bottle near its BOTTOM makes it…',o:['topple over','slide along the surface','float','spin in the air'],a:1,e:'A force applied low, close to the base, makes the bottle slide instead of toppling — same force, different point of application.',r:'s-direction',rl:'§4 Point of application'},
+ {c:'Direction',q:'To open a drawer, the force must be directed…',o:['towards you (a pull)','away from you (a push)','downward','upward'],a:0,e:'Opening a drawer means pulling it towards you; closing it means pushing it away. Direction matters.',r:'s-direction',rl:'§4 Direction'},
+ {c:'Direction',q:'Fitting a handle to a cart or pulling a rope at an angle mainly changes the…',o:['mass of the cart','direction and/or point of application to make work easier','colour of the cart','weight of the load'],a:1,e:'We change the direction and point of application of the force to do the same work more comfortably.',r:'s-easier',rl:'§7 Making work easier'},
+ {c:'Vector',q:'Force is considered a vector quantity because it has…',o:['magnitude only','direction only','a point of application only','both magnitude and direction'],a:3,e:'A vector has both magnitude and direction. Force has both, so force is a vector quantity.',r:'s-vector',rl:'§5 Force is a vector'},
+ {c:'Vector',q:'A quantity that has both a magnitude and a direction is called a…',o:['scalar quantity','vector quantity','random quantity','fixed quantity'],a:1,e:'Vector quantities carry both size and direction — force is a classic example.',r:'s-vector',rl:'§5 Vectors'},
+ {c:'Vector',q:'In the graphical representation of a force, the LENGTH of the line shows the…',o:['direction','magnitude','point of application','colour'],a:1,e:'The length of the line represents the magnitude — a 10 N force is drawn twice as long as a 5 N force.',r:'s-graphical',rl:'§6 Graphical representation'},
+ {c:'Vector',q:'In a force diagram, the ARROW HEAD represents the…',o:['magnitude','direction','point of application','speed'],a:1,e:'The arrow head shows the direction of the force. Length shows magnitude; the starting dot shows the point of application.',r:'s-graphical',rl:'§6 Graphical representation'},
+ {c:'Vector',q:'Consider: (a) magnitude = length of the line, (b) direction = arrow head, (c) point of application = midpoint of the line. Which statements are TRUE?',o:['a and b only','a and c only','b and c only','a, b and c'],a:0,e:'a and b are correct. But the point of application is the dot at the START of the arrow, NOT the midpoint — so c is false.',r:'s-graphical',rl:'§6 Graphical representation'}
+];
+document.getElementById('qm-total').textContent=Q.length;
+
+/* ===== QUIZ ENGINE ===== */
+const LSKEY='force_ol_v1';
+function loadLS(){try{return JSON.parse(localStorage.getItem(LSKEY))||{}}catch(e){return{}}}
+function saveLS(d){try{localStorage.setItem(LSKEY,JSON.stringify(d))}catch(e){}}
+let store=loadLS();if(!store.correctSet)store.correctSet=[];if(!store.history)store.history=[];
+let activeCat='all',deck=[],pos=0,ansMap={};
+function buildDeck(){deck=Q.map((q,i)=>i).filter(i=>activeCat==='all'||Q[i].c===activeCat);pos=0;}
+function renderDots(){const d=document.getElementById('dots');d.innerHTML='';deck.forEach((qi,k)=>{const i=document.createElement('i');
+  if(ansMap[qi])i.classList.add(ansMap[qi].ok?'done':'miss');if(k===pos)i.classList.add('cur');i.onclick=()=>{pos=k;renderCard();};d.appendChild(i);});}
+function updateMeta(){const answered=deck.filter(qi=>ansMap[qi]).length;const correct=deck.filter(qi=>ansMap[qi]&&ansMap[qi].ok).length;
+  document.getElementById('qm-done').textContent=answered;document.getElementById('qm-correct').textContent=correct;
+  document.getElementById('qm-total').textContent=deck.length;document.getElementById('qm-score').textContent=(answered?Math.round(correct/answered*100):0)+'%';}
+function renderCard(){const card=document.getElementById('flipcard');card.classList.remove('flipped');
+  const qi=deck[pos],item=Q[qi],front=document.getElementById('cardFront'),cs=CAT_COLORS[item.c],already=ansMap[qi];
+  front.innerHTML=`<div class="q-top"><span class="q-cat" style="background:${cs.split(';')[0]};color:${cs.split('color:')[1]}">${item.c}</span><span class="q-idx">${pos+1} / ${deck.length}</span></div>
+    <div class="q-text">${item.q}</div>
+    <div class="opts">${item.o.map((op,j)=>`<button class="opt" onclick="answer(${qi},${j})" ${already?'disabled':''}><span class="k">${'ABCD'[j]}</span><span>${op}</span></button>`).join('')}</div>
+    <div class="q-hint">${already?'Already answered — flip to review.':'Tap an answer to check yourself'}</div>`;
+  if(already){const opts=front.querySelectorAll('.opt');opts[item.a].classList.add('correct');if(!already.ok)opts[already.chosen].classList.add('wrong');
+    setTimeout(()=>{buildBack(qi);card.classList.add('flipped');},60);}
+  document.getElementById('prevBtn').disabled=(pos===0);document.getElementById('nextBtn').disabled=(pos===deck.length-1);
+  renderDots();updateMeta();}
+function buildBack(qi){const item=Q[qi],ok=ansMap[qi]&&ansMap[qi].ok,back=document.getElementById('cardBack');
+  back.innerHTML=`<div class="a-verdict ${ok?'ok':'no'}">${ok?'✓ Correct!':'✗ Not quite'}</div>
+    <div class="a-answer">Answer: <b>${'ABCD'[item.a]}. ${item.o[item.a]}</b></div>
+    <div class="a-expl">${item.e}</div>
+    <div class="a-actions"><a class="a-ref" href="#${item.r}">📖 Review: ${item.rl}</a><button class="a-ref" onclick="flipToFront()">↺ See question</button></div>`;}
+function flipToFront(){document.getElementById('flipcard').classList.remove('flipped');}
+function answer(qi,j){if(ansMap[qi])return;const ok=(j===Q[qi].a);ansMap[qi]={chosen:j,ok};
+  if(ok&&!store.correctSet.includes(qi)){store.correctSet.push(qi);saveLS(store);}
+  const front=document.getElementById('cardFront'),opts=front.querySelectorAll('.opt');opts.forEach(o=>o.disabled=true);
+  opts[Q[qi].a].classList.add('correct');if(!ok)opts[j].classList.add('wrong');buildBack(qi);
+  setTimeout(()=>document.getElementById('flipcard').classList.add('flipped'),450);
+  renderDots();updateMeta();renderDashboard();
+  if(deck.every(x=>ansMap[x]))setTimeout(showResult,700);}
+function goCard(dir){const np=pos+dir;if(np<0||np>=deck.length)return;pos=np;renderCard();}
+function restartQuiz(){ansMap={};document.getElementById('result').classList.remove('show');buildDeck();renderCard();document.getElementById('quiz').scrollIntoView({behavior:'smooth'});}
+document.querySelectorAll('#qfilter button').forEach(b=>{b.onclick=()=>{document.querySelectorAll('#qfilter button').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');activeCat=b.dataset.cat;ansMap={};document.getElementById('result').classList.remove('show');buildDeck();renderCard();};});
+function showResult(){const correct=deck.filter(qi=>ansMap[qi].ok).length,score=Math.round(correct/deck.length*100),res=document.getElementById('result');
+  document.getElementById('resBig').textContent=score+'%';let msg;
+  if(score>=90)msg=`Outstanding — ${correct}/${deck.length}. You've mastered force! 🎉`;
+  else if(score>=70)msg=`Great work — ${correct}/${deck.length}. Nearly there; review the misses.`;
+  else if(score>=50)msg=`Good start — ${correct}/${deck.length}. Revisit the cheat sheet and try again.`;
+  else msg=`${correct}/${deck.length}. Re-read the lessons and come back — you'll improve fast.`;
+  document.getElementById('resMsg').textContent=msg;res.classList.add('show');res.scrollIntoView({behavior:'smooth'});
+  if(activeCat==='all'){const today=new Date().toISOString().slice(0,10);store.attempts=(store.attempts||0)+1;store.last=score;
+    const prevBest=store.best||0;store.best=Math.max(prevBest,score);
+    if(store.lastDay){const diff=(new Date(today)-new Date(store.lastDay))/86400000;if(diff===1)store.streak=(store.streak||1)+1;else if(diff>1)store.streak=1;}else store.streak=1;
+    store.lastDay=today;store.history.push({date:today,score});if(store.history.length>8)store.history=store.history.slice(-8);saveLS(store);
+    if(score>=80)confetti();if(score>prevBest&&store.attempts>1)toast('🎉 New personal best: '+score+'%!');}
+  else if(score>=80)confetti();
+  renderDashboard();}
+function renderDashboard(){document.getElementById('st-best').textContent=(store.best||0)+'%';
+  document.getElementById('st-last').textContent=(store.last!=null?store.last+'%':'–');
+  document.getElementById('st-attempts').textContent=store.attempts||0;document.getElementById('st-streak').textContent=store.streak||0;
+  document.getElementById('scorechip-txt').textContent='Best '+(store.best||0)+'%';
+  const cats=['Basics','Effects','Magnitude','Direction','Vector'],ml=document.getElementById('masteryList');ml.innerHTML='';
+  cats.forEach(cat=>{const total=Q.filter(q=>q.c===cat).length,got=Q.filter((q,i)=>q.c===cat&&store.correctSet.includes(i)).length,pc=total?Math.round(got/total*100):0;
+    const row=document.createElement('div');row.className='row';row.innerHTML=`<span class="nm">${cat==='Vector'?'Vector & Graph':cat}</span><span class="bar"><i style="width:${pc}%"></i></span><span class="pc">${pc}%</span>`;ml.appendChild(row);});
+  const hl=document.getElementById('historyList');hl.innerHTML=(store.history&&store.history.length)?'Recent attempts: '+store.history.map(h=>`<span>${h.date.slice(5)} · ${h.score}%</span>`).join(''):'';
+  const note=document.getElementById('improveNote');
+  if(store.history&&store.history.length>=2){const d=store.history[store.history.length-1].score-store.history[store.history.length-2].score;
+    note.textContent=d>0?`⬆ Up ${d}% since your last full attempt — keep going!`:(d<0?`You dipped ${Math.abs(d)}% — review the weak topics above and bounce back.`:'Holding steady. Aim to push your best higher!');}else note.textContent='';}
+function confetti(){const box=document.createElement('div');box.className='confetti';document.body.appendChild(box);
+  const cols=['#fb923c','#38bdf8','#4ade80','#fbbf24','#f472b6'];
+  for(let i=0;i<80;i++){const p=document.createElement('div');const sz=6+Math.random()*8;
+    p.style.cssText=`position:absolute;top:-20px;left:${Math.random()*100}%;width:${sz}px;height:${sz}px;background:${cols[i%cols.length]};border-radius:${Math.random()>.5?'50%':'2px'};opacity:.9`;box.appendChild(p);
+    const dur=1800+Math.random()*1600;p.animate([{transform:'translateY(0) rotate(0)',opacity:1},{transform:`translateY(${innerHeight+60}px) rotate(${Math.random()*720}deg)`,opacity:.7}],{duration:dur,easing:'cubic-bezier(.3,.6,.5,1)'});setTimeout(()=>p.remove(),dur);}
+  setTimeout(()=>box.remove(),3600);}
+function resetAll(){if(confirm('Reset all quiz scores and progress on this device?')){localStorage.removeItem(LSKEY);store=loadLS();store.correctSet=[];store.history=[];ansMap={};buildDeck();renderCard();renderDashboard();toast('Progress reset.');}}
+
+/* ===== INIT ===== */
+drawSpring(3);pushBottle('reset');drawVector();
+buildDeck();renderCard();renderDashboard();
+</script>
+</body>
+</html>

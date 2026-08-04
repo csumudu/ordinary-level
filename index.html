@@ -107,6 +107,25 @@ section p.lead{color:var(--ink-soft);max-width:660px}
 .t-microbes{--acc:#2dd4bf;--acc2:#4ade80;--accsoft:rgba(45,212,191,.10)}
 .t-eye     {--acc:#38bdf8;--acc2:#a78bfa;--accsoft:rgba(56,189,248,.10)}
 .t-matter  {--acc:#a78bfa;--acc2:#22d3ee;--accsoft:rgba(167,139,250,.13)}
+.t-force   {--acc:#fb923c;--acc2:#fbbf24;--accsoft:rgba(251,146,60,.13)}
+
+/* ============ GRADE FILTER ============ */
+.gbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:6px 0 18px}
+.gbar .glbl{font-size:.76rem;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:var(--ink-dim)}
+.gseg{display:flex;gap:6px;padding:6px;background:var(--panel);border:1px solid var(--line);border-radius:999px}
+.gseg button{border:none;cursor:pointer;font-family:inherit;font-weight:800;font-size:.88rem;
+  padding:9px 18px;border-radius:999px;background:transparent;color:var(--ink-soft);transition:.2s}
+.gseg button:hover{color:#fff;background:var(--panel2)}
+.gseg button.on{background:linear-gradient(120deg,var(--cyan),var(--teal-d));color:#04231f;
+  box-shadow:0 6px 18px rgba(46,197,230,.28)}
+.gcount{font-size:.86rem;color:var(--ink-dim);font-weight:600;margin-left:auto}
+.lcard.hidden,section.hidden{display:none}
+.empty{display:none;text-align:center;margin-top:22px;padding:38px 24px;
+  background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px dashed var(--line);border-radius:var(--radius)}
+.empty.show{display:block}
+.empty .mark{font-size:2rem}
+.empty h3{margin:10px 0 6px;font-size:1.12rem}
+.empty p{color:var(--ink-soft);font-size:.94rem;max-width:470px;margin:0 auto 18px}
 
 /* ============ LESSON CARDS ============ */
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px;margin-top:22px}
@@ -187,13 +206,14 @@ footer b{color:var(--ink-soft)}
     <span style="left:91%;top:58%;animation-delay:2.4s;color:var(--gold)">0</span>
     <span style="left:31%;top:34%;animation-delay:1.2s;color:var(--accent)">7×8</span>
     <span style="left:60%;top:40%;animation-delay:2.8s;color:var(--violet)">H₂O</span>
+    <span style="left:12%;top:46%;animation-delay:3.2s;color:var(--amber)">→F</span>
   </div>
   <div class="wrap">
-    <span class="kicker">Everything you need · Grade 9 O/L</span>
+    <span class="kicker">Everything you need · O/L Grades 9–11</span>
     <h1>Maths &amp; Science,<br>Actually Understood</h1>
-    <p class="sub">Six pages built to make the ideas <em>click</em> — interactive tools you can play with, plain-English explanations, and 148 questions to prove you've got it. Pick a chapter and start.</p>
+    <p class="sub">Seven pages built to make the ideas <em>click</em> — interactive tools you can play with, plain-English explanations, and 178 questions to prove you've got it. Pick a grade, then pick a chapter.</p>
     <div class="hero-cta">
-      <a class="btn btn-primary" href="#maths">▶ Browse lessons</a>
+      <a class="btn btn-primary" href="#grades">▶ Browse lessons</a>
       <a class="btn btn-ghost" href="#howto">How to use this</a>
     </div>
   </div>
@@ -202,27 +222,38 @@ footer b{color:var(--ink-soft)}
 <main>
 
 <div class="wrap">
+  <div class="gbar reveal" id="grades">
+    <span class="glbl">Grade</span>
+    <div class="gseg" id="gseg">
+      <button type="button" data-g="all" class="on">All</button>
+      <button type="button" data-g="9">Grade 9</button>
+      <button type="button" data-g="10">Grade 10</button>
+      <button type="button" data-g="11">Grade 11</button>
+    </div>
+    <span class="gcount" id="gcount"></span>
+  </div>
   <div class="stats reveal">
-    <div class="stat"><div class="big">6</div><div class="lbl">Pages</div></div>
-    <div class="stat"><div class="big">5</div><div class="lbl">Chapters</div></div>
-    <div class="stat"><div class="big">148</div><div class="lbl">Questions</div></div>
-    <div class="stat"><div class="big">22</div><div class="lbl">Live tools</div></div>
+    <div class="stat"><div class="big" id="stPages">7</div><div class="lbl">Pages</div></div>
+    <div class="stat"><div class="big" id="stChapters">6</div><div class="lbl">Chapters</div></div>
+    <div class="stat"><div class="big" id="stQuestions">178</div><div class="lbl">Questions</div></div>
+    <div class="stat"><div class="big" id="stTools">26</div><div class="lbl">Live tools</div></div>
   </div>
 </div>
 
 <!-- ============ MATHS ============ -->
-<section id="maths" class="sub-maths"><div class="wrap reveal">
+<section id="maths" class="subject sub-maths"><div class="wrap reveal">
   <div class="eyebrow"><span class="num">∑</span><span>Subject one</span></div>
   <h2>Mathematics</h2>
-  <p class="lead">Two chapter deep-dives that build the idea from the ground up, hand you a live tool to play with, then lock it in with 30 flip-to-reveal questions graded easy → hard — plus a drill app for the multiplication facts everything else rests on.</p>
+  <p class="lead">Chapter deep-dives that build the idea from the ground up, hand you a live tool to play with, then lock it in with 30 flip-to-reveal questions graded easy → hard — plus a drill app for the multiplication facts everything else rests on.</p>
 
   <div class="cards">
 
-    <a class="lcard t-patterns" href="maths/number-patterns.html">
+    <a class="lcard t-patterns" href="maths/number-patterns.html"
+       data-grade="9" data-chapter="1" data-q="30" data-tools="1">
       <div class="ltop">
         <div class="glyph">Tₙ</div>
         <div>
-          <div class="chap">Chapter 1</div>
+          <div class="chap">Grade 9 · Chapter 1</div>
           <h3>Number Patterns</h3>
         </div>
       </div>
@@ -237,11 +268,12 @@ footer b{color:var(--ink-soft)}
       <div class="open">Open lesson <span class="arr">→</span></div>
     </a>
 
-    <a class="lcard t-binary" href="maths/binary-numbers.html">
+    <a class="lcard t-binary" href="maths/binary-numbers.html"
+       data-grade="9" data-chapter="2" data-q="30" data-tools="2">
       <div class="ltop">
         <div class="glyph mono">10</div>
         <div>
-          <div class="chap">Chapter 2</div>
+          <div class="chap">Grade 9 · Chapter 2</div>
           <h3>Binary Numbers</h3>
         </div>
       </div>
@@ -256,11 +288,12 @@ footer b{color:var(--ink-soft)}
       <div class="open">Open lesson <span class="arr">→</span></div>
     </a>
 
-    <a class="lcard t-tables" href="maths/times-tables-master.html">
+    <a class="lcard t-tables" href="maths/times-tables-master.html"
+       data-grade="all" data-q="0" data-tools="5">
       <div class="ltop">
         <div class="glyph">×</div>
         <div>
-          <div class="chap">Practice app</div>
+          <div class="chap">Any grade · Practice app</div>
           <h3>Times Tables Master</h3>
         </div>
       </div>
@@ -280,18 +313,19 @@ footer b{color:var(--ink-soft)}
 </div></section>
 
 <!-- ============ SCIENCE ============ -->
-<section id="science" class="sub-science"><div class="wrap reveal">
+<section id="science" class="subject sub-science"><div class="wrap reveal">
   <div class="eyebrow"><span class="num">🔬</span><span>Subject two</span></div>
   <h2>Science</h2>
-  <p class="lead">All three chapters written straight from the Grade 9 Science textbook, but explained as systems with a job to do — so the parts, the defects and the diseases make sense instead of needing to be memorised. Each page scores your quiz and saves progress on this device.</p>
+  <p class="lead">Every chapter written straight from the Science textbook, but explained as systems with a job to do — so the parts, the defects and the diseases make sense instead of needing to be memorised. Each page scores your quiz and saves progress on this device.</p>
 
   <div class="cards">
 
-    <a class="lcard t-microbes" href="science/micro-organisms.html">
+    <a class="lcard t-microbes" href="science/micro-organisms.html"
+       data-grade="9" data-chapter="1" data-q="28" data-tools="3">
       <div class="ltop">
         <div class="glyph">🦠</div>
         <div>
-          <div class="chap">Chapter 1</div>
+          <div class="chap">Grade 9 · Chapter 1</div>
           <h3>Micro-organisms</h3>
         </div>
       </div>
@@ -307,11 +341,12 @@ footer b{color:var(--ink-soft)}
       <div class="open">Open lesson <span class="arr">→</span></div>
     </a>
 
-    <a class="lcard t-eye" href="science/eye_and_ear.html">
+    <a class="lcard t-eye" href="science/eye_and_ear.html"
+       data-grade="9" data-chapter="2" data-q="30" data-tools="7">
       <div class="ltop">
         <div class="glyph">👁</div>
         <div>
-          <div class="chap">Chapter 2</div>
+          <div class="chap">Grade 9 · Chapter 2</div>
           <h3>Eye &amp; Ear</h3>
         </div>
       </div>
@@ -327,11 +362,12 @@ footer b{color:var(--ink-soft)}
       <div class="open">Open lesson <span class="arr">→</span></div>
     </a>
 
-    <a class="lcard t-matter" href="science/matter_mastery.html">
+    <a class="lcard t-matter" href="science/matter_mastery.html"
+       data-grade="9" data-chapter="3" data-q="30" data-tools="4">
       <div class="ltop">
         <div class="glyph">⚛</div>
         <div>
-          <div class="chap">Chapter 3</div>
+          <div class="chap">Grade 9 · Chapter 3</div>
           <h3>Matter &amp; Atoms</h3>
         </div>
       </div>
@@ -347,8 +383,38 @@ footer b{color:var(--ink-soft)}
       <div class="open">Open lesson <span class="arr">→</span></div>
     </a>
 
+    <a class="lcard t-force" href="science/force_mastery.html"
+       data-grade="9" data-chapter="4" data-q="30" data-tools="4">
+      <div class="ltop">
+        <div class="glyph">💪</div>
+        <div>
+          <div class="chap">Grade 9 · Chapter 4</div>
+          <h3>Force</h3>
+        </div>
+      </div>
+      <div class="tagline">Every push &amp; pull around you</div>
+      <p class="desc">What a force can actually do to an object, how a spring balance measures it in newtons, and why a force needs a direction as well as a size — then draw your own force vectors.</p>
+      <div class="chips">
+        <span class="chip">Effects</span>
+        <span class="chip">Magnitude</span>
+        <span class="chip">Direction</span>
+        <span class="chip hot">🎯 4 simulators</span>
+        <span class="chip go">📝 30-Q scored quiz</span>
+      </div>
+      <div class="open">Open lesson <span class="arr">→</span></div>
+    </a>
+
   </div>
 </div></section>
+
+<div class="wrap">
+  <div class="empty" id="empty">
+    <div class="mark">🗓️</div>
+    <h3>Nothing here yet</h3>
+    <p id="emptyTxt">No pages have been added for this grade so far. New chapters land here as they're built.</p>
+    <button type="button" class="btn btn-ghost" id="emptyReset">Show all grades</button>
+  </div>
+</div>
 
 <!-- ============ HOW TO USE ============ -->
 <section id="howto"><div class="wrap reveal">
@@ -396,6 +462,61 @@ const io=new IntersectionObserver(es=>{
   es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
 },{threshold:.12});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* ---------- grade filter ---------- */
+const cards    = [...document.querySelectorAll('.lcard')];
+const subjects = [...document.querySelectorAll('section.subject')];
+const segBtns  = [...document.querySelectorAll('#gseg button')];
+const emptyBox = document.getElementById('empty');
+const emptyTxt = document.getElementById('emptyTxt');
+const gcount   = document.getElementById('gcount');
+const STORE    = 'ol-hub-grade';
+
+function num(el,v){ el.textContent = v; }
+
+function applyGrade(g){
+  let pages=0, chapters=0, questions=0, tools=0;
+
+  cards.forEach(c=>{
+    const tags = (c.dataset.grade||'').trim().split(/\s+/);
+    const on   = g==='all' || tags.includes('all') || tags.includes(g);
+    c.classList.toggle('hidden', !on);
+    if(!on) return;
+    pages++;
+    if(+(c.dataset.chapter||0) > 0) chapters++;
+    questions += +(c.dataset.q||0);
+    tools     += +(c.dataset.tools||0);
+  });
+
+  /* hide a subject entirely when it has nothing for this grade */
+  subjects.forEach(s=>{
+    const any = [...s.querySelectorAll('.lcard')].some(c=>!c.classList.contains('hidden'));
+    s.classList.toggle('hidden', !any);
+  });
+
+  num(document.getElementById('stPages'),     pages);
+  num(document.getElementById('stChapters'),  chapters);
+  num(document.getElementById('stQuestions'), questions);
+  num(document.getElementById('stTools'),     tools);
+
+  const label = g==='all' ? 'all grades' : 'Grade '+g;
+  emptyBox.classList.toggle('show', pages===0);
+  emptyTxt.textContent = 'No pages have been added for '+label+' so far. New chapters land here as they\'re built.';
+  gcount.textContent = pages===0
+    ? 'Nothing for '+label+' yet'
+    : pages+(pages===1?' page':' pages')+' · '+chapters+(chapters===1?' chapter':' chapters');
+
+  segBtns.forEach(b=>b.classList.toggle('on', b.dataset.g===g));
+  try{ localStorage.setItem(STORE,g); }catch(e){}
+}
+
+segBtns.forEach(b=>b.addEventListener('click',()=>applyGrade(b.dataset.g)));
+document.getElementById('emptyReset').addEventListener('click',()=>applyGrade('all'));
+
+let start='all';
+try{ start = localStorage.getItem(STORE) || 'all'; }catch(e){}
+if(!segBtns.some(b=>b.dataset.g===start)) start='all';
+applyGrade(start);
 </script>
 </body>
 </html>
