@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fractions — Master It | Grade 9 Maths</title>
+<style>
+  :root{
+    --bg:#0f1020; --bg2:#171933; --card:#1e2140; --card2:#262a52;
+    --ink:#eef0ff; --muted:#a9b0d8; --line:#333863;
+    --purple:#a78bfa; --purple2:#c4b5fd; --teal:#2dd4bf; --pink:#f472b6;
+    --easy:#3ecf8e; --med:#f6b93b; --hard:#ff6b6b;
+    --accent:#8b7cff; --gold:#ffd166;
+    --shadow:0 18px 45px rgba(0,0,0,.5); --r:18px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+    background:radial-gradient(1200px 700px at 80% -10%,#241f45 0%,var(--bg) 55%) fixed;
+    color:var(--ink);line-height:1.65;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+  h1,h2,h3{line-height:1.2;font-weight:800;letter-spacing:.2px}
+  .eq{font-family:'Cambria Math','Times New Roman',Georgia,serif;font-style:italic}
+
+  /* fraction rendering */
+  .fr{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 3px;line-height:1.05}
+  .fr .num{border-bottom:2px solid currentColor;padding:0 4px}
+  .fr .den{padding:0 4px}
+  .mix{display:inline-flex;align-items:center;gap:3px;vertical-align:middle}
+
+  header.hero{padding:64px 0 40px;text-align:center;position:relative;overflow:hidden}
+  .badge{display:inline-block;padding:6px 16px;border:1px solid var(--line);border-radius:999px;
+    color:var(--purple2);font-size:.8rem;letter-spacing:2px;text-transform:uppercase;background:rgba(167,139,250,.1)}
+  header.hero h1{font-size:clamp(2.1rem,6vw,3.6rem);margin:18px 0 8px;
+    background:linear-gradient(100deg,#fff 10%,var(--purple) 55%,var(--teal) 95%);
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  header.hero p.sub{color:var(--muted);max-width:650px;margin:0 auto;font-size:1.05rem}
+  .floaters{position:absolute;inset:0;pointer-events:none;z-index:-1;opacity:.4}
+  .floaters span{position:absolute;color:var(--purple);font-weight:800;font-size:1.5rem;animation:float 7s ease-in-out infinite}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-22px)}}
+
+  nav.toc{position:sticky;top:0;z-index:40;background:rgba(15,16,32,.86);backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);padding:10px 0}
+  nav.toc .wrap{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+  nav.toc .wrap::-webkit-scrollbar{display:none}
+  nav.toc a{white-space:nowrap;color:var(--muted);text-decoration:none;font-size:.88rem;padding:7px 14px;border-radius:999px;transition:.2s}
+  nav.toc a:hover{color:#fff;background:var(--card)}
+  nav.toc a.home{position:sticky;left:0;z-index:1;flex:0 0 auto;font-weight:800;color:var(--purple2);
+    background:var(--card2);border:1px solid var(--line)}
+  nav.toc a.home:hover{color:#fff;border-color:var(--purple);background:var(--card2)}
+
+  section{padding:44px 0}
+  .sec-tag{color:var(--purple2);font-weight:700;letter-spacing:2px;text-transform:uppercase;font-size:.78rem}
+  section h2{font-size:clamp(1.5rem,4vw,2.1rem);margin:6px 0 14px}
+  section h2 .n{color:var(--purple);opacity:.7;margin-right:10px}
+  p.lead{color:#d3d8f5;font-size:1.05rem}
+  .muted{color:var(--muted)}
+  .step-label{display:inline-block;font-size:.72rem;font-weight:800;letter-spacing:1px;color:var(--teal);
+    background:rgba(45,212,191,.12);border:1px solid rgba(45,212,191,.4);padding:2px 10px;border-radius:999px;margin-bottom:8px}
+
+  .card{background:linear-gradient(180deg,var(--card),var(--bg2));border:1px solid var(--line);
+    border-radius:var(--r);padding:24px;box-shadow:var(--shadow);margin:18px 0}
+  .card.tight{padding:18px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:720px){.grid2{grid-template-columns:1fr}}
+
+  .keybox{border-left:4px solid var(--purple);background:rgba(167,139,250,.1);padding:14px 18px;border-radius:10px;margin:14px 0}
+  .keybox b{color:var(--purple2)}
+  .analogy{border-left:4px solid var(--gold);background:rgba(255,209,102,.08);padding:14px 18px;border-radius:10px;margin:14px 0}
+  .analogy b{color:var(--gold)}
+  .warn{border-left:4px solid var(--hard);background:rgba(255,107,107,.08);padding:14px 18px;border-radius:10px;margin:14px 0}
+  .formula{display:inline-block;background:rgba(139,124,255,.14);border:1px solid #4a4a86;padding:8px 16px;border-radius:12px;font-size:1.1rem;color:#fff;margin:6px 0}
+
+  /* fraction bar visual */
+  .bar{display:flex;height:52px;border-radius:10px;overflow:hidden;border:1px solid var(--line);max-width:420px}
+  .bar .cell{flex:1;border-right:1px solid rgba(255,255,255,.12)}
+  .bar .cell:last-child{border-right:none}
+  .bar .cell.on{background:var(--teal)}
+  .circlewrap{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;align-items:center}
+
+  /* OF grid */
+  .ofgrid{display:grid;gap:3px;max-width:360px;margin:10px auto}
+  .ofcell{aspect-ratio:1;border-radius:5px;background:var(--card2);border:1px solid var(--line);transition:.25s}
+  .ofcell.colsel{background:rgba(45,212,191,.28);border-color:var(--teal)}
+  .ofcell.both{background:var(--purple);border-color:var(--purple2);box-shadow:0 0 10px rgba(167,139,250,.5)}
+  .ofctrls{display:flex;gap:22px;justify-content:center;flex-wrap:wrap;margin-bottom:6px}
+  .stepper{display:flex;align-items:center;gap:8px;background:var(--card2);border:1px solid var(--line);padding:8px 12px;border-radius:12px}
+  .stepper button{width:30px;height:30px;border-radius:8px;border:none;background:var(--accent);color:#0a0a1a;font-weight:800;font-size:1.1rem;cursor:pointer}
+  .stepper .val{min-width:26px;text-align:center;font-weight:800}
+  .legend{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;font-size:.85rem;margin-top:10px}
+  .legend i{display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:middle;margin-right:6px}
+  .ofresult{text-align:center;font-size:1.3rem;font-weight:800;margin-top:12px}
+
+  /* BODMAS ladder */
+  .ladder{display:flex;flex-direction:column;gap:8px}
+  .rung{display:flex;align-items:center;gap:14px;background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:10px 16px}
+  .rung .big{font-size:1.5rem;font-weight:900;width:34px;text-align:center}
+  .rung .t{font-weight:800}
+  .rung small{color:var(--muted)}
+  .rung.b .big{color:#f472b6}.rung.o .big{color:var(--gold)}.rung.d .big{color:var(--teal)}
+  .rung.m .big{color:#60a5fa}.rung.a .big{color:var(--easy)}.rung.s .big{color:var(--hard)}
+  .tie{font-size:.78rem;color:var(--muted);text-align:center;margin:-2px 0}
+
+  /* BODMAS stepper */
+  .bstep{background:rgba(139,124,255,.08);border-left:3px solid var(--accent);padding:8px 14px;border-radius:8px;margin:8px 0;
+    opacity:0;transform:translateY(6px);transition:.4s;font-size:1.02rem}
+  .bstep.show{opacity:1;transform:none}
+  .bstep .why{color:var(--purple2);font-size:.85rem;display:block;margin-top:3px}
+  .gobtn{padding:9px 20px;border-radius:10px;border:none;background:linear-gradient(90deg,var(--purple),var(--accent));color:#0a0a1a;font-weight:800;cursor:pointer}
+
+  .tabs{display:flex;gap:10px;justify-content:center;margin:8px 0 22px;flex-wrap:wrap}
+  .tab{cursor:pointer;padding:10px 22px;border-radius:999px;font-weight:800;border:1px solid var(--line);background:var(--card);color:var(--muted);transition:.2s}
+  .tab .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px;vertical-align:middle}
+  .tab.easy .dot{background:var(--easy)}.tab.med .dot{background:var(--med)}.tab.hard .dot{background:var(--hard)}
+  .tab.active{color:#fff;transform:translateY(-2px)}
+  .tab.active.easy{border-color:var(--easy);box-shadow:0 6px 18px rgba(62,207,142,.25)}
+  .tab.active.med{border-color:var(--med);box-shadow:0 6px 18px rgba(246,185,59,.25)}
+  .tab.active.hard{border-color:var(--hard);box-shadow:0 6px 18px rgba(255,107,107,.25)}
+  .hint{text-align:center;color:var(--muted);font-size:.9rem;margin-bottom:16px}
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:720px){.cards{grid-template-columns:1fr}}
+  .flip{perspective:1600px;min-height:250px;cursor:pointer}
+  .flip-in{position:relative;width:100%;height:100%;min-height:250px;transition:transform .65s cubic-bezier(.4,.2,.2,1);transform-style:preserve-3d}
+  .flip.flipped .flip-in{transform:rotateY(180deg)}
+  .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--r);padding:20px;border:1px solid var(--line);display:flex;flex-direction:column;overflow:auto}
+  .front{background:linear-gradient(180deg,var(--card),var(--bg2))}
+  .back{background:linear-gradient(180deg,#211a3d,#141026);transform:rotateY(180deg)}
+  .qhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+  .qno{font-weight:800;color:var(--muted);font-size:.85rem;letter-spacing:1px}
+  .lvl{font-size:.72rem;font-weight:800;padding:3px 10px;border-radius:999px;text-transform:uppercase}
+  .lvl.easy{background:rgba(62,207,142,.18);color:var(--easy)}
+  .lvl.med{background:rgba(246,185,59,.18);color:var(--med)}
+  .lvl.hard{background:rgba(255,107,107,.18);color:var(--hard)}
+  .qtext{font-size:1.05rem;font-weight:600}
+  .flip-cue{margin-top:auto;color:var(--purple2);font-size:.82rem;font-weight:700;display:flex;align-items:center;gap:6px}
+  .flip-cue svg{width:16px;height:16px}
+  .ans{color:var(--gold);font-weight:800;font-size:1.1rem;margin:2px 0 10px}
+  .exp{font-size:.92rem;color:#dce0f7}.exp b{color:#fff}
+  .estep{background:rgba(139,124,255,.09);border-left:3px solid var(--accent);padding:6px 12px;border-radius:8px;margin:6px 0;font-size:.92rem}
+  .back .qno{color:#8b90c0}
+
+  .cheat{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:720px){.cheat{grid-template-columns:1fr}}
+  .cheat .c{background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:16px}
+  .cheat .c h4{color:var(--purple2);margin-bottom:6px;font-size:1rem}
+
+  footer{padding:40px 0 60px;text-align:center;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line);margin-top:30px}
+  .prog{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--purple),var(--teal));z-index:60;width:0}
+  ::selection{background:var(--purple);color:#0a0a1a}
+</style>
+</head>
+<body>
+<div class="prog" id="prog"></div>
+
+<header class="hero">
+  <div class="floaters">
+    <span style="left:8%;top:20%">½</span><span style="left:20%;top:62%;animation-delay:1s">⅔</span>
+    <span style="left:82%;top:24%;animation-delay:.6s">¾</span><span style="left:70%;top:70%;animation-delay:1.6s">⅕</span>
+    <span style="left:45%;top:12%;animation-delay:2s">of</span><span style="left:90%;top:56%;animation-delay:2.4s">÷</span>
+  </div>
+  <div class="wrap">
+    <span class="badge">Grade 9 · O/L Maths · Chapter 3</span>
+    <h1>Fractions</h1>
+    <p class="sub">Built up one idea at a time — from what a fraction <em>is</em>, to the four operations, to the word "of", and finally to solving big BODMAS expressions with total confidence.</p>
+  </div>
+</header>
+
+<nav class="toc">
+  <div class="wrap">
+    <a class="home" href="../index.html" title="Back to all lessons">← Home</a>
+    <a href="#c1">① What a fraction is</a>
+    <a href="#c2">② Mixed &amp; improper</a>
+    <a href="#c3">③ Equivalent</a>
+    <a href="#c4">④ + and −</a>
+    <a href="#c5">⑤ × and reciprocal</a>
+    <a href="#c6">⑥ ÷</a>
+    <a href="#c7">⑦ "of" = ×</a>
+    <a href="#c8">⑧ BODMAS</a>
+    <a href="#play">🎨 "of" grid</a>
+    <a href="#bodmas-play">🪜 BODMAS demo</a>
+    <a href="#practice">📝 Practice ×30</a>
+    <a href="#cheat">⭐ Cheat sheet</a>
+  </div>
+</nav>
+
+<!-- ① -->
+<section id="c1"><div class="wrap">
+  <span class="step-label">Level 1 · the foundation</span>
+  <h2><span class="n">①</span>A fraction is "how many equal parts you have"</h2>
+  <p class="lead">Cut a whole into equal parts. The bottom number (<b>denominator</b>) says how many equal parts the whole is split into. The top number (<b>numerator</b>) says how many of them you're taking.</p>
+  <div class="card">
+    <div class="circlewrap">
+      <div class="bar"><div class="cell on"></div><div class="cell on"></div><div class="cell on"></div><div class="cell"></div><div class="cell"></div></div>
+      <div style="font-size:1.4rem" class="eq">= <span class="fr"><span class="num">3</span><span class="den">5</span></span></div>
+    </div>
+    <p class="muted" style="text-align:center;margin-top:14px"><b>3 shaded</b> parts out of <b>5 equal</b> parts → three-fifths.</p>
+  </div>
+  <div class="analogy"><b>It works for groups too.</b> A team of 3 boys and 2 girls is 5 people. The boys are <span class="fr"><span class="num">3</span><span class="den">5</span></span> of the team — same idea, "3 out of 5 equal shares".</div>
+</div></section>
+
+<!-- ② -->
+<section id="c2"><div class="wrap">
+  <span class="step-label">Level 2 · building on level 1</span>
+  <h2><span class="n">②</span>Proper, improper &amp; mixed numbers</h2>
+  <p class="lead">Once you can count parts, you can go past a whole. That's where these three names come in — they're just different ways of writing the same amount.</p>
+  <div class="grid2">
+    <div class="card tight"><h3 style="font-size:1rem;color:var(--teal)">Proper (less than 1)</h3><p class="muted">Top smaller than bottom.</p><p style="font-size:1.2rem"><span class="fr"><span class="num">3</span><span class="den">4</span></span> &nbsp; <span class="fr"><span class="num">1</span><span class="den">2</span></span> &nbsp; <span class="fr"><span class="num">2</span><span class="den">3</span></span></p></div>
+    <div class="card tight"><h3 style="font-size:1rem;color:var(--gold)">Improper (1 or more)</h3><p class="muted">Top ≥ bottom.</p><p style="font-size:1.2rem"><span class="fr"><span class="num">3</span><span class="den">2</span></span> &nbsp; <span class="fr"><span class="num">8</span><span class="den">5</span></span> &nbsp; <span class="fr"><span class="num">5</span><span class="den">5</span></span></p></div>
+  </div>
+  <div class="card">
+    <p style="text-align:center;font-size:1.15rem">One full circle <b>+</b> <span class="fr"><span class="num">3</span><span class="den">8</span></span> of another &nbsp;=&nbsp; <span class="mix">1<span class="fr"><span class="num">3</span><span class="den">8</span></span></span> &nbsp;(mixed number)&nbsp; =&nbsp; <span class="fr"><span class="num">11</span><span class="den">8</span></span> &nbsp;(improper)</p>
+  </div>
+  <div class="keybox"><b>Swap between them freely.</b> Mixed → improper: multiply the whole number by the denominator and add the top (<span class="mix">1<span class="fr"><span class="num">1</span><span class="den">2</span></span></span> = <span class="eq">(1×2+1)/2</span> = <span class="fr"><span class="num">3</span><span class="den">2</span></span>). Improper → mixed: divide top by bottom; the quotient is the whole, the remainder is the new top.</div>
+</div></section>
+
+<!-- ③ -->
+<section id="c3"><div class="wrap">
+  <span class="step-label">Level 3 · the key to everything after</span>
+  <h2><span class="n">③</span>Equivalent fractions — same amount, different clothes</h2>
+  <p class="lead">Multiply <b>or</b> divide the top and bottom by the <b>same</b> non-zero number and the value doesn't change. This one move powers adding, subtracting and simplifying.</p>
+  <div class="card">
+    <div class="circlewrap" style="gap:26px">
+      <div style="text-align:center"><div class="bar" style="width:220px"><div class="cell on"></div><div class="cell"></div></div><p class="muted" style="margin-top:6px"><span class="fr"><span class="num">1</span><span class="den">2</span></span></p></div>
+      <div style="font-size:1.4rem">=</div>
+      <div style="text-align:center"><div class="bar" style="width:220px"><div class="cell on"></div><div class="cell on"></div><div class="cell"></div><div class="cell"></div></div><p class="muted" style="margin-top:6px"><span class="fr"><span class="num">2</span><span class="den">4</span></span></p></div>
+    </div>
+    <p style="text-align:center;margin-top:12px" class="eq"><span class="fr"><span class="num">2</span><span class="den">5</span></span> = <span style="color:var(--pink)">2×2 / 5×2</span> = <span class="fr"><span class="num">4</span><span class="den">10</span></span> &nbsp;&nbsp;&nbsp; <span class="fr"><span class="num">8</span><span class="den">12</span></span> = <span style="color:var(--pink)">8÷4 / 12÷4</span> = <span class="fr"><span class="num">2</span><span class="den">3</span></span></p>
+  </div>
+  <div class="analogy"><b>Simplest form</b> just means you've divided out every common factor — the same amount written with the smallest numbers.</div>
+</div></section>
+
+<!-- ④ -->
+<section id="c4"><div class="wrap">
+  <span class="step-label">Level 4 · now we can combine them</span>
+  <h2><span class="n">④</span>Adding &amp; subtracting: make the bottoms match first</h2>
+  <p class="lead">You can only add or subtract parts that are the <b>same size</b>. Same denominator? Just add the tops. Different denominators? Use Level 3 to give them a common bottom first.</p>
+  <div class="grid2">
+    <div class="card tight"><h3 style="font-size:1rem;color:var(--teal)">Same bottom → easy</h3>
+      <p class="eq" style="font-size:1.05rem"><span class="fr"><span class="num">1</span><span class="den">5</span></span> + <span class="fr"><span class="num">4</span><span class="den">5</span></span> − <span class="fr"><span class="num">2</span><span class="den">5</span></span> = <span class="fr"><span class="num">1+4−2</span><span class="den">5</span></span> = <span class="fr"><span class="num">3</span><span class="den">5</span></span></p></div>
+    <div class="card tight"><h3 style="font-size:1rem;color:var(--gold)">Different bottoms → convert</h3>
+      <p class="eq" style="font-size:1.02rem"><span class="fr"><span class="num">1</span><span class="den">4</span></span> + <span class="fr"><span class="num">2</span><span class="den">3</span></span> − <span class="fr"><span class="num">5</span><span class="den">6</span></span> = <span class="fr"><span class="num">3</span><span class="den">12</span></span> + <span class="fr"><span class="num">8</span><span class="den">12</span></span> − <span class="fr"><span class="num">10</span><span class="den">12</span></span> = <span class="fr"><span class="num">1</span><span class="den">12</span></span></p></div>
+  </div>
+</div></section>
+
+<!-- ⑤ -->
+<section id="c5"><div class="wrap">
+  <span class="step-label">Level 5 · the easiest operation</span>
+  <h2><span class="n">⑤</span>Multiplying &amp; the reciprocal</h2>
+  <p class="lead">Multiplying is the friendliest: no common denominator needed. <b>Tops × tops, bottoms × bottoms.</b></p>
+  <div class="card">
+    <p style="text-align:center;font-size:1.25rem" class="eq"><span class="fr"><span class="num">2</span><span class="den">5</span></span> × <span class="fr"><span class="num">1</span><span class="den">3</span></span> = <span class="fr"><span class="num">2×1</span><span class="den">5×3</span></span> = <span class="fr"><span class="num">2</span><span class="den">15</span></span></p>
+  </div>
+  <div class="keybox"><b>Reciprocal = flip it over.</b> The reciprocal of <span class="fr"><span class="num">a</span><span class="den">b</span></span> is <span class="fr"><span class="num">b</span><span class="den">a</span></span>. Two numbers are reciprocals when they multiply to <b>1</b> — e.g. 2 × <span class="fr"><span class="num">1</span><span class="den">2</span></span> = 1, so <span class="fr"><span class="num">1</span><span class="den">2</span></span> and 2 are reciprocals. (Whole number 5 = <span class="fr"><span class="num">5</span><span class="den">1</span></span>, so its reciprocal is <span class="fr"><span class="num">1</span><span class="den">5</span></span>.)</div>
+</div></section>
+
+<!-- ⑥ -->
+<section id="c6"><div class="wrap">
+  <span class="step-label">Level 6 · division is secretly multiplication</span>
+  <h2><span class="n">⑥</span>Dividing: flip the second one, then multiply</h2>
+  <p class="lead">To divide by a fraction, multiply by its reciprocal. Dividing by <span class="fr"><span class="num">3</span><span class="den">2</span></span> is the same as multiplying by <span class="fr"><span class="num">2</span><span class="den">3</span></span>.</p>
+  <div class="card">
+    <p style="text-align:center;font-size:1.2rem" class="eq"><span class="fr"><span class="num">4</span><span class="den">3</span></span> ÷ 2 = <span class="fr"><span class="num">4</span><span class="den">3</span></span> × <span class="fr"><span class="num">1</span><span class="den">2</span></span> = <span class="fr"><span class="num">4</span><span class="den">6</span></span> = <span class="fr"><span class="num">2</span><span class="den">3</span></span></p>
+    <p style="text-align:center;font-size:1.05rem;margin-top:10px" class="eq muted">Mixed numbers first become improper: <span class="mix">1<span class="fr"><span class="num">2</span><span class="den">7</span></span></span> ÷ <span class="mix">1<span class="fr"><span class="num">1</span><span class="den">2</span></span></span> = <span class="fr"><span class="num">9</span><span class="den">7</span></span> × <span class="fr"><span class="num">2</span><span class="den">3</span></span> = <span class="fr"><span class="num">6</span><span class="den">7</span></span></p>
+  </div>
+  <div class="analogy"><b>Why flipping works:</b> "how many halves fit into 3?" is 3 ÷ ½ = 6 — dividing by a half <em>doubles</em>. Multiplying by the flipped fraction (×2) does exactly that.</div>
+</div></section>
+
+<!-- ⑦ -->
+<section id="c7"><div class="wrap">
+  <span class="step-label">Level 7 · the word that unlocks the chapter</span>
+  <h2><span class="n">⑦</span>"of" just means "×"</h2>
+  <p class="lead"><span class="fr"><span class="num">1</span><span class="den">2</span></span> <b>of</b> 100 is 50 — and 50 = <span class="fr"><span class="num">1</span><span class="den">2</span></span> × 100. Whenever you see "of" between a fraction and an amount, replace it with a multiply sign.</p>
+  <div class="card">
+    <p style="text-align:center;font-size:1.1rem" class="eq"><span class="fr"><span class="num">1</span><span class="den">2</span></span> of <span class="fr"><span class="num">1</span><span class="den">3</span></span> = <span class="fr"><span class="num">1</span><span class="den">2</span></span> × <span class="fr"><span class="num">1</span><span class="den">3</span></span> = <span class="fr"><span class="num">1</span><span class="den">6</span></span></p>
+    <p class="muted" style="text-align:center;margin-top:8px">Take a third of a bar, then take half of <em>that</em> — you land on one-sixth of the whole bar. See it move in the <a href="#play" style="color:var(--gold)">"of" grid</a> below.</p>
+  </div>
+  <div class="keybox"><b>General rule:</b> <span class="fr"><span class="num">a</span><span class="den">b</span></span> of <span class="fr"><span class="num">c</span><span class="den">d</span></span> = <span class="fr"><span class="num">a</span><span class="den">b</span></span> × <span class="fr"><span class="num">c</span><span class="den">d</span></span>. It works for whole numbers and mixed numbers too (turn mixed numbers improper first).</div>
+</div></section>
+
+<!-- ⑧ -->
+<section id="c8"><div class="wrap">
+  <span class="step-label">Level 8 · putting it all together</span>
+  <h2><span class="n">⑧</span>BODMAS — the order of operations</h2>
+  <p class="lead">When one expression mixes +, −, ×, ÷ and "of", the answer depends on the <b>order</b> you work in. BODMAS is that agreed order, top priority first.</p>
+  <div class="card">
+    <div class="ladder">
+      <div class="rung b"><span class="big">B</span><span><span class="t">Brackets</span> <small>— do what's inside ( ) first</small></span></div>
+      <div class="rung o"><span class="big">O</span><span><span class="t">Of</span> <small>— "of" acts like a bracket; do it next</small></span></div>
+      <div class="rung d"><span class="big">D</span><span><span class="t">Division</span></span></div>
+      <div class="tie">▲ ÷ and × are equal — do them left → right ▼</div>
+      <div class="rung m"><span class="big">M</span><span><span class="t">Multiplication</span></span></div>
+      <div class="rung a"><span class="big">A</span><span><span class="t">Addition</span></span></div>
+      <div class="tie">▲ + and − are equal — do them left → right ▼</div>
+      <div class="rung s"><span class="big">S</span><span><span class="t">Subtraction</span></span></div>
+    </div>
+  </div>
+  <div class="warn"><b>Two traps to remember:</b> ÷ and × have the <em>same</em> rank (go left to right, don't always divide first); likewise + and − (go left to right). And <b>"of" outranks ÷ and ×</b> — so in <span class="eq">4/3 of 3/2</span>, do the "of" before any surrounding × or ÷.</div>
+  <div class="keybox">Watch the full worked example build itself in the <a href="#bodmas-play" style="color:var(--gold)">BODMAS demo</a> below.</div>
+</div></section>
+
+<!-- OF GRID -->
+<section id="play"><div class="wrap">
+  <span class="sec-tag">Learn by playing</span>
+  <h2>🎨 The "of" grid — see why <span class="eq">of</span> is <span class="eq">×</span></h2>
+  <p class="lead">Set two fractions. Green shades the first fraction across the columns; purple takes the second fraction "of" the green. The purple overlap, counted out of all cells, <b>is</b> the product.</p>
+  <div class="card">
+    <div class="ofctrls">
+      <div style="text-align:center">
+        <div class="muted" style="font-size:.8rem;margin-bottom:4px">Second fraction — shaded green (the "of this")</div>
+        <div style="display:flex;gap:10px;justify-content:center">
+          <div class="stepper"><button data-k="rn" data-d="-1">−</button><span class="val" id="rnV">1</span><button data-k="rn" data-d="1">+</button></div>
+          <div style="align-self:center">/</div>
+          <div class="stepper"><button data-k="rd" data-d="-1">−</button><span class="val" id="rdV">3</span><button data-k="rd" data-d="1">+</button></div>
+        </div>
+      </div>
+      <div style="text-align:center">
+        <div class="muted" style="font-size:.8rem;margin-bottom:4px">First fraction — takes purple (the "of")</div>
+        <div style="display:flex;gap:10px;justify-content:center">
+          <div class="stepper"><button data-k="pn" data-d="-1">−</button><span class="val" id="pnV">1</span><button data-k="pn" data-d="1">+</button></div>
+          <div style="align-self:center">/</div>
+          <div class="stepper"><button data-k="pd" data-d="-1">−</button><span class="val" id="pdV">2</span><button data-k="pd" data-d="1">+</button></div>
+        </div>
+      </div>
+    </div>
+    <div class="ofgrid" id="ofgrid"></div>
+    <div class="legend">
+      <span><i style="background:rgba(45,212,191,.28);border:1px solid var(--teal)"></i>the second fraction</span>
+      <span><i style="background:var(--purple)"></i>"of" it (the answer)</span>
+    </div>
+    <div class="ofresult" id="ofresult"></div>
+  </div>
+</div></section>
+
+<!-- BODMAS DEMO -->
+<section id="bodmas-play"><div class="wrap">
+  <span class="sec-tag">Watch the order in action</span>
+  <h2>🪜 BODMAS demo</h2>
+  <p class="lead">A real expression from the lesson, simplified one BODMAS step at a time. Tap to reveal each step and see <em>why</em> it goes in that order.</p>
+  <div class="card">
+    <p style="text-align:center;font-size:1.25rem;margin-bottom:6px" class="eq">
+      <span class="fr"><span class="num">1</span><span class="den">4</span></span> + <span class="fr"><span class="num">5</span><span class="den">6</span></span> × <span class="fr"><span class="num">1</span><span class="den">2</span></span> ÷ <span class="fr"><span class="num">4</span><span class="den">3</span></span> of <span class="fr"><span class="num">3</span><span class="den">2</span></span>
+    </p>
+    <div style="text-align:center;margin:12px 0"><button class="gobtn" id="bgo">▶ Play the steps</button></div>
+    <div id="bsteps"></div>
+  </div>
+</div></section>
+
+<!-- PRACTICE -->
+<section id="practice"><div class="wrap">
+  <span class="sec-tag">Test yourself</span>
+  <h2>📝 Practice — 30 questions</h2>
+  <p class="lead">They build in difficulty just like the lesson. Work each out, then <b>tap the card to flip</b> for the answer and full working. Ten per level.</p>
+  <div class="tabs">
+    <div class="tab easy active" data-lvl="easy"><span class="dot"></span>Easy · 10</div>
+    <div class="tab med" data-lvl="med"><span class="dot"></span>Medium · 10</div>
+    <div class="tab hard" data-lvl="hard"><span class="dot"></span>Hard · 10</div>
+  </div>
+  <p class="hint">👆 Tap any card to reveal the answer &amp; step-by-step working. Tap again to hide.</p>
+  <div class="cards" id="cards"></div>
+</div></section>
+
+<!-- CHEAT -->
+<section id="cheat"><div class="wrap">
+  <span class="sec-tag">Keep this in your head</span>
+  <h2>⭐ One-glance cheat sheet</h2>
+  <div class="card">
+    <div class="cheat">
+      <div class="c"><h4>Add / Subtract</h4><span class="muted">Same bottom → add/subtract tops. Different → make a common denominator first.</span></div>
+      <div class="c"><h4>Multiply</h4><span class="muted">Tops × tops, bottoms × bottoms. No common denominator needed.</span></div>
+      <div class="c"><h4>Divide</h4><span class="muted">Flip the second fraction (reciprocal), then multiply.</span></div>
+      <div class="c"><h4>"of"</h4><span class="muted">Replace "of" with ×. Mixed numbers → improper first.</span></div>
+      <div class="c"><h4>Mixed ↔ improper</h4><span class="muted">whole×bottom+top over bottom; or divide top by bottom for the reverse.</span></div>
+      <div class="c"><h4>BODMAS</h4><span class="muted">Brackets, Of, ÷ &amp; × (left→right), + &amp; − (left→right).</span></div>
+    </div>
+  </div>
+</div></section>
+
+<footer>
+  <div class="wrap">
+    <p><b>Fractions</b> · Grade 9 O/L Mathematics · Chapter 3</p>
+    <p class="muted" style="margin-top:6px">Built up level by level — understand each idea, play with it, then prove it with 30 questions.</p>
+  </div>
+</footer>
+
+<script>
+const prog=document.getElementById('prog');
+addEventListener('scroll',()=>{const h=document.documentElement;prog.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';});
+
+/* ---------- helpers ---------- */
+function gcd(a,b){a=Math.abs(a);b=Math.abs(b);while(b){[a,b]=[b,a%b];}return a||1;}
+function reduce(n,d){const g=gcd(n,d);return [n/g,d/g];}
+function frHTML(n,d){return `<span class="fr"><span class="num">${n}</span><span class="den">${d}</span></span>`;}
+
+/* ---------- OF GRID ---------- */
+let of={pn:1,pd:2,rn:1,rd:3};
+function clampOf(){
+  of.pd=Math.max(2,Math.min(6,of.pd)); of.rd=Math.max(2,Math.min(6,of.rd));
+  of.pn=Math.max(1,Math.min(of.pd,of.pn)); of.rn=Math.max(1,Math.min(of.rd,of.rn));
+}
+function drawOf(){
+  clampOf();
+  ['pn','pd','rn','rd'].forEach(k=>document.getElementById(k+'V').textContent=of[k]);
+  const cols=of.rd, rows=of.pd;
+  const g=document.getElementById('ofgrid');
+  g.style.gridTemplateColumns=`repeat(${cols},1fr)`;
+  g.innerHTML='';
+  for(let r=0;r<rows;r++){
+    for(let c=0;c<cols;c++){
+      const cell=document.createElement('div'); cell.className='ofcell';
+      const inCols=c<of.rn;          // green: the second fraction (columns)
+      const inRows=r<of.pn;          // the "of": top rows
+      if(inCols&&inRows) cell.classList.add('both');
+      else if(inCols) cell.classList.add('colsel');
+      g.appendChild(cell);
+    }
+  }
+  const prodN=of.pn*of.rn, prodD=of.pd*of.rd;
+  const [rn,rd]=reduce(prodN,prodD);
+  document.getElementById('ofresult').innerHTML=
+    `${frHTML(of.pn,of.pd)} <span style="font-style:italic">of</span> ${frHTML(of.rn,of.rd)} = ${frHTML(of.pn,of.pd)} × ${frHTML(of.rn,of.rd)} = ${frHTML(prodN,prodD)}` +
+    ((rn!==prodN)?` = ${frHTML(rn,rd)}`:``) +
+    `<div class="muted" style="font-size:.85rem;font-weight:400;margin-top:4px">${prodN} purple cell${prodN>1?'s':''} out of ${prodD} total</div>`;
+}
+document.querySelectorAll('.stepper button').forEach(b=>b.onclick=()=>{of[b.dataset.k]+=+b.dataset.d;drawOf();});
+drawOf();
+
+/* ---------- BODMAS DEMO ---------- */
+const BSTEPS=[
+  {t:`= <span class="fr"><span class="num">1</span><span class="den">4</span></span> + <span class="fr"><span class="num">5</span><span class="den">6</span></span> × <span class="fr"><span class="num">1</span><span class="den">2</span></span> ÷ (<span class="fr"><span class="num">4</span><span class="den">3</span></span> × <span class="fr"><span class="num">3</span><span class="den">2</span></span>)`, why:`O — do the "of" first. "of" = ×, and it outranks the ÷ before it.`},
+  {t:`= <span class="fr"><span class="num">1</span><span class="den">4</span></span> + <span class="fr"><span class="num">5</span><span class="den">6</span></span> × <span class="fr"><span class="num">1</span><span class="den">2</span></span> ÷ 2`, why:`4/3 × 3/2 = 12/6 = 2. The "of" is done.`},
+  {t:`= <span class="fr"><span class="num">1</span><span class="den">4</span></span> + <span class="fr"><span class="num">5</span><span class="den">12</span></span> ÷ 2`, why:`D & M, left → right. The × comes first: 5/6 × 1/2 = 5/12.`},
+  {t:`= <span class="fr"><span class="num">1</span><span class="den">4</span></span> + <span class="fr"><span class="num">5</span><span class="den">24</span></span>`, why:`Now the ÷: 5/12 ÷ 2 = 5/12 × 1/2 = 5/24.`},
+  {t:`= <span class="fr"><span class="num">6</span><span class="den">24</span></span> + <span class="fr"><span class="num">5</span><span class="den">24</span></span> = <span class="fr"><span class="num">11</span><span class="den">24</span></span>`, why:`A — addition last. Common denominator 24: 1/4 = 6/24. Answer 11/24.`}
+];
+document.getElementById('bgo').onclick=()=>{
+  const host=document.getElementById('bsteps'); host.innerHTML='';
+  BSTEPS.forEach((s,i)=>{
+    const d=document.createElement('div'); d.className='bstep';
+    d.innerHTML=`<span class="eq">${s.t}</span><span class="why">▸ ${s.why}</span>`;
+    host.appendChild(d);
+    setTimeout(()=>d.classList.add('show'), 650*i);
+  });
+};
+
+/* ---------- PRACTICE ---------- */
+const Q={easy:[],med:[],hard:[]};
+function q(l,text,ans,steps){Q[l].push({text,ans,steps});}
+const F=(n,d)=>frHTML(n,d);
+
+/* EASY */
+q('easy',`Write ${F(5,3)} as a mixed number.`,`1 ⅔`,
+ [`Divide top by bottom: 5 ÷ 3 = 1 remainder 2.`,`Whole part 1, remainder 2 stays over 3.`,`So ${F(5,3)} = <b>1 ${F(2,3)}</b>.`]);
+q('easy',`Write 2 ¾ as an improper fraction.`,`11/4`,
+ [`whole × bottom + top: 2 × 4 + 3 = 11.`,`Keep the same denominator 4.`,`So 2 ${F(3,4)} = <b>${F(11,4)}</b>.`]);
+q('easy',`Write a fraction equivalent to ${F(2,3)}.`,`4/6 (for example)`,
+ [`Multiply top and bottom by the same number, say 2.`,`2×2 = 4 and 3×2 = 6.`,`So ${F(2,3)} = <b>${F(4,6)}</b> (also ${F(6,9)}, ${F(8,12)}…).`]);
+q('easy',`Simplify ${F(8,12)} to lowest terms.`,`2/3`,
+ [`Find the biggest common factor of 8 and 12 → 4.`,`Divide both: 8÷4 = 2, 12÷4 = 3.`,`So ${F(8,12)} = <b>${F(2,3)}</b>.`]);
+q('easy',`Work out ${F(3,7)} + ${F(2,7)}.`,`5/7`,
+ [`Same denominator, so just add the tops.`,`3 + 2 = 5 over 7.`,`= <b>${F(5,7)}</b>.`]);
+q('easy',`Write the reciprocal of ${F(3,8)}.`,`8/3`,
+ [`Reciprocal = flip the fraction over.`,`${F(3,8)} flipped is ${F(8,3)}.`,`Check: ${F(3,8)} × ${F(8,3)} = 1 ✓. Answer <b>${F(8,3)}</b>.`]);
+q('easy',`Work out ${F(2,5)} × ${F(1,3)}.`,`2/15`,
+ [`Multiply tops, multiply bottoms.`,`2×1 = 2 and 5×3 = 15.`,`= <b>${F(2,15)}</b>.`]);
+q('easy',`How much is ${F(1,2)} of 100 rupees?`,`50 rupees`,
+ [`"of" means ×: ${F(1,2)} × 100.`,`100 ÷ 2 = 50.`,`= <b>Rs 50</b>.`]);
+q('easy',`Is ${F(5,5)} a proper or improper fraction?`,`improper (it equals 1)`,
+ [`Proper = top smaller than bottom. Here top = bottom.`,`${F(5,5)} means 5 parts out of 5 = one whole = 1.`,`So it is <b>improper</b> (fractions equal to 1 count as improper).`]);
+q('easy',`Work out ${F(5,6)} − ${F(1,6)}.`,`2/3`,
+ [`Same bottom, subtract tops: 5 − 1 = 4 over 6.`,`Simplify ${F(4,6)} by dividing by 2.`,`= <b>${F(2,3)}</b>.`]);
+
+/* MEDIUM */
+q('med',`Simplify ${F(1,4)} + ${F(2,3)} − ${F(5,6)}.`,`1/12`,
+ [`Common denominator of 4, 3, 6 is 12.`,`${F(1,4)}=${F(3,12)}, ${F(2,3)}=${F(8,12)}, ${F(5,6)}=${F(10,12)}.`,`3 + 8 − 10 = 1 → <b>${F(1,12)}</b>.`]);
+q('med',`How much is ${F(3,4)} of 64 rupees?`,`48 rupees`,
+ [`${F(3,4)} × 64.`,`64 ÷ 4 = 16, then × 3 = 48.`,`= <b>Rs 48</b>.`]);
+q('med',`Simplify 1 ⅓ × 1 ¾.`,`2 ⅓`,
+ [`Make improper: 1⅓ = ${F(4,3)}, 1¾ = ${F(7,4)}.`,`${F(4,3)} × ${F(7,4)} = ${F(28,12)} = ${F(7,3)}.`,`= <b>2 ${F(1,3)}</b>.`]);
+q('med',`Simplify ${F(4,3)} ÷ 2.`,`2/3`,
+ [`Dividing by 2 = multiplying by ${F(1,2)}.`,`${F(4,3)} × ${F(1,2)} = ${F(4,6)}.`,`= <b>${F(2,3)}</b>.`]);
+q('med',`How much is ${F(2,3)} of 1 ⅘?`,`1 ⅕`,
+ [`"of" = ×, and 1⅘ = ${F(9,5)}.`,`${F(2,3)} × ${F(9,5)} = ${F(18,15)} = ${F(6,5)}.`,`= <b>1 ${F(1,5)}</b>.`]);
+q('med',`Simplify 1 2/7 ÷ 1 ½.`,`6/7`,
+ [`Make improper: 1 2/7 = ${F(9,7)}, 1½ = ${F(3,2)}.`,`Flip &amp; multiply: ${F(9,7)} × ${F(2,3)} = ${F(18,21)}.`,`= <b>${F(6,7)}</b>.`]);
+q('med',`Find ${F(1,2)} of ${F(2,3)}.`,`1/3`,
+ [`${F(1,2)} × ${F(2,3)} = ${F(2,6)}.`,`Simplify by dividing by 2.`,`= <b>${F(1,3)}</b>.`]);
+q('med',`Write the reciprocal of 2 ⅗.`,`5/13`,
+ [`First make it improper: 2⅗ = ${F(13,5)}.`,`Flip it over.`,`Reciprocal = <b>${F(5,13)}</b>.`]);
+q('med',`How many grammes is ${F(2,5)} of 400 g?`,`160 g`,
+ [`${F(2,5)} × 400.`,`400 ÷ 5 = 80, then × 2 = 160.`,`= <b>160 g</b>.`]);
+q('med',`How many metres is ${F(1,8)} of 1 km?`,`125 m`,
+ [`1 km = 1000 m.`,`${F(1,8)} × 1000 = 1000 ÷ 8 = 125.`,`= <b>125 m</b>.`]);
+
+/* HARD */
+q('hard',`Simplify ${F(1,2)} + ${F(2,3)} × ${F(5,6)}.`,`1 1/18`,
+ [`BODMAS: multiplication before addition.`,`${F(2,3)} × ${F(5,6)} = ${F(10,18)} = ${F(5,9)}.`,`${F(1,2)} + ${F(5,9)} = ${F(9,18)} + ${F(10,18)} = ${F(19,18)} = <b>1 ${F(1,18)}</b>.`]);
+q('hard',`Simplify ${F(1,4)} of (3 ⅓ ÷ 2 ⅙).`,`5/13`,
+ [`Bracket first: 3⅓ = ${F(10,3)}, 2⅙ = ${F(13,6)}.`,`${F(10,3)} ÷ ${F(13,6)} = ${F(10,3)} × ${F(6,13)} = ${F(60,39)} = ${F(20,13)}.`,`Then ${F(1,4)} of ${F(20,13)} = ${F(1,4)} × ${F(20,13)} = ${F(20,52)} = <b>${F(5,13)}</b>.`]);
+q('hard',`Simplify ${F(3,5)} × (${F(1,3)} + ${F(1,2)}).`,`1/2`,
+ [`Bracket first: ${F(1,3)} + ${F(1,2)} = ${F(2,6)} + ${F(3,6)} = ${F(5,6)}.`,`${F(3,5)} × ${F(5,6)} = ${F(15,30)}.`,`= <b>${F(1,2)}</b>.`]);
+q('hard',`Simplify ${F(4,10)} of (${F(1,6)} + ${F(1,4)}).`,`1/6`,
+ [`Bracket: ${F(1,6)} + ${F(1,4)} = ${F(2,12)} + ${F(3,12)} = ${F(5,12)}.`,`"of" = ×: ${F(4,10)} × ${F(5,12)} = ${F(20,120)}.`,`= <b>${F(1,6)}</b>.`]);
+q('hard',`Simplify (1 ⅖ ÷ 2 ⅓) of (${F(2,3)} − ${F(1,2)}).`,`1/10`,
+ [`Left bracket: 1⅖ = ${F(7,5)}, 2⅓ = ${F(7,3)}; ${F(7,5)} ÷ ${F(7,3)} = ${F(7,5)} × ${F(3,7)} = ${F(3,5)}.`,`Right bracket: ${F(2,3)} − ${F(1,2)} = ${F(4,6)} − ${F(3,6)} = ${F(1,6)}.`,`${F(3,5)} of ${F(1,6)} = ${F(3,5)} × ${F(1,6)} = ${F(3,30)} = <b>${F(1,10)}</b>.`]);
+q('hard',`Simplify ${F(1,4)} + ${F(5,6)} × ${F(1,2)} ÷ ${F(4,3)} of ${F(3,2)}.`,`11/24`,
+ [`"Of" first (it outranks ÷/×): ${F(4,3)} × ${F(3,2)} = ${F(12,6)} = 2.`,`Now ×, ÷ left→right: ${F(5,6)} × ${F(1,2)} = ${F(5,12)}; then ${F(5,12)} ÷ 2 = ${F(5,24)}.`,`Add: ${F(1,4)} + ${F(5,24)} = ${F(6,24)} + ${F(5,24)} = <b>${F(11,24)}</b>.`]);
+q('hard',`A person sets aside ${F(1,4)} of his income for food and ${F(1,2)} for business, and saves the rest. What fraction does he save?`,`1/4`,
+ [`Spent = ${F(1,4)} + ${F(1,2)} = ${F(1,4)} + ${F(2,4)} = ${F(3,4)}.`,`Saved = whole − spent = 1 − ${F(3,4)}.`,`= <b>${F(1,4)}</b>.`]);
+q('hard',`Kumuduni walked ${F(1,8)} of a journey and went ${F(2,3)} by train; the rest by bus. What fraction was by bus?`,`5/24`,
+ [`Foot + train = ${F(1,8)} + ${F(2,3)} = ${F(3,24)} + ${F(16,24)} = ${F(19,24)}.`,`Bus = 1 − ${F(19,24)}.`,`= <b>${F(5,24)}</b>.`]);
+q('hard',`A person owns ${F(3,5)} of a land and gives ${F(1,3)} of it to his daughter. What fraction of the whole land does the daughter get?`,`1/5`,
+ [`"${F(1,3)} of it" = ${F(1,3)} of ${F(3,5)} = ${F(1,3)} × ${F(3,5)}.`,`= ${F(3,15)}.`,`= <b>${F(1,5)}</b> of the whole land.`]);
+q('hard',`Simplify 3 ¾ ÷ (2 ½ + 3 ¼).`,`15/23`,
+ [`Bracket first: 2½ + 3¼ = ${F(5,2)} + ${F(13,4)} = ${F(10,4)} + ${F(13,4)} = ${F(23,4)}.`,`3¾ = ${F(15,4)}; ${F(15,4)} ÷ ${F(23,4)} = ${F(15,4)} × ${F(4,23)}.`,`= ${F(60,92)} = <b>${F(15,23)}</b>.`]);
+
+/* render */
+const flipIcon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>';
+function render(lvl){
+  const host=document.getElementById('cards'); host.innerHTML='';
+  Q[lvl].forEach((item,i)=>{
+    const steps=item.steps.map(s=>`<div class="estep eq">${s}</div>`).join('');
+    const div=document.createElement('div'); div.className='flip';
+    div.innerHTML=`<div class="flip-in">
+      <div class="face front">
+        <div class="qhead"><span class="qno">Q${i+1}</span><span class="lvl ${lvl}">${lvl==='med'?'medium':lvl}</span></div>
+        <div class="qtext eq">${item.text}</div>
+        <div class="flip-cue">${flipIcon} tap to reveal answer</div>
+      </div>
+      <div class="face back">
+        <div class="qhead"><span class="qno">Q${i+1} · answer</span><span class="lvl ${lvl}">${lvl==='med'?'medium':lvl}</span></div>
+        <div class="ans">✓ ${item.ans}</div>
+        <div class="exp">${steps}</div>
+        <div class="flip-cue">${flipIcon} tap to hide</div>
+      </div></div>`;
+    div.onclick=()=>div.classList.toggle('flipped');
+    host.appendChild(div);
+  });
+}
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  t.classList.add('active'); render(t.dataset.lvl);
+});
+render('easy');
+</script>
+</body>
+</html>
